@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Community Core Vision">
+</Property><Property Name="Solution File" Value="C:\Users\pwjones\Documents\dev\ccv15\apps\addonsExamples\VS2008\Community Core Vision.sln">
+</Property><Property Name="User Options File" Value="C:\Users\pwjones\Documents\dev\ccv15\apps\addonsExamples\VS2008\Community Core Vision.suo">
+</Property><Property Name="Date" Value="Tuesday, July 24, 2012">
+</Property><Property Name="Time" Value="12:55 PM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="Community Core Vision.sln" Description="File successfully backed up as C:\Users\pwjones\Documents\dev\ccv15\apps\addonsExamples\VS2008\Backup\Community Core Vision.sln">
+</Event><Event ErrorLevel="0" Project="" Source="Community Core Vision.suo" Description="File successfully backed up as C:\Users\pwjones\Documents\dev\ccv15\apps\addonsExamples\VS2008\Backup\Community Core Vision.suo">
+</Event><Event ErrorLevel="0" Project="" Source="Community Core Vision.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="Community Core Vision.sln" Description="Converted">
+</Event></UpgradeLog>

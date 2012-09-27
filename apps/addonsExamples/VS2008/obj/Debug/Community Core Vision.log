@@ -1,0 +1,214 @@
+﻿Build started 8/1/2012 2:34:14 PM.
+     1>Project "C:\Users\pwjones\Documents\dev\ccv15\apps\addonsExamples\VS2008\Community Core Vision.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "obj\Debug\Community Core Vision.unsuccessfulbuild".
+       ClCompile:
+         d:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\..\..\addons\ofxCMU\inc /I..\..\..\addons\ofxKinect\src /I..\..\..\addons\ofxDShow\src /I..\..\..\addons\ofxNCore\src\Calibration /I..\..\..\addons\ofxMultiplexer\inc /I..\..\..\addons\ofxCameraBase\inc /I..\..\..\libs\openFrameworks /I..\..\..\libs\openFrameworks\graphics /I..\..\..\libs\openFrameworks\app /I..\..\..\libs\openFrameworks\sound /I..\..\..\libs\openFrameworks\utils /I..\..\..\libs\openFrameworks\communication /I..\..\..\libs\openFrameworks\video /I..\..\..\libs\openFrameworks\events /I..\..\..\libs\glut\include /I..\..\..\libs\rtAudio\include /I..\..\..\libs\freetype\include /I..\..\..\libs\freetype\include\freetype2 /I..\..\..\libs\freeImage\include /I..\..\..\libs\fmodex\include /I..\..\..\libs\videoInput\include /I..\..\..\libs\glee\include /I..\..\..\libs\glu\include /I..\..\..\libs\quicktime\include /I..\..\..\libs\Poco\include /I..\..\..\addons /I..\..\..\addons\ofxNetwork\src /I..\..\..\addons\ofxDirList\src /I..\..\..\addons\ofxObjLoader\src /I..\..\..\addons\ofxOpenCv\src /I..\..\..\addons\ofxOpenCv\libs\opencv\include /I..\..\..\addons\ofxOsc\src /I..\..\..\addons\ofxOsc\libs\oscpack\include\ip /I..\..\..\addons\ofxOsc\libs\oscpack\include\osc /I..\..\..\addons\ofxThread\src /I..\..\..\addons\ofxVectorGraphics\src /I..\..\..\addons\ofxVectorGraphics\libs /I..\..\..\addons\ofxVectorMath\src /I..\..\..\addons\ofxXMLSettings\libs /I..\..\..\addons\ofxXMLSettings\src /I..\..\..\addons\ofx3DModelLoader\src /I..\..\..\addons\ofx3DModelLoader\src\3DS /I..\..\..\addons\ofxPS3\src /I..\..\..\addons\ofxFFMV\src /I..\..\..\addons\ofxNCore\src /I..\..\..\addons\ofxDSVL\src /I..\..\..\addons\ofxFiducialFinder\src /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D POCO_STATIC /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /openmp /Fo"obj\Debug\\" /Fd"obj\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\addons\ofxNetwork\src\ofxTCPManager.cpp ..\..\..\addons\ofxNetwork\src\ofxUDPManager.cpp
+         ofxUDPManager.cpp
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(28): error C2825: '_Fty': must be a class or namespace when followed by '::'
+                 d:\program files\microsoft visual studio 10.0\vc\include\xxresult(40) : see reference to class template instantiation 'std::tr1::_Result_type2<__formal,_Fty,_Arg0,_Arg1>' being compiled
+                 with
+                 [
+                     __formal=false,
+                     _Fty=__w64 unsigned int,
+                     _Arg0=std::tr1::_Nil &,
+                     _Arg1=std::tr1::_Nil &
+                 ]
+                 d:\program files\microsoft visual studio 10.0\vc\include\xxresult(597) : see reference to class template instantiation 'std::tr1::_Result_of2<_Fty,_Farg0,_Farg1>' being compiled
+                 with
+                 [
+                     _Fty=__w64 unsigned int,
+                     _Farg0=std::tr1::_Nil &,
+                     _Farg1=std::tr1::_Nil &
+                 ]
+                 d:\program files\microsoft visual studio 10.0\vc\include\xrefwrap(28) : see reference to class template instantiation 'std::tr1::_Result_of<_Ty>' being compiled
+                 with
+                 [
+                     _Ty=__w64 unsigned int (std::tr1::_Nil &,std::tr1::_Nil &)
+                 ]
+                 d:\program files\microsoft visual studio 10.0\vc\include\xxbind1(273) : see reference to class template instantiation 'std::tr1::result_of<_Fty>' being compiled
+                 with
+                 [
+                     _Fty=__w64 unsigned int (std::tr1::_Nil &,std::tr1::_Nil &)
+                 ]
+                 d:\program files\microsoft visual studio 10.0\vc\include\xxbind0(10) : see reference to class template instantiation 'std::tr1::_Bind2<_Callable,_Arg0,_Arg1>::_Return<_Barg0,_Barg1,_Barg2,_Barg3,_Barg4,_Barg5,_Barg6,_Barg7,_Barg8,_Barg9>' being compiled
+                 with
+                 [
+                     _Callable=std::tr1::_Callable_obj<SOCKET,false>,
+                     _Arg0=sockaddr *,
+                     _Arg1=unsigned int,
+                     _Barg0=std::tr1::_Nil &,
+                     _Barg1=std::tr1::_Nil &,
+                     _Barg2=std::tr1::_Nil &,
+                     _Barg3=std::tr1::_Nil &,
+                     _Barg4=std::tr1::_Nil &,
+                     _Barg5=std::tr1::_Nil &,
+                     _Barg6=std::tr1::_Nil &,
+                     _Barg7=std::tr1::_Nil &,
+                     _Barg8=std::tr1::_Nil &,
+                     _Barg9=std::tr1::_Nil &
+                 ]
+                 d:\program files\microsoft visual studio 10.0\vc\include\functional(408) : see reference to class template instantiation 'std::tr1::_Bind_base<_Ret,_BindN>' being compiled
+                 with
+                 [
+                     _Ret=std::tr1::_Notforced,
+                     _BindN=std::tr1::_Bind2<std::tr1::_Callable_obj<SOCKET,false>,sockaddr *,unsigned int>
+                 ]
+                 c:\users\pwjones\documents\dev\ccv15\addons\ofxnetwork\src\ofxudpmanager.cpp(97) : see reference to class template instantiation 'std::tr1::_Bind_fty<_Fty,_Ret,_BindN>' being compiled
+                 with
+                 [
+                     _Fty=SOCKET,
+                     _Ret=std::tr1::_Notforced,
+                     _BindN=std::tr1::_Bind2<std::tr1::_Callable_obj<SOCKET,false>,sockaddr *,unsigned int>
+                 ]
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(28): error C2903: 'result' : symbol is neither a class template nor a function template
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(28): error C2039: 'result' : is not a member of '`global namespace''
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(28): error C2143: syntax error : missing ';' before '<'
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(28): error C2039: 'type' : is not a member of '`global namespace''
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(28): error C2238: unexpected token(s) preceding ';'
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(40): error C2039: '_Type' : is not a member of 'std::tr1::_Result_type2<__formal,_Fty,_Arg0,_Arg1>'
+                 with
+                 [
+                     __formal=false,
+                     _Fty=__w64 unsigned int,
+                     _Arg0=std::tr1::_Nil &,
+                     _Arg1=std::tr1::_Nil &
+                 ]
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(40): error C2146: syntax error : missing ';' before identifier '_Type'
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(40): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(40): error C2602: 'std::tr1::_Result_of2<_Fty,_Farg0,_Farg1>::_Type' is not a member of a base class of 'std::tr1::_Result_of2<_Fty,_Farg0,_Farg1>'
+                 with
+                 [
+                     _Fty=__w64 unsigned int,
+                     _Farg0=std::tr1::_Nil &,
+                     _Farg1=std::tr1::_Nil &
+                 ]
+                 d:\program files\microsoft visual studio 10.0\vc\include\xxresult(40) : see declaration of 'std::tr1::_Result_of2<_Fty,_Farg0,_Farg1>::_Type'
+                 with
+                 [
+                     _Fty=__w64 unsigned int,
+                     _Farg0=std::tr1::_Nil &,
+                     _Farg1=std::tr1::_Nil &
+                 ]
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(40): error C2868: 'std::tr1::_Result_of2<_Fty,_Farg0,_Farg1>::_Type' : illegal syntax for using-declaration; expected qualified-name
+                 with
+                 [
+                     _Fty=__w64 unsigned int,
+                     _Farg0=std::tr1::_Nil &,
+                     _Farg1=std::tr1::_Nil &
+                 ]
+     1>c:\users\pwjones\documents\dev\ccv15\addons\ofxnetwork\src\ofxudpmanager.cpp(97): error C2440: 'initializing' : cannot convert from 'std::tr1::_Bind_fty<_Fty,_Ret,_BindN>' to 'int'
+                 with
+                 [
+                     _Fty=SOCKET,
+                     _Ret=std::tr1::_Notforced,
+                     _BindN=std::tr1::_Bind2<std::tr1::_Callable_obj<SOCKET,false>,sockaddr *,unsigned int>
+                 ]
+                 No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+         ofxTCPManager.cpp
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(28): error C2825: '_Fty': must be a class or namespace when followed by '::'
+                 d:\program files\microsoft visual studio 10.0\vc\include\xxresult(40) : see reference to class template instantiation 'std::tr1::_Result_type2<__formal,_Fty,_Arg0,_Arg1>' being compiled
+                 with
+                 [
+                     __formal=false,
+                     _Fty=__w64 unsigned int,
+                     _Arg0=std::tr1::_Nil &,
+                     _Arg1=std::tr1::_Nil &
+                 ]
+                 d:\program files\microsoft visual studio 10.0\vc\include\xxresult(597) : see reference to class template instantiation 'std::tr1::_Result_of2<_Fty,_Farg0,_Farg1>' being compiled
+                 with
+                 [
+                     _Fty=__w64 unsigned int,
+                     _Farg0=std::tr1::_Nil &,
+                     _Farg1=std::tr1::_Nil &
+                 ]
+                 d:\program files\microsoft visual studio 10.0\vc\include\xrefwrap(28) : see reference to class template instantiation 'std::tr1::_Result_of<_Ty>' being compiled
+                 with
+                 [
+                     _Ty=__w64 unsigned int (std::tr1::_Nil &,std::tr1::_Nil &)
+                 ]
+                 d:\program files\microsoft visual studio 10.0\vc\include\xxbind1(273) : see reference to class template instantiation 'std::tr1::result_of<_Fty>' being compiled
+                 with
+                 [
+                     _Fty=__w64 unsigned int (std::tr1::_Nil &,std::tr1::_Nil &)
+                 ]
+                 d:\program files\microsoft visual studio 10.0\vc\include\xxbind0(10) : see reference to class template instantiation 'std::tr1::_Bind2<_Callable,_Arg0,_Arg1>::_Return<_Barg0,_Barg1,_Barg2,_Barg3,_Barg4,_Barg5,_Barg6,_Barg7,_Barg8,_Barg9>' being compiled
+                 with
+                 [
+                     _Callable=std::tr1::_Callable_obj<SOCKET,false>,
+                     _Arg0=sockaddr *,
+                     _Arg1=unsigned int,
+                     _Barg0=std::tr1::_Nil &,
+                     _Barg1=std::tr1::_Nil &,
+                     _Barg2=std::tr1::_Nil &,
+                     _Barg3=std::tr1::_Nil &,
+                     _Barg4=std::tr1::_Nil &,
+                     _Barg5=std::tr1::_Nil &,
+                     _Barg6=std::tr1::_Nil &,
+                     _Barg7=std::tr1::_Nil &,
+                     _Barg8=std::tr1::_Nil &,
+                     _Barg9=std::tr1::_Nil &
+                 ]
+                 d:\program files\microsoft visual studio 10.0\vc\include\functional(408) : see reference to class template instantiation 'std::tr1::_Bind_base<_Ret,_BindN>' being compiled
+                 with
+                 [
+                     _Ret=std::tr1::_Notforced,
+                     _BindN=std::tr1::_Bind2<std::tr1::_Callable_obj<SOCKET,false>,sockaddr *,unsigned int>
+                 ]
+                 c:\users\pwjones\documents\dev\ccv15\addons\ofxnetwork\src\ofxtcpmanager.cpp(103) : see reference to class template instantiation 'std::tr1::_Bind_fty<_Fty,_Ret,_BindN>' being compiled
+                 with
+                 [
+                     _Fty=SOCKET,
+                     _Ret=std::tr1::_Notforced,
+                     _BindN=std::tr1::_Bind2<std::tr1::_Callable_obj<SOCKET,false>,sockaddr *,unsigned int>
+                 ]
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(28): error C2903: 'result' : symbol is neither a class template nor a function template
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(28): error C2039: 'result' : is not a member of '`global namespace''
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(28): error C2143: syntax error : missing ';' before '<'
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(28): error C2039: 'type' : is not a member of '`global namespace''
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(28): error C2238: unexpected token(s) preceding ';'
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(40): error C2039: '_Type' : is not a member of 'std::tr1::_Result_type2<__formal,_Fty,_Arg0,_Arg1>'
+                 with
+                 [
+                     __formal=false,
+                     _Fty=__w64 unsigned int,
+                     _Arg0=std::tr1::_Nil &,
+                     _Arg1=std::tr1::_Nil &
+                 ]
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(40): error C2146: syntax error : missing ';' before identifier '_Type'
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(40): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(40): error C2602: 'std::tr1::_Result_of2<_Fty,_Farg0,_Farg1>::_Type' is not a member of a base class of 'std::tr1::_Result_of2<_Fty,_Farg0,_Farg1>'
+                 with
+                 [
+                     _Fty=__w64 unsigned int,
+                     _Farg0=std::tr1::_Nil &,
+                     _Farg1=std::tr1::_Nil &
+                 ]
+                 d:\program files\microsoft visual studio 10.0\vc\include\xxresult(40) : see declaration of 'std::tr1::_Result_of2<_Fty,_Farg0,_Farg1>::_Type'
+                 with
+                 [
+                     _Fty=__w64 unsigned int,
+                     _Farg0=std::tr1::_Nil &,
+                     _Farg1=std::tr1::_Nil &
+                 ]
+     1>d:\program files\microsoft visual studio 10.0\vc\include\xxresult(40): error C2868: 'std::tr1::_Result_of2<_Fty,_Farg0,_Farg1>::_Type' : illegal syntax for using-declaration; expected qualified-name
+                 with
+                 [
+                     _Fty=__w64 unsigned int,
+                     _Farg0=std::tr1::_Nil &,
+                     _Farg1=std::tr1::_Nil &
+                 ]
+     1>c:\users\pwjones\documents\dev\ccv15\addons\ofxnetwork\src\ofxtcpmanager.cpp(103): error C2451: conditional expression of type 'std::tr1::_Bind_fty<_Fty,_Ret,_BindN>' is illegal
+                 with
+                 [
+                     _Fty=SOCKET,
+                     _Ret=std::tr1::_Notforced,
+                     _BindN=std::tr1::_Bind2<std::tr1::_Callable_obj<SOCKET,false>,sockaddr *,unsigned int>
+                 ]
+                 No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+         Generating Code...
+     1>Done Building Project "C:\Users\pwjones\Documents\dev\ccv15\apps\addonsExamples\VS2008\Community Core Vision.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:05.16

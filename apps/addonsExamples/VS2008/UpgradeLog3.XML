@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Community Core Vision">
+</Property><Property Name="Solution File" Value="C:\Users\pwjones\Documents\dev\ccv15\apps\addonsExamples\VS2008\Community Core Vision.sln">
+</Property><Property Name="User Options File" Value="C:\Users\pwjones\Documents\dev\ccv15\apps\addonsExamples\VS2008\Community Core Vision.suo">
+</Property><Property Name="Date" Value="Wednesday, July 25, 2012">
+</Property><Property Name="Time" Value="13:42 PM">
+</Property><Property Name="Log Number" Value="3">
+</Property></Properties><Event ErrorLevel="2" Project="" Source="Community Core Vision.sln" Description="Error creating backup file: C:\Users\pwjones\Documents\dev\ccv15\apps\addonsExamples\VS2008\Community Core Vision.sln.old">
+</Event><Event ErrorLevel="2" Project="" Source="Community Core Vision.suo" Description="Error creating backup file: C:\Users\pwjones\Documents\dev\ccv15\apps\addonsExamples\VS2008\Community Core Vision.suo.old">
+</Event><Event ErrorLevel="3" Project="Community Core Vision" Source="Community Core Vision.vcproj" Description="No Conversion Required">
+</Event></UpgradeLog>
