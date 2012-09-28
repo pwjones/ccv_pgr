@@ -68,7 +68,7 @@ void ofxFlea3::initFlea3(int wid,int hei,int startX,int startY)
 {
 	Error error;
 	FC2Config config;
-	const Mode k_fmt7Mode = MODE_0;
+	const Mode k_fmt7Mode = MODE_1;
     const PixelFormat k_fmt7PixFmt = PIXEL_FORMAT_MONO8;
     //Camera *cam;
 	listDevices();
@@ -133,36 +133,39 @@ void ofxFlea3::initFlea3(int wid,int hei,int startX,int startY)
 		// Must use format 7 specific methods
 		// Query for available Format 7 modes
 
-		//Format7Info fmt7Info;
-		//bool supported;
-		//
-		//fmt7Info.mode = k_fmt7Mode;
-		//error = cams[i].GetFormat7Info( &fmt7Info, &supported );
-		//if (error != PGRERROR_OK) {
-		//	PrintError( error );
-		//	return;
-		//}
-		//Format7ImageSettings fmt7ImageSettings;
-		//fmt7ImageSettings.mode = k_fmt7Mode;
-		//fmt7ImageSettings.offsetX = startX;
-		//fmt7ImageSettings.offsetY = startY;
-		//fmt7ImageSettings.width = wid;
-		//fmt7ImageSettings.height = hei;
-		//fmt7ImageSettings.pixelFormat = k_fmt7PixFmt;
+		Format7Info fmt7Info;
+		bool supported;
+		fmt7Info.mode = k_fmt7Mode;
+		error = cams[i].GetFormat7Info( &fmt7Info, &supported );
+		if (error != PGRERROR_OK) {
+			PrintError( error );
+			return;
+		}
+		Format7ImageSettings fmt7ImageSettings;
+		fmt7ImageSettings.mode = k_fmt7Mode;
+		fmt7ImageSettings.offsetX = startX;
+		fmt7ImageSettings.offsetY = startY;
+		fmt7ImageSettings.width = wid;
+		fmt7ImageSettings.height = hei;
+		fmt7ImageSettings.pixelFormat = k_fmt7PixFmt;
 
-		//bool valid;
-		//Format7PacketInfo fmt7PacketInfo;
-		//// Validate the settings to make sure that they are valid
-		//error = cams[i].ValidateFormat7Settings(&fmt7ImageSettings, &valid, &fmt7PacketInfo );
-		//if (error != PGRERROR_OK) {
-		//	PrintError( error );
-		//	return;
-		//}
-		//if ( !valid ) {
-		//	// Settings are not valid
-		//	printf("Format7 settings are not valid\n");
-		//	return;
-		//}
+		bool valid;
+		Format7PacketInfo fmt7PacketInfo;
+		// Validate the settings to make sure that they are valid
+		error = cams[i].ValidateFormat7Settings(&fmt7ImageSettings, &valid, &fmt7PacketInfo );
+		if (error != PGRERROR_OK) {
+			PrintError( error );
+			return;
+		}
+		if ( !valid ) {
+			// Settings are not valid
+			printf("Format7 settings are not valid\n");
+			return;
+		}
+		// Set the settings to the camera
+		error = cams[i].SetFormat7Configuration(&fmt7ImageSettings, fmt7PacketInfo.recommendedBytesPerPacket);
+		if (error != PGRERROR_OK) { PrintError( error ); return; }
+		
 
 		// Now set the frame rate
 		//VideoMode videoMode;
@@ -180,11 +183,6 @@ void ofxFlea3::initFlea3(int wid,int hei,int startX,int startY)
 		//	printf("The video frame rate and mode specified are not supported.  Exiting.\n");
 		//	return;
 		//}
-		// Set the settings to the camera
-		//error = cams[i].SetFormat7Configuration(&fmt7ImageSettings, fmt7PacketInfo.recommendedBytesPerPacket);
-		//if (error != PGRERROR_OK) { PrintError( error ); return; }
-		
-
 		printf( "Starting capture... \n" );
 		error = cams[i].StartCapture();
 		if (error != PGRERROR_OK) {
@@ -194,6 +192,26 @@ void ofxFlea3::initFlea3(int wid,int hei,int startX,int startY)
 		} else {
 			printf("Capture started successfully\n");
 		}
+		// Retrieve frame rate property
+		Property frmRate;
+		frmRate.type = FRAME_RATE;
+		error = cams[i].GetProperty( &frmRate );
+		if (error != PGRERROR_OK)
+		{
+			PrintError( error );
+			return;
+		}
+		frmRate.valueA = framerate;
+		frmRate.absValue = framerate;
+		error = cams[i].SetProperty( &frmRate );
+		if (error != PGRERROR_OK)
+		{
+			PrintError( error );
+			return;
+		}
+		printf( "Frame rate is %3.2f fps\n", frmRate.absValue );
+
+
 		Image rawImage;
 		for (int ii = 0; ii<5; ii++) {
 			error = cams[i].RetrieveBuffer(&rawImage);
@@ -216,9 +234,7 @@ void ofxFlea3::initFlea3(int wid,int hei,int startX,int startY)
 }
 void ofxFlea3::cameraInitializationLogic()
 {
-	int wid = 1280, hei = 1024, startX = 0, startY = 0;
-
-	initFlea3(wid,hei,startX,startY);
+	initFlea3(width,height,left,top);
 }
 void ofxFlea3::cameraDeinitializationLogic()
 {
@@ -340,7 +356,6 @@ void ofxFlea3::getCameraFeature(CAMERA_BASE_FEATURE featureCode,int* firstValue,
 
 void ofxFlea3::getNewFrame(unsigned char* newFrame)
 {
-	// Note: need to put an option to get a timestamp for the images.
 	Image rawImage, imCopy;
 	Error error;
 	unsigned int dsize;
@@ -349,14 +364,15 @@ void ofxFlea3::getNewFrame(unsigned char* newFrame)
     {
 		printf("Error grabbing image %u\n", fcCameraID);
     }
+	// Get some image information
+	PixelFormat pixFormat;
+    unsigned int rows=1024, cols=1280, stride;
+    rawImage.GetDimensions( &rows, &cols, &stride, &pixFormat );
 	dsize = rawImage.GetDataSize();
 	memcpy((void *)newFrame, (const unsigned char*)rawImage.GetData(), dsize);
 	TimeStamp raw_ts = rawImage.GetTimeStamp(); 
 	timestamp = ofxTimeStamp(raw_ts); //construct the timestamp using the PRG TimeStamp
-	// Get some image information
-	//PixelFormat pixFormat;
-    //unsigned int rows=1024, cols=1280, stride, dsize;
-    //rawImage.GetDimensions( &rows, &cols, &stride, &pixFormat );
+	
 	// Create a converted image
     //Image convertedImage;
 	// Convert the raw image
@@ -385,9 +401,10 @@ void ofxFlea3::getNewFrame(Image *newFrame)
 	// This is the version that includes all of the niceties of the Image object provided
 	// by the FlyCapture2 library. Always returns the image in 8-bit Grayscale format. The 
 	// function expects the newFrame image to exist.
-	Image rawImage, imCopy;
+	Image imCopy;
 	Error error;
-	error = cams[fcCameraID].RetrieveBuffer(&rawImage);
+	Image *rawImage = fcImage[fcCameraID];
+	error = cams[fcCameraID].RetrieveBuffer(&fcImage[fcCameraID]);
     if (error != PGRERROR_OK)
     {
 		printf("Error grabbing image %u\n", fcCameraID);
@@ -401,7 +418,7 @@ void ofxFlea3::getNewFrame(Image *newFrame)
 
 	// Create a converted image
     Image convertedImage;
-	error = rawImage.Convert( PIXEL_FORMAT_MONO8, newFrame );
+	error = fcImage[fcCameraID].Convert( PIXEL_FORMAT_MONO8, newFrame );
     if (error != PGRERROR_OK) {
 		PrintError( error );
     }
