@@ -13,8 +13,6 @@ ofxFlea3::ofxFlea3()
     //First assume there are MAX_CAMS.Then this variable is modified to the
     //true camera number after listDevices() is called.
     camNum=_MAX_CAMS;
-	
-
 }
 
 void PrintError( Error error)                                                                                                                     
@@ -68,7 +66,9 @@ void ofxFlea3::initFlea3(int wid,int hei,int startX,int startY)
 {
 	Error error;
 	FC2Config config;
-	const Mode k_fmt7Mode = MODE_1;
+	//If you want full frame, this should be MODE_0.  If you want full coverage but a smaller image,
+	//it should be MODE_1
+	const Mode k_fmt7Mode = MODE_0; 
     const PixelFormat k_fmt7PixFmt = PIXEL_FORMAT_MONO8;
     //Camera *cam;
 	listDevices();
@@ -166,23 +166,6 @@ void ofxFlea3::initFlea3(int wid,int hei,int startX,int startY)
 		error = cams[i].SetFormat7Configuration(&fmt7ImageSettings, fmt7PacketInfo.recommendedBytesPerPacket);
 		if (error != PGRERROR_OK) { PrintError( error ); return; }
 		
-
-		// Now set the frame rate
-		//VideoMode videoMode;
-		//FrameRate frameRate;
-		//error = cams[i].GetVideoModeAndFrameRate(&videoMode, &frameRate);
-		//if (error != PGRERROR_OK) { PrintError( error ); return; }
-		//double rate = getRequestedFrameRate();
-		////frameRate = FRAMERATE_60;
-		//error = cams[i].GetVideoModeAndFrameRateInfo(videoMode, frameRate, &supported);
-		//if (error != PGRERROR_OK) { PrintError( error ); return; }
-		//if (supported) {
-		//	error = cams[i].SetVideoModeAndFrameRate(videoMode, frameRate);
-		//	if (error != PGRERROR_OK) { PrintError( error ); return; }
-		//} else {
-		//	printf("The video frame rate and mode specified are not supported.  Exiting.\n");
-		//	return;
-		//}
 		printf( "Starting capture... \n" );
 		error = cams[i].StartCapture();
 		if (error != PGRERROR_OK) {
@@ -211,7 +194,6 @@ void ofxFlea3::initFlea3(int wid,int hei,int startX,int startY)
 		}
 		printf( "Frame rate is %3.2f fps\n", frmRate.absValue );
 
-
 		Image rawImage;
 		for (int ii = 0; ii<5; ii++) {
 			error = cams[i].RetrieveBuffer(&rawImage);
@@ -219,7 +201,6 @@ void ofxFlea3::initFlea3(int wid,int hei,int startX,int startY)
 				printf("Error grabbing image: ofxFlea3.cpp:122 %u\n", ii);
 				continue;
 			} else {
-				//Print Timestamp value
 				printf( "Grabbed image %d\n", ii );
 			}
 			printf("Copying image\n");
@@ -356,7 +337,7 @@ void ofxFlea3::getCameraFeature(CAMERA_BASE_FEATURE featureCode,int* firstValue,
 
 void ofxFlea3::getNewFrame(unsigned char* newFrame)
 {
-	Image rawImage, imCopy;
+	Image rawImage;
 	Error error;
 	unsigned int dsize;
 	error = cams[fcCameraID].RetrieveBuffer(&rawImage);
@@ -403,8 +384,9 @@ void ofxFlea3::getNewFrame(Image *newFrame)
 	// function expects the newFrame image to exist.
 	Image imCopy;
 	Error error;
-	Image *rawImage = fcImage[fcCameraID];
-	error = cams[fcCameraID].RetrieveBuffer(&fcImage[fcCameraID]);
+	Image rawImage;
+	//Image *rawImage = fcImage[fcCameraID];
+	error = cams[fcCameraID].RetrieveBuffer(&rawImage);
     if (error != PGRERROR_OK)
     {
 		printf("Error grabbing image %u\n", fcCameraID);
