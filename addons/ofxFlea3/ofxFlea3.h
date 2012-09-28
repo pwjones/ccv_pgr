@@ -20,15 +20,9 @@ class ofxFlea3 : ofxCameraBase
         void initFlea3(int wid,int hei,int startX=0,int startY=0);
         void setDeviceID(int id);
         int getDeviceID();
-        int getCamWidth();
-        int getCamHeight();
         void listDevices();
         int getDeviceCount();
-		void getNewFrame(unsigned char* newFrame);
-		void getNewFrame(Image *newFrame);
-		void getNewFrame(Image *newFrame, TimeStamp *ts);
 		GUID* getBaseCameraGuids(int* camCount);
-		// Not implemented yet
 		void setCameraFeature(CAMERA_BASE_FEATURE featureCode,int firstValue,int secondValue,bool isAuto,bool isEnabled);
 		void getCameraFeature(CAMERA_BASE_FEATURE featureCode,int* firstValue,int* secondValue, bool* isAuto, bool* isEnabled,int* minValue,int* maxValue);
 		int getCameraBaseCount();
@@ -38,18 +32,17 @@ class ofxFlea3 : ofxCameraBase
 		void setCameraType();
 		void cameraInitializationLogic();
 		void cameraDeinitializationLogic();
+		void getNewFrame(unsigned char* newFrame);
+		void getNewFrame(Image *newFrame);
+		void getNewFrame(Image *newFrame, TimeStamp *ts);
     private:
-        // This acts as a handle to the camera.
 		Camera cams[_MAX_CAMS];
 		int fcCameraID;
-        int camWidth;
-        int camHeight;
 		int camNum ;
-        // Enumerate the cameras on the bus.
 		PGRGuid pgrGuid[_MAX_CAMS];
 		Image fcImage[_MAX_CAMS]; //This Image object is from the FlyCapture2 lib
 		// Private functions
 		void PrintCameraInfo( CameraInfo* pCamInfo );
-		double ofxFlea3::getRequestedFrameRate();
+		double getRequestedFrameRate();
 };
 #endif // OFXFLEA3_H_INCLUDED

@@ -460,27 +460,12 @@ void ofxFlea3::getNewFrame(Image *newFrame, TimeStamp *ts)
 	rawImage.ReleaseBuffer();
 
 }
-
 int ofxFlea3::getDeviceCount()
 {
 	// Get number of PGRCameras
 	int numCams;
 	numCams = camNum;
 	return numCams;
-}
-int ofxFlea3::getCamWidth()
-{
-	unsigned int width;
-
-    width=fcImage[fcCameraID].GetCols();
-    return width;
-}
-int ofxFlea3::getCamHeight()
-{
-	unsigned int height;
-
-    height=fcImage[fcCameraID].GetRows();
-    return height;
 }
 void ofxFlea3::setCameraType()
 {
