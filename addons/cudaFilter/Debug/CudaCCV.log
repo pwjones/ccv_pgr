@@ -1,0 +1,72 @@
+﻿Build started 10/23/2012 5:37:57 PM.
+     1>Project "C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\CudaCCV\CudaCCV.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\CudaCCV.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       CudaBuild:
+       Skipping target "CudaBuild" because all output files are up-to-date with respect to the input files.
+       CudaBuild:
+       Skipping target "CudaBuild" because all output files are up-to-date with respect to the input files.
+       CudaBuild:
+       Skipping target "CudaBuild" because all output files are up-to-date with respect to the input files.
+       CudaBuild:
+       Skipping target "CudaBuild" because all output files are up-to-date with respect to the input files.
+       CudaBuild:
+       Skipping target "CudaBuild" because all output files are up-to-date with respect to the input files.
+       CudaBuild:
+       Skipping target "CudaBuild" because all output files are up-to-date with respect to the input files.
+       CudaBuild:
+       Skipping target "CudaBuild" because all output files are up-to-date with respect to the input files.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin\CL.exe /c /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.2\include" /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc90.pdb" /Gd /TP /analyze- /errorReport:prompt main.cu
+         main.cu
+     1>c:\opencv2.2\include\opencv2\flann\logger.h(66): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 9.0\vc\include\stdio.h(237) : see declaration of 'fopen'
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\Debug\CudaCCV.exe" /NOLOGO /LIBPATH:"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.2\lib\Win32" cudart.lib C:\OpenCV2.2\lib\opencv_core220d.lib C:\OpenCV2.2\lib\opencv_highgui220d.lib C:\OpenCV2.2\lib\opencv_video220d.lib C:\OpenCV2.2\lib\opencv_ml220d.lib C:\OpenCV2.2\lib\opencv_legacy220d.lib C:\OpenCV2.2\lib\opencv_imgproc220d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\CudaCCV.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\Debug\CudaCCV.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\Debug\CudaCCV.lib" /MACHINE:X86 Debug\gpu_amplify.cu.obj
+         Debug\api.cu.obj
+         Debug\gpu_sub.cu.obj
+         Debug\gpu_blob.cu.obj
+         Debug\gpu_blur_tex.cu.obj
+         Debug\gpu_grayscale.cu.obj
+         Debug\gpu_threshold.cu.obj
+         Debug\main.obj
+         LINK : C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\Debug\CudaCCV.exe not found or not built by the last incremental link; performing full link
+         CudaCCV.vcxproj -> C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\Debug\CudaCCV.exe
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\Debug\CudaCCV.exe;#1" /manifest Debug\CudaCCV.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Debug\CudaCCV.unsuccessfulbuild".
+         Touching "Debug\CudaCCV.lastbuildstate".
+     1>Done Building Project "C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\CudaCCV\CudaCCV.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.94

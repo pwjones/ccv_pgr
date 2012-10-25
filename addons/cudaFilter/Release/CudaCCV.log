@@ -1,0 +1,92 @@
+﻿Build started 10/24/2012 8:15:41 PM.
+     1>Project "C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\CudaCCV\CudaCCV.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Release\CudaCCV.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+         C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.2\bin" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.2\include" /I. /FIcuda_runtime.h /c C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\CudaCCV\API\api.cu 
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompileDeps:
+       Skipping target "AddCudaCompileDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       CudaBuild:
+       Skipping target "CudaBuild" because all output files are up-to-date with respect to the input files.
+       CudaBuild:
+         Compiling CUDA source file API\api.cu...
+         cmd.exe /C "C:\Users\pwjones\AppData\Local\Temp\54761c6800da4ee28928f59ab037bbb8.cmd"
+         "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.2\bin\nvcc.exe" -gencode=arch=compute_13,code=\"sm_13,compute_13\" --use-local-env --cl-version 2008 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin"  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.2\include"    --keep-dir "Release" -maxrregcount=0  --machine 32 --compile      -Xcompiler "/EHsc /nologo /Od /Zi  /MD  " -o "Release\api.cu.obj" "C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\CudaCCV\API\api.cu"
+         
+         C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\CudaCCV>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.2\bin\nvcc.exe" -gencode=arch=compute_13,code=\"sm_13,compute_13\" --use-local-env --cl-version 2008 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin"  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.2\include"    --keep-dir "Release" -maxrregcount=0  --machine 32 --compile      -Xcompiler "/EHsc /nologo /Od /Zi  /MD  " -o "Release\api.cu.obj" "C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\CudaCCV\API\api.cu" 
+         api.cu
+     1>C:/Users/pwjones/Documents/dev/cudacv/Windows/CudaCCV/CudaCCV/API/api.cu(203): warning : variable "temp1" was declared but never referenced
+         
+     1>C:/Users/pwjones/Documents/dev/cudacv/Windows/CudaCCV/CudaCCV/API/api.cu(204): warning : variable "temp2" was declared but never referenced
+         
+     1>C:/Users/pwjones/Documents/dev/cudacv/Windows/CudaCCV/CudaCCV/API/api.cu(205): warning : variable "i" was declared but never referenced
+         
+         tmpxft_00000944_00000000-0_api.cudafe1.gpu
+         tmpxft_00000944_00000000-5_api.cudafe2.gpu
+         api.cu
+     1>C:/Users/pwjones/Documents/dev/cudacv/Windows/CudaCCV/CudaCCV/API/api.cu(203): warning : variable "temp1" was declared but never referenced
+         
+     1>C:/Users/pwjones/Documents/dev/cudacv/Windows/CudaCCV/CudaCCV/API/api.cu(204): warning : variable "temp2" was declared but never referenced
+         
+     1>C:/Users/pwjones/Documents/dev/cudacv/Windows/CudaCCV/CudaCCV/API/api.cu(205): warning : variable "i" was declared but never referenced
+         
+         tmpxft_00000944_00000000-0_api.cudafe1.cpp
+         tmpxft_00000944_00000000-11_api.ii
+       CudaBuild:
+       Skipping target "CudaBuild" because all output files are up-to-date with respect to the input files.
+       CudaBuild:
+       Skipping target "CudaBuild" because all output files are up-to-date with respect to the input files.
+       CudaBuild:
+       Skipping target "CudaBuild" because all output files are up-to-date with respect to the input files.
+       CudaBuild:
+       Skipping target "CudaBuild" because all output files are up-to-date with respect to the input files.
+       CudaBuild:
+       Skipping target "CudaBuild" because all output files are up-to-date with respect to the input files.
+       ClCompile:
+         All outputs are up-to-date.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\Release\CudaCCV.exe" /NOLOGO /LIBPATH:"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.2\lib\Win32" cudart.lib C:\OpenCV2.2\lib\opencv_core220d.lib C:\OpenCV2.2\lib\opencv_highgui220d.lib C:\OpenCV2.2\lib\opencv_video220d.lib C:\OpenCV2.2\lib\opencv_ml220d.lib C:\OpenCV2.2\lib\opencv_legacy220d.lib C:\OpenCV2.2\lib\opencv_imgproc220d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\CudaCCV.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\Release\CudaCCV.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\Release\CudaCCV.lib" /MACHINE:X86 Release\gpu_amplify.cu.obj
+         Release\api.cu.obj
+         Release\gpu_sub.cu.obj
+         Release\gpu_blob.cu.obj
+         Release\gpu_blur_tex.cu.obj
+         Release\gpu_grayscale.cu.obj
+         Release\gpu_threshold.cu.obj
+         Release\main.obj
+         Generating code
+         Finished generating code
+         CudaCCV.vcxproj -> C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\Release\CudaCCV.exe
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\Release\CudaCCV.exe;#1" /manifest Release\CudaCCV.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Release\CudaCCV.unsuccessfulbuild".
+         Touching "Release\CudaCCV.lastbuildstate".
+     1>Done Building Project "C:\Users\pwjones\Documents\dev\cudacv\Windows\CudaCCV\CudaCCV\CudaCCV.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:06.56
