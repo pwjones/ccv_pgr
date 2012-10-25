@@ -14,6 +14,9 @@
 		/>
 	</Platforms>
 	<ToolFiles>
+		<DefaultToolFile
+			FileName="NvCudaDriverApi.rules"
+		/>
 	</ToolFiles>
 	<Configurations>
 		<Configuration
@@ -28,6 +31,9 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="Driver API Build Rule"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -114,6 +120,9 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="Driver API Build Rule"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -1072,6 +1081,50 @@
 				</File>
 				<File
 					RelativePath="..\..\..\addons\ofxFlea3\ofxFlea3.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="cudaFilter"
+				>
+				<File
+					RelativePath="..\..\..\addons\cudaFilter\API\api.cu"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\addons\cudaFilter\API\api.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\addons\cudaFilter\Amplify\gpu_amplify.cu"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\addons\cudaFilter\Amplify\gpu_amplify.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\addons\cudaFilter\GaussBlurTex\gpu_blur_tex.cu"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\addons\cudaFilter\GaussBlurTex\gpu_blur_tex.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\addons\cudaFilter\Grayscale\gpu_grayscale.cu"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\addons\cudaFilter\Grayscale\gpu_grayscale.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\addons\cudaFilter\BgSub\gpu_sub.cu"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\addons\cudaFilter\BgSub\gpu_sub.h"
 					>
 				</File>
 			</Filter>
