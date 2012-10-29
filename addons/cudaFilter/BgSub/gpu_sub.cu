@@ -19,7 +19,7 @@
 */
 
 #include "cuda.h"
-#include "../API/api.h"
+#include "../API/gpu_filter_api.h"
 #include "assert.h"
 #include "stdio.h"
 

@@ -11,16 +11,37 @@
 #include "ofxCvColorImage.h"
 #include "ofxCvGrayscaleImage.h"
 #include "ofxCvFloatImage.h"
+#include "../../cudaFilter/Amplify/gpu_amplify.h"
 
 //--------------------------------------------------------------------------------
 void CPUImageFilter::amplify ( CPUImageFilter& mom, float level ) {
 
 	float scalef = level / 128.0f;
+	//gpu_error cudaerr = gpu_amplify( 
 	cvMul( mom.getCvImage(), mom.getCvImage(), cvImageTemp, scalef );
 	swapTemp();
 	flagImageChanged();
 }
 
+void CPUImageFilter::cuda_amplify (gpu_context_t *ctx, CPUImageFilter& mom, float level ) {
+	gpu_error_t cudaErr;
+	
+	if (image_buffer == NULL)
+		image_buffer = (char *) malloc(width*height*sizeof(char));
+	
+	cudaErr = gpu_amplify( ctx, level);
+	if (cudaErr != GPU_OK) {
+		GPU_ERROR("Unable to amplify image using CUDA");
+		return;
+	}
+	if (gpu_get_output(ctx, (unsigned char **)&image_buffer) != GPU_OK) {
+		GPU_ERROR("Unable to get GPU output buffer after amplify");
+		return;
+	}
+	cvImageTemp->imageData = image_buffer;
+	swapTemp();
+	flagImageChanged();
+}
 void CPUImageFilter::highpass ( float blur1, float blur2 ) {
 
 	//Blur Original Image

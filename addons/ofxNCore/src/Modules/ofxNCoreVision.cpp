@@ -10,6 +10,7 @@
 
 #include "ofxNCoreVision.h"
 #include "../Controls/gui.h"
+#include "API/gpu_filter_api.h"
 
 /******************************************************************************
 * The setup function is run once to perform initializations in the application
@@ -135,7 +136,16 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	contourFinder.setTemplateUtils(&templates);
 	tracker.passInFiducialInfo(&fidfinder);
 
-
+	//CUDA context initialization
+	if ( gpu_context_create(&ctx) != GPU_OK )
+	{
+		GPU_ERROR("Unable to create GPU context");
+		//return 0;
+	}
+	if ( gpu_context_init( ctx, camHeight, camWidth, 1, GPU_MEMORY_HOST) != GPU_OK ){
+		GPU_ERROR("Unable to initialize GPU context");
+		//break;
+	}
 
 	#ifdef TARGET_WIN32
 		//get rid of the console window
@@ -524,6 +534,11 @@ void ofxNCoreVision::getPixels()
 				multiplexer->getStitchedFrame(&w,&h,capturedData);
 				processedImg.setFromPixels(capturedData, camWidth, camHeight);
 				if(contourFinder.bTrackFiducials || bFidtrackInterface){processedImg_fiducial.setFromPixels(capturedData, camWidth, camHeight);}
+				// CUDA setup for the frame
+				if(gpu_set_input( ctx, (unsigned char *)capturedData) != GPU_OK) {
+					GPU_ERROR("Unable to set context buffer");
+					return;
+				}	
 			}
 		#endif
 	}

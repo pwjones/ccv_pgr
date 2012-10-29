@@ -470,5 +470,8 @@ public:
 	float draggingXOffset;
 	float draggingYOffset;
 	int rawCamId;
+	// CUDA variables
+	gpu_context_t *ctx;
+
 };
 #endif

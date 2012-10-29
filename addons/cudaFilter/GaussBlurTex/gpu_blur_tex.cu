@@ -3,7 +3,7 @@
 	Future release might contain share memory embedded in it. :D
 */
 
-#include "../API/api.h"
+#include "../API/gpu_filter_api.h"
 #include "cuda_runtime.h"
 #include "assert.h"
 #include "stdio.h"

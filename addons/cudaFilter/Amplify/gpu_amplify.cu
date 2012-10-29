@@ -19,7 +19,7 @@
 */
 
 #include "cuda.h"
-#include "../API/api.h"
+#include "../API/gpu_filter_api.h"
 #include "assert.h"
 #include "stdio.h"
 
@@ -44,11 +44,11 @@ gpu_error_t gpu_amplify(gpu_context_t *ctx, float ampValue)
 	assert(ampValue);
 	assert(ctx);
 
-	float elapsedtime;
+	/*float elapsedtime;
 	cudaEvent_t start, stop;
 	cudaEventCreate(&start);
 	cudaEventCreate(&stop);
-	cudaEventRecord(start,0);
+	cudaEventRecord(start,0);*/
 
 	gpu_error_t error = GPU_OK;
 	int threadsX = ctx->threadsX;
@@ -65,11 +65,11 @@ gpu_error_t gpu_amplify(gpu_context_t *ctx, float ampValue)
 	if(cudaSuccess != cudaMemcpy( ctx->output_buffer_1, ctx->gpu_buffer_1, ctx->width * ctx->height, cudaMemcpyDeviceToHost))
 		error = GPU_ERR_MEM;
 
-	cudaEventRecord(stop,0);
+	/*cudaEventRecord(stop,0);
 	cudaEventSynchronize(stop);
 	cudaEventElapsedTime(&elapsedtime,start,stop);
 	cudaEventDestroy(start);
-	cudaEventDestroy(stop);
+	cudaEventDestroy(stop);*/
 
 	//FILE *file;
 	//file = fopen("../timing.txt","a+");

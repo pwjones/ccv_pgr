@@ -11,12 +11,13 @@
 #define CPUImageFilter_H
 
 #include "ofxCvGrayscaleImage.h"
+#include "API/gpu_filter_api.h"
 
 class CPUImageFilter : public ofxCvGrayscaleImage {
 
   public:
 
-    CPUImageFilter(){};
+    CPUImageFilter(){image_buffer = NULL;};
 
     void operator = ( unsigned char* _pixels );
     void operator = ( const ofxCvGrayscaleImage& mom );
@@ -25,8 +26,13 @@ class CPUImageFilter : public ofxCvGrayscaleImage {
 
 	//amplifies signal
 	void amplify( CPUImageFilter& mom, float level );
+	void cuda_amplify (gpu_context_t *ctx, CPUImageFilter& mom, float level );
 	//picks out light spots from image
 	void highpass(float blur1, float blur2 );
+
+  protected:
+	char *image_buffer;
+
 };
 
 #endif

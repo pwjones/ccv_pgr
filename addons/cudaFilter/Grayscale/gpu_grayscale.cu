@@ -21,7 +21,7 @@
 #include "assert.h"
 #include "stdio.h"
 #include "cuda_runtime.h"
-#include "../API/api.h"
+#include "../API/gpu_filter_api.h"
 
 /////////////// Grayscale Cuda Fucntion ////////////////////
 __global__ void grayscaleKernel(int width, int height, unsigned char *gpu_in_1, unsigned char *gpu_in_4)
