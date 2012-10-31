@@ -17,7 +17,7 @@ class CPUImageFilter : public ofxCvGrayscaleImage {
 
   public:
 
-    CPUImageFilter(){image_buffer = NULL;};
+    CPUImageFilter(){image_buffer = NULL; uimage_buffer = NULL;};
 
     void operator = ( unsigned char* _pixels );
     void operator = ( const ofxCvGrayscaleImage& mom );
@@ -29,9 +29,11 @@ class CPUImageFilter : public ofxCvGrayscaleImage {
 	void cuda_amplify (gpu_context_t *ctx, CPUImageFilter& mom, float level );
 	//picks out light spots from image
 	void highpass(float blur1, float blur2 );
+	void cuda_highpass(gpu_context_t *ctx, float blur1, float blur2);
 
   protected:
 	char *image_buffer;
+	unsigned char *uimage_buffer;
 
 };
 

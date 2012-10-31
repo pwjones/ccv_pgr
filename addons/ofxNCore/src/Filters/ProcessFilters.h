@@ -71,7 +71,7 @@ class ProcessFilters : public Filters {
 /****************************************************************
  *	CPU Filters
  ****************************************************************/
-     void applyCPUFilters(CPUImageFilter& img){
+void applyCPUFilters(CPUImageFilter& img){
 
         //Set Mirroring Horizontal/Vertical
         if(bVerticalMirror || bHorizontalMirror) img.mirror(bVerticalMirror, bHorizontalMirror);
@@ -133,7 +133,71 @@ class ProcessFilters : public Filters {
         if(!bMiniMode)
         grayDiff = img; //for drawing
 	
+}
+
+void applyCUDAFilters(gpu_context_t *ctx, CPUImageFilter& img){
+    
+	//Set Mirroring Horizontal/Vertical
+    if(bVerticalMirror || bHorizontalMirror) img.mirror(bVerticalMirror, bHorizontalMirror);
+
+    if(!bMiniMode) grayImg = img; //for drawing
+    //Dynamic background with learn rate
+    if(bDynamicBG){
+        floatBgImg.addWeighted( img, fLearnRate);
+		//grayBg = floatBgImg;  // not yet implemented
+		 cvConvertScale( floatBgImg.getCvImage(), grayBg.getCvImage(), 255.0f/65535.0f, 0 );       
+		 grayBg.flagImageChanged();
     }
+
+    //recapature the background until image/camera is fully exposed
+    if((ofGetElapsedTimeMillis() - exposureStartTime) < CAMERA_EXPOSURE_TIME) bLearnBakground = true;
+
+    //Capture full background
+    if (bLearnBakground == true){
+        floatBgImg = img;
+		//grayBg = floatBgImg;  // not yet implemented
+		cvConvertScale( floatBgImg.getCvImage(), grayBg.getCvImage(), 255.0f/65535.0f, 0 );       
+		grayBg.flagImageChanged();
+        bLearnBakground = false;
+    }
+
+	//Background Subtraction
+    //img.absDiff(grayBg, img); 		
+	if(bTrackDark)
+		cvSub(grayBg.getCvImage(), img.getCvImage(), img.getCvImage());
+	else
+		cvSub(img.getCvImage(), grayBg.getCvImage(), img.getCvImage());
+
+	img.flagImageChanged();
+
+	
+	if(bSmooth){//Smooth
+        img.blur((smooth * 2) + 1); //needs to be an odd number
+        if(!bMiniMode)
+        subtractBg = img; //for drawing
+    }
+
+    if(bHighpass){//HighPass
+        img.cuda_highpass(ctx, highpassBlur, highpassNoise);
+        if(!bMiniMode)
+        highpassImg = img; //for drawing
+    }
+
+    if(bAmplify){//Amplify
+        img.cuda_amplify(ctx, img, highpassAmp);
+        if(!bMiniMode)
+        amplifyImg = img; //for drawing
+    }
+
+	if (bDynamicTH)
+		img.adaptiveThreshold(threshold, -threshSize);
+	else
+		img.threshold(threshold); //Threshold
+
+    if(!bMiniMode)
+    grayDiff = img; //for drawing
+	
+}
 
 /****************************************************************
  *	GPU Filters

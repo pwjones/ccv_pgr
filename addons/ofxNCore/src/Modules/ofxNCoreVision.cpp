@@ -97,7 +97,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	//Allocate Filters
 	filter->allocate( camWidth, camHeight );
 	filter_fiducial->allocate( camWidth, camHeight );
-
+	
 	//Fiducial Initialisation
 
 	// factor for Fiducial Drawing. The ImageSize is hardcoded 326x246 Pixel!(Look at ProcessFilters.h at the draw() Method
@@ -467,6 +467,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 		{
 			grabFrameToCPU();
 			filter->applyCPUFilters( processedImg );
+			//filter->applyCUDAFilters(ctx, processedImg );
 			contourFinder.findContours(processedImg,  (MIN_BLOB_SIZE * 2) + 1, ((camWidth * camHeight) * .4) * (MAX_BLOB_SIZE * .001), maxBlobs, false);
 			if(contourFinder.bTrackFiducials || bFidtrackInterface)
 			{

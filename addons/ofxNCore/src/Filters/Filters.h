@@ -116,6 +116,8 @@ class Filters {
     virtual void allocate( int w, int h ) = 0;
     virtual void applyCPUFilters(CPUImageFilter& img) = 0;
     virtual void draw() = 0;
+	// This is for the CUDA extension
+	virtual void applyCUDAFilters(gpu_context_t *ctx, CPUImageFilter& img) = 0;
 
     virtual void allocateGPU() = 0;
     virtual void applyGPUFilters() = 0;
