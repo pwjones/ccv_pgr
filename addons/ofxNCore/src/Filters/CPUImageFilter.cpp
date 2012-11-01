@@ -11,9 +11,15 @@
 #include "ofxCvColorImage.h"
 #include "ofxCvGrayscaleImage.h"
 #include "ofxCvFloatImage.h"
+#include "cuda.h"
 #include "../../cudaFilter/Amplify/gpu_amplify.h"
 #include "../../cudaFilter/GaussBlurTex/gpu_blur_tex.h"
 #include "../../cudaFilter/BgSub/gpu_sub.h"
+#include "../../cudaFilter/API/gpu_filter_api.h"
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 //--------------------------------------------------------------------------------
 void CPUImageFilter::amplify ( CPUImageFilter& mom, float level ) {
@@ -27,8 +33,9 @@ void CPUImageFilter::amplify ( CPUImageFilter& mom, float level ) {
 
 void CPUImageFilter::cuda_amplify (gpu_context_t *ctx, CPUImageFilter& mom, float level ) {
 	gpu_error_t cudaErr;
-	
-	cudaErr = gpu_amplify( ctx, level);
+	float scalef = level / 128.0f;
+
+	cudaErr = gpu_amplify( ctx, scalef);
 	if (cudaErr != GPU_OK) {
 		GPU_ERROR("Unable to amplify image using CUDA");
 		return;
@@ -62,6 +69,23 @@ void CPUImageFilter::highpass ( float blur1, float blur2 ) {
 void CPUImageFilter::cuda_highpass (gpu_context_t *ctx, float blur1, float blur2)
 {
 	gpu_error_t cudaErr;
+	
+	////////////// calculating kernel //////////////
+	//float sum = 0;
+	//float sig = blur1;
+	//float KERNEL_LENGTH = (2*sig)+1;
+	//float *tempKernel = (float *) malloc(sizeof(float)*KERNEL_LENGTH*2);
+	//float dist = 0;
+ //   for(int i = 0; i <KERNEL_LENGTH*2; i++)
+ //   {
+ //   	dist = (float)i;
+ //   	//tempKernel[i] = expf(- dist * dist / 2); //exponential decay, e^(-dist)
+	//	tempKernel[i] = (1/(sig*sqrtf(2*M_PI)))*(expf(-.5*pow(dist/sig, 2))); //guassian kernel
+ //   	sum += tempKernel[i];
+ //   }
+ //   for(int i = 0; i < KERNEL_LENGTH*2; i++)
+ //       tempKernel[i] /= tempKernel[0];            
+
 
 	//Blur Original Image
 	if(blur1 >= 1) {
@@ -74,12 +98,14 @@ void CPUImageFilter::cuda_highpass (gpu_context_t *ctx, float blur1, float blur2
 	unsigned char *imgdata_ref = (unsigned char *)cvImage->imageData;
 	if (gpu_sub(ctx, imgdata_ref) != GPU_OK)
 		GPU_ERROR("Unable to subtract background for highpass filtering");
+	
 	// Blur Highpass to remove noise
 	if(blur1 >= 1) {
 		if(gpu_blur(ctx, (int)blur2) != GPU_OK){
 			GPU_ERROR("Unable to blur the image");
 		}
 	}
+	
 	// Now get output from the GPU
 	if (gpu_get_output(ctx, &uimage_buffer) != GPU_OK) {
 		GPU_ERROR("Unable to get GPU output buffer after filtering");
@@ -87,7 +113,8 @@ void CPUImageFilter::cuda_highpass (gpu_context_t *ctx, float blur1, float blur2
 	}
 	//cvImageTemp->imageData = static_cast<char *>(uimage_buffer);
 	//cvImageTemp->imageData = (char *)uimage_buffer;
-	memcpy((char *)cvImageTemp->imageData, (void *)uimage_buffer, width*height);
+	
+	memcpy((char *)cvImageTemp->imageData, (char *)uimage_buffer, width*height);
 	swapTemp();
 	flagImageChanged();
 }

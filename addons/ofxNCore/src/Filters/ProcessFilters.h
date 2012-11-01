@@ -137,6 +137,7 @@ void applyCPUFilters(CPUImageFilter& img){
 
 void applyCUDAFilters(gpu_context_t *ctx, CPUImageFilter& img){
     
+
 	//Set Mirroring Horizontal/Vertical
     if(bVerticalMirror || bHorizontalMirror) img.mirror(bVerticalMirror, bHorizontalMirror);
 
@@ -167,8 +168,14 @@ void applyCUDAFilters(gpu_context_t *ctx, CPUImageFilter& img){
 		cvSub(grayBg.getCvImage(), img.getCvImage(), img.getCvImage());
 	else
 		cvSub(img.getCvImage(), grayBg.getCvImage(), img.getCvImage());
-
+	// Need to copy the results to the GPU
+	IplImage *tmp = img.getCvImage(); 
+	if(gpu_set_input( ctx, (unsigned char *)tmp->imageData) != GPU_OK) {
+		GPU_ERROR("Unable to set context buffer");
+		return;
+	}
 	img.flagImageChanged();
+
 
 	
 	if(bSmooth){//Smooth
