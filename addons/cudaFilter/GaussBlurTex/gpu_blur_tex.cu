@@ -137,7 +137,7 @@ gpu_error_t gpu_blur( gpu_context_t *ctx , int KERNEL_RADIUS)
 	error = checkCudaError();
 	
 	////////////// calculating kernel //////////////
-	//float sum = 0;
+	float sum = 0;
 	float sig = 1/3;
 	float dist;
     for(int i = 0; i < KERNEL_LENGTH; i++)
@@ -146,10 +146,10 @@ gpu_error_t gpu_blur( gpu_context_t *ctx , int KERNEL_RADIUS)
     	dist = (float)(i - KERNEL_RADIUS) / (float)KERNEL_RADIUS;
     	tempKernel[i] = expf(- dist * dist / 2); //exponential decay, e^(-dist)
 		//tempKernel[i] = (1/(sig*sqrtf(2*M_PI)))*(expf(-.5*pow(dist/sig, 2))); //guassian kernel
-    	//sum += tempKernel[i];
+    	sum += tempKernel[i];
     }
     for(int i = 0; i < KERNEL_LENGTH; i++)
-        tempKernel[i] /= tempKernel[KERNEL_RADIUS+1];            
+        tempKernel[i] /= tempKernel[0];            
 	cudaMemcpyToSymbol(Kernel, tempKernel, KERNEL_LENGTH * sizeof(float));       
 	////////////////////////////////////////////////
 
