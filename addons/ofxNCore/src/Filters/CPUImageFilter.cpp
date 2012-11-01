@@ -100,7 +100,7 @@ void CPUImageFilter::cuda_highpass (gpu_context_t *ctx, float blur1, float blur2
 		GPU_ERROR("Unable to subtract background for highpass filtering");
 	
 	// Blur Highpass to remove noise
-	if(blur1 >= 1) {
+	if(blur2 >= 1) {
 		if(gpu_blur(ctx, (int)blur2) != GPU_OK){
 			GPU_ERROR("Unable to blur the image");
 		}
