@@ -7,12 +7,9 @@
 #include "cuda_runtime.h"
 #include "assert.h"
 #include "stdio.h"
-#include "math.h"
 
 #define MAD(a, b, c) ( __mul24((a), (b)) + (c) )
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
+
 
 inline int iDivUp(int a, int b){
     return (a % b != 0) ? (a / b + 1) : (a / b);
@@ -111,11 +108,11 @@ gpu_error_t gpu_blur( gpu_context_t *ctx , int KERNEL_RADIUS)
 	assert(KERNEL_RADIUS);
 	gpu_error_t error = GPU_OK;
 
-	//float elapsedtime;
-	//cudaEvent_t start, stop;
-	//cudaEventCreate(&start);
-	//cudaEventCreate(&stop);
-	//cudaEventRecord(start,0);
+	float elapsedtime;
+	cudaEvent_t start, stop;
+	cudaEventCreate(&start);
+	cudaEventCreate(&stop);
+	cudaEventRecord(start,0);
 
 	int KERNEL_LENGTH = (2 * KERNEL_RADIUS + 1);
 	const int imageW = ctx->width;
@@ -138,14 +135,10 @@ gpu_error_t gpu_blur( gpu_context_t *ctx , int KERNEL_RADIUS)
 	
 	////////////// calculating kernel //////////////
 	float sum = 0;
-	float sig = 1/3;
-	float dist;
     for(int i = 0; i < KERNEL_LENGTH; i++)
     {
-		//dist = (float)i - KERNEL_RADIUS;
-    	dist = (float)(i - KERNEL_RADIUS) / (float)KERNEL_RADIUS;
-    	tempKernel[i] = expf(- dist * dist / 2); //exponential decay, e^(-dist)
-		//tempKernel[i] = (1/(sig*sqrtf(2*M_PI)))*(expf(-.5*pow(dist/sig, 2))); //guassian kernel
+    	float dist = (float)(i - KERNEL_RADIUS) / (float)KERNEL_RADIUS;
+    	tempKernel[i] = expf(- dist * dist / 2);
     	sum += tempKernel[i];
     }
     for(int i = 0; i < KERNEL_LENGTH; i++)
@@ -171,11 +164,11 @@ gpu_error_t gpu_blur( gpu_context_t *ctx , int KERNEL_RADIUS)
 	cudaFree(tempOutput);
 	cudaFreeArray(src);
 
-	//cudaEventRecord(stop,0);
-	//cudaEventSynchronize(stop);
-	//cudaEventElapsedTime(&elapsedtime,start,stop);
-	//cudaEventDestroy(start);
-	//cudaEventDestroy(stop);
+	cudaEventRecord(stop,0);
+	cudaEventSynchronize(stop);
+	cudaEventElapsedTime(&elapsedtime,start,stop);
+	cudaEventDestroy(start);
+	cudaEventDestroy(stop);
 	
 	//FILE *file;
 	//file = fopen("../timing.txt","a+");
