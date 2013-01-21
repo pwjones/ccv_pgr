@@ -36,7 +36,7 @@
             </FRAME>
             <SENSOR>
             	<MODE>0</MODE>
-                <DEPTH>3</DEPTH>
+                <DEPTH>1</DEPTH>
                 <FRAMERATE>15</FRAMERATE>
             </SENSOR>
         </SETTINGS>
@@ -82,8 +82,8 @@
         <SETTINGS>
             <TYPE>CMU</TYPE>
             <FRAME>
-                <WIDTH>320</WIDTH>
-                <HEIGHT>240</HEIGHT>
+                <WIDTH>1280</WIDTH>
+                <HEIGHT>1024</HEIGHT>
                 <LEFT>0</LEFT>
                 <TOP>0</TOP>
 		<RAW>0</RAW>

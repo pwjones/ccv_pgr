@@ -11,6 +11,8 @@
 #include "ofxNCoreVision.h"
 #include "../Controls/gui.h"
 #include "API/gpu_filter_api.h"
+#include "FlyCapture2.h"
+#include "ofxFC2MovieWriter.h"
 
 /******************************************************************************
 * The setup function is run once to perform initializations in the application
@@ -65,6 +67,8 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	processedImg.setUseTexture(false);			//We don't need to draw this so don't create a texture
 	sourceImg.allocate(camWidth, camHeight);    //Source Image
 	sourceImg.setUseTexture(false);				//We don't need to draw this so don't create a texture
+	sourceGrayImg.allocate(camWidth, camHeight); //Image that'll be used for video.
+	sourceGrayImg.setUseTexture(false);			//We don't need to draw this so don't create a texture
 
 	//Fiducial Images
 	processedImg_fiducial.allocate(camWidth, camHeight); //main Image that'll be processed.
@@ -136,6 +140,9 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	contourFinder.setTemplateUtils(&templates);
 	tracker.passInFiducialInfo(&fidfinder);
 
+	//Setup the movieWriter to save the incoming video
+	movieWriter = new ofxFC2MovieWriter();
+
 	//CUDA context initialization
 	if ( gpu_context_create(&ctx) != GPU_OK )
 	{
@@ -149,7 +156,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 
 	#ifdef TARGET_WIN32
 		//get rid of the console window
-		FreeConsole();
+		//FreeConsole();
 	#endif
 
 
@@ -466,8 +473,10 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 		else
 		{
 			grabFrameToCPU();
-			//filter->applyCPUFilters( processedImg );
-			filter->applyCUDAFilters(ctx, processedImg );
+			//sourceImg.setFromGrayscalePlanarImages(processedImg, processedImg, processedImg);
+			sourceGrayImg.setFromPixels(processedImg.getPixels(), processedImg.getWidth(), processedImg.getHeight()); //copy that image
+			filter->applyCPUFilters( processedImg );
+			//filter->applyCUDAFilters(ctx, processedImg );
 			contourFinder.findContours(processedImg,  (MIN_BLOB_SIZE * 2) + 1, ((camWidth * camHeight) * .4) * (MAX_BLOB_SIZE * .001), maxBlobs, false);
 			if(contourFinder.bTrackFiducials || bFidtrackInterface)
 			{
@@ -505,9 +514,34 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 		//Sending TUIO messages
 		if (myTUIO.bOSCMode || myTUIO.bTCPMode || myTUIO.bBinaryMode)
 		{
-			//printf("sending data osc : %d TCP : %d binary : %d\n", myTUIO.bOSCMode, myTUIO.bTCPMode, myTUIO.bBinaryMode);
+			printf("sending data osc : %d TCP : %d binary : %d\n", myTUIO.bOSCMode, myTUIO.bTCPMode, myTUIO.bBinaryMode);
 			myTUIO.setMode(contourFinder.bTrackFingers , contourFinder.bTrackObjects, contourFinder.bTrackFiducials);
 			myTUIO.sendTUIO(&getBlobs(),&getObjects(),&fidfinder.fiducialsList);
+		}
+		if (bSaveBgImage) { // This implementation works, but is not ideal because it needs the Flea3 camera, and the
+							// getNewImage method to be public, which it shouldn't be.
+			unsigned char *saveImg = sourceImg.getPixels();
+			ofxFlea3 *cam = (ofxFlea3 *) multiplexerManager->getCameraBase(0);
+			FlyCapture2::Image fcImage = FlyCapture2::Image();
+			cam->getNewFrame(&fcImage);
+			//float h = sourceImg.getHeight(); float w =  sourceImg.getWidth();
+			//FlyCapture2::Image fcImage = FlyCapture2::Image(h, w, w, saveImg, sizeof(w*h*sizeof(unsigned char)), FlyCapture2::PIXEL_FORMAT_MONO8);
+			fcImage.Save("savedBg.jpg");
+			bSaveBgImage = 0;
+		}
+		if (bSaveMovie) { // Do movie saving things - this functionality also needs the FlyCapture2 library
+			if (bSavingMovie) {//then already saving and just want to append
+				movieWriter->writeGrayMovieFrame(sourceGrayImg.getPixels(), sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
+			} else { //start saving the movie
+				movieWriter->init("I:/odor_tracking/temp/tracking", MJPG, 20, sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
+				movieWriter->writeGrayMovieFrame(sourceGrayImg.getPixels(), sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
+				bSavingMovie = 1;
+			}
+		} else {
+			if (bSavingMovie) {
+				movieWriter->closeMovieFile();
+				bSavingMovie = 0;
+			}
 		}
 	}
 }
@@ -534,12 +568,13 @@ void ofxNCoreVision::getPixels()
 				}
 				multiplexer->getStitchedFrame(&w,&h,capturedData);
 				processedImg.setFromPixels(capturedData, camWidth, camHeight);
+				//sourceImg.setFromPixels(capturedData, camWidth, camHeight);
 				if(contourFinder.bTrackFiducials || bFidtrackInterface){processedImg_fiducial.setFromPixels(capturedData, camWidth, camHeight);}
 				// CUDA setup for the frame
-				if(gpu_set_input( ctx, (unsigned char *)capturedData) != GPU_OK) {
-					GPU_ERROR("Unable to set context buffer");
-					return;
-				}	
+				//if(gpu_set_input( ctx, (unsigned char *)capturedData) != GPU_OK) {
+				//	GPU_ERROR("Unable to set context buffer");
+				//	return;
+				//}	
 			}
 		#endif
 	}
@@ -1226,6 +1261,7 @@ void ofxNCoreVision::_exit(ofEventArgs &e)
 	#endif
 	delete vidPlayer; vidPlayer = NULL;
 	delete filter;		filter = NULL;
+	delete movieWriter;
 	// -------------------------------- SAVE STATE ON EXIT
 	printf("Vision module has exited!\n");
 }

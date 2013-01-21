@@ -28,13 +28,14 @@ class ofxFlea3 : ofxCameraBase
 		int getCameraBaseCount();
 		CAMERA_BASE_FEATURE* getSupportedFeatures(int* featuresCount);
 		void callSettingsDialog();
+		// These are supposed to be protected
+		void getNewFrame(Image *newFrame);
+		void getNewFrame(Image *newFrame, TimeStamp *ts);
 	protected:
 		void setCameraType();
 		void cameraInitializationLogic();
 		void cameraDeinitializationLogic();
 		void getNewFrame(unsigned char* newFrame);
-		void getNewFrame(Image *newFrame);
-		void getNewFrame(Image *newFrame, TimeStamp *ts);
     private:
 		Camera cams[_MAX_CAMS];
 		int fcCameraID;

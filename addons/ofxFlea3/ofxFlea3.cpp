@@ -68,7 +68,7 @@ void ofxFlea3::initFlea3(int wid,int hei,int startX,int startY)
 	FC2Config config;
 	//If you want full frame, this should be MODE_0.  If you want full coverage but a smaller image,
 	//it should be MODE_1
-	const Mode k_fmt7Mode = MODE_0; 
+	const Mode k_fmt7Mode = MODE_0;
     const PixelFormat k_fmt7PixFmt = PIXEL_FORMAT_MONO8;
     //Camera *cam;
 	listDevices();
@@ -86,8 +86,7 @@ void ofxFlea3::initFlea3(int wid,int hei,int startX,int startY)
 		// Get and display the camera information
 		CameraInfo camInfo;
 		error = cams[i].GetCameraInfo(&camInfo);
-		if (error != PGRERROR_OK)
-		{
+		if (error != PGRERROR_OK) {
 			PrintError(error);
 			return;
 		}
@@ -141,6 +140,9 @@ void ofxFlea3::initFlea3(int wid,int hei,int startX,int startY)
 			PrintError( error );
 			return;
 		}
+
+		//PrintFormat7Capabilities( fmt7Info );
+
 		Format7ImageSettings fmt7ImageSettings;
 		fmt7ImageSettings.mode = k_fmt7Mode;
 		fmt7ImageSettings.offsetX = startX;

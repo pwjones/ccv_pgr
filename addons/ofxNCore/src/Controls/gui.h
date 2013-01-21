@@ -137,6 +137,9 @@ void ofxNCoreVision::updateMainPanels()
 	controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
 	controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
 	controls->update(appPtr->optionPanel_bin_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bBinaryMode, sizeof(bool));
+	// Log/Save Panel
+	controls->update(appPtr->logPanel_saveBgImage, kofxGui_Set_Bool, &appPtr->bSaveBgImage, sizeof(bool));
+	controls->update(appPtr->logPanel_saveMovie, kofxGui_Set_Bool, &appPtr->bSaveMovie, sizeof(bool));
 	//controls->update(appPtr->optionPanel_win_hid, kofxGui_Set_Bool, &appPtr->bWinTouch, sizeof(bool));
 	//TUIO Height Width
 //	controls->update(appPtr->optionPanel_tuio_height_width, kofxGui_Set_Bool, &appPtr->myTUIO.bHeightWidth, sizeof(bool));
@@ -193,6 +196,13 @@ void ofxNCoreVision::addMainPanels()
 	trackingPanel->addButton(appPtr->trackingPanel_trackObjects, "Objects (j)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	trackingPanel->mObjWidth = 200;
 	trackingPanel->mObjHeight = 95;
+
+	// Saving/Logging
+	ofxGuiPanel* logPanel = controls->addPanel(appPtr->logPanel, "Log/Save", MAIN_PANEL_SECOND_X, 455 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+	logPanel->addButton(appPtr->logPanel_saveBgImage, "Save Bg Image", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
+	logPanel->addButton(appPtr->logPanel_saveMovie, "Save Movie/Log", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
+	logPanel->mObjWidth = 200;
+	logPanel->mObjHeight = 75;
 
 
 	// ---------------------------------- START IO PANELS -----------------------------------------------------------------------------------------
@@ -715,7 +725,15 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 				filter->bVerticalMirror = *(bool*)data;
 				filter_fiducial->bVerticalMirror = *(bool*)data;
 			break;
-
+		// Log/Save Panel
+		case logPanel_saveBgImage:
+			if(length == sizeof(bool))
+				bSaveBgImage=*(bool*)data;
+			break;
+		case logPanel_saveMovie:
+			if(length == sizeof(bool))
+				bSaveMovie=*(bool*)data;
+			break;
 		//Tracking Panel
 		case trackingPanel_trackFingers:
 			if(length == sizeof(bool))

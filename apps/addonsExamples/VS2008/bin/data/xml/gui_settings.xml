@@ -240,8 +240,45 @@
             <VALUE>0</VALUE>
         </OBJECT>
     </OBJECT>
+	<OBJECT>
+        <ID>74</ID>
+        <TYPE>PANEL</TYPE>
+        <NAME>Log/Save</NAME>
+        <LEFT>15.000000</LEFT>
+        <TOP>450.000000</TOP>
+        <WIDTH>98.000000</WIDTH>
+        <HEIGHT>75.000000</HEIGHT>
+        <DISPLAY>2</DISPLAY>
+        <STEPS>0</STEPS>
+        <BORDER>10</BORDER>
+        <SPACING>10</SPACING>
+        <OBJECT>
+            <ID>75</ID>
+            <TYPE>BUTTON</TYPE>
+            <NAME>Save Bg Image</NAME>
+            <LEFT>10.000000</LEFT>
+            <TOP>32.000000</TOP>
+            <WIDTH>10.000000</WIDTH>
+            <HEIGHT>10.000000</HEIGHT>
+            <DISPLAY>2</DISPLAY>
+            <STEPS>0</STEPS>
+            <VALUE>0</VALUE>
+        </OBJECT>
+        <OBJECT>
+            <ID>76</ID>
+            <TYPE>BUTTON</TYPE>
+            <NAME>Save Movie/Log</NAME>
+            <LEFT>10.000000</LEFT>
+            <TOP>52.000000</TOP>
+            <WIDTH>10.000000</WIDTH>
+            <HEIGHT>10.000000</HEIGHT>
+            <DISPLAY>2</DISPLAY>
+            <STEPS>0</STEPS>
+            <VALUE>0</VALUE>
+        </OBJECT>
+	</OBJECT>
     <OBJECT>
-        <ID>15</ID>
+        <ID>70</ID>
         <TYPE>PANEL</TYPE>
         <NAME>Input</NAME>
         <LEFT>251.000000</LEFT>

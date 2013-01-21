@@ -11,6 +11,12 @@
 #define PROCESS_FILTERS_H_
 
 #include "Filters.h"
+//#include "opencv2\gpu\gpu.hpp"
+//#include "arrayfire.h"
+#include <malloc.h>
+
+//using namespace cv;
+//using namespace af;
 
 class ProcessFilters : public Filters {
 
@@ -135,76 +141,170 @@ void applyCPUFilters(CPUImageFilter& img){
 	
 }
 
-void applyCUDAFilters(gpu_context_t *ctx, CPUImageFilter& img){
-    
+// mem layout for gpu
+//void mat_to_array(cv::Mat& input, array& output) 
+//{
+ //   input.convertTo(input, CV_16U); // floating point
+	//
+	//const int asize = input.rows * input.cols;
+	//const int w = input.cols;
+	//const int h = input.rows;
+	//
+	//float *r; float *g; float *b;
+	//size_t bsize = sizeof(float)*asize;
+	//if (bsize > 0 && bsize < 1024) {
+	//	r = (float *)alloca(bsize);
+	//	b = (float *)alloca(bsize);
+	//	g = (float *)alloca(bsize);
+	//} else {
+	//	printf("Tried to allocate too much space on the stack");
+	//	_exit(1);
+	//}
 
-	//Set Mirroring Horizontal/Vertical
-    if(bVerticalMirror || bHorizontalMirror) img.mirror(bVerticalMirror, bHorizontalMirror);
+	////Vector<float> r(asize);
+ //   //Vector<float> g(asize);
+ //   //Vector<float> b(asize);
+ //   int tmp = 0;
+ //   for (unsigned i = 0; i < h; i++) {
+ //       for (unsigned j = 0; j < w; j++) {
+ //           Vec3f ip = input.at<Vec3f>(i, j);
+ //           tmp = j * h + i; // convert to column major
+ //           r[tmp] = ip[2];
+ //           g[tmp] = ip[1];
+ //           b[tmp] = ip[0];
+ //       }
+ //   }
+ //   output = join(2,
+ //                 array(h, w, r),
+ //                 array(h, w, g),
+ //                 array(h, w, b))/255.f; // merge, set range [0-1]
+//}
 
-    if(!bMiniMode) grayImg = img; //for drawing
-    //Dynamic background with learn rate
-    if(bDynamicBG){
-        floatBgImg.addWeighted( img, fLearnRate);
-		//grayBg = floatBgImg;  // not yet implemented
-		 cvConvertScale( floatBgImg.getCvImage(), grayBg.getCvImage(), 255.0f/65535.0f, 0 );       
-		 grayBg.flagImageChanged();
-    }
-
-    //recapature the background until image/camera is fully exposed
-    if((ofGetElapsedTimeMillis() - exposureStartTime) < CAMERA_EXPOSURE_TIME) bLearnBakground = true;
-
-    //Capture full background
-    if (bLearnBakground == true){
-        floatBgImg = img;
-		//grayBg = floatBgImg;  // not yet implemented
-		cvConvertScale( floatBgImg.getCvImage(), grayBg.getCvImage(), 255.0f/65535.0f, 0 );       
-		grayBg.flagImageChanged();
-        bLearnBakground = false;
-    }
-
-	//Background Subtraction
-    //img.absDiff(grayBg, img); 		
-	if(bTrackDark)
-		cvSub(grayBg.getCvImage(), img.getCvImage(), img.getCvImage());
-	else
-		cvSub(img.getCvImage(), grayBg.getCvImage(), img.getCvImage());
-	// Need to copy the results to the GPU
-	IplImage *tmp = img.getCvImage(); 
-	if(gpu_set_input( ctx, (unsigned char *)tmp->imageData) != GPU_OK) {
-		GPU_ERROR("Unable to set context buffer");
-		return;
-	}
-	img.flagImageChanged();
-
-
+// mem layout for gpu - the input is unsigned char, the ouput is floats
+//void greymat_to_array(cv::Mat& input, array& output) 
+//{
+    //input.convertTo(input, CV_16U); // floating point
 	
-	if(bSmooth){//Smooth
-        img.blur((smooth * 2) + 1); //needs to be an odd number
-        if(!bMiniMode)
-        subtractBg = img; //for drawing
-    }
+//	const int asize = input.rows * input.cols;
+//	const int w = input.cols;
+//	const int h = input.rows;
+//	
+//	float *g;
+//	size_t bsize = sizeof(unsigned int)*asize;
+//	g = (float *)malloc(bsize);
+//	
+//    int tmp = 0;
+//    for (unsigned i = 0; i < h; i++) {
+//        for (unsigned j = 0; j < w; j++) {
+//            unsigned char ip = input.at<unsigned char>(i, j);
+//            tmp = j * h + i; // convert to column major
+//            g[tmp] = (float) ip;
+//        }
+//    }
+//   array af_temp(h,w,g);
+//   output = af_temp;
+//   free(g);
+//}
 
-    if(bHighpass){//HighPass
-        img.cuda_highpass(ctx, highpassBlur, highpassNoise);
-        if(!bMiniMode)
-        highpassImg = img; //for drawing
-    }
 
-    if(bAmplify){//Amplify
-        img.cuda_amplify(ctx, img, highpassAmp);
-        if(!bMiniMode)
-        amplifyImg = img; //for drawing
-    }
 
-	if (bDynamicTH)
-		img.adaptiveThreshold(threshold, -threshSize);
-	else
-		img.threshold(threshold); //Threshold
+//void applyCUDAFilters(gpu_context_t *ctx, CPUImageFilter& img){
+//	
+//	//Set Mirroring Horizontal/Vertical
+//    //if(bVerticalMirror || bHorizontalMirror) img.mirror(bVerticalMirror, bHorizontalMirror);
+//
+//    //if(!bMiniMode) grayImg = img; //for drawing
+//    //Dynamic background with learn rate
+//  //  if(bDynamicBG){
+//  //      floatBgImg.addWeighted( img, fLearnRate);
+//		////grayBg = floatBgImg;  // not yet implemented
+//		// cvConvertScale( floatBgImg.getCvImage(), grayBg.getCvImage(), 255.0f/65535.0f, 0 );       
+//		// grayBg.flagImageChanged();
+//  //  }
+//
+//    //recapature the background until image/camera is fully exposed
+//    if((ofGetElapsedTimeMillis() - exposureStartTime) < CAMERA_EXPOSURE_TIME) bLearnBakground = true;
+//
+//    //Capture full background
+//	if (bLearnBakground == true){
+//        floatBgImg = img;
+//		////grayBg = floatBgImg;  // not yet implemented
+//		cvConvertScale( floatBgImg.getCvImage(), grayBg.getCvImage(), 255.0f/65535.0f, 0 );       
+//		grayBg.flagImageChanged();
+//        bLearnBakground = false;
+//    }
+//    
+//	
+//    //gpu::getCudaEnabledDeviceCount();
+//	//gpu::GpuMat *gpu_im = new gpu::GpuMat(img.width, img.height, sizeof(unsigned char));
+//	//gpu_im->upload(temp_im);
+//	
+//	IplImage *imdata = img.getCvImage();
+//	Mat temp_im(imdata);
+//	array af_fg = array(temp_im.cols, temp_im.rows, f32);
+//	greymat_to_array(temp_im, af_fg);
+//	IplImage *bgdata = grayBg.getCvImage();
+//	Mat temp_bg(bgdata);
+//	array af_bg = array(temp_im.cols, temp_im.rows, f32);
+//	greymat_to_array(temp_bg, af_bg);
+//	array af_sub = af_bg;
+//	if(bTrackDark)
+//		array af_sub = af_bg - af_fg;
+//	else
+//		array af_sub = af_fg - af_bg;
+//	// graphics window
+//    figure(0, 0, 1366, 768);
+//    palette("gray");
+//	// image operations
+//	subfigure(1, 2, 1);  af::imgplot(af_fg);	title("source image");
+//	subfigure(1, 2, 2);  af::imgplot(af_sub);   title("Background sub");
+//
+//	//Background Subtraction
+//    //img.absDiff(grayBg, img); 		
+//	//if(bTrackDark)
+//	//	cvSub(grayBg.getCvImage(), img.getCvImage(), img.getCvImage());
+//	//else
+//	//	cvSub(img.getCvImage(), grayBg.getCvImage(), img.getCvImage());
+//	//// Need to copy the results to the GPU
+//	//IplImage *tmp = img.getCvImage(); 
+//	//if(gpu_set_input( ctx, (unsigned char *)tmp->imageData) != GPU_OK) {
+//	//	GPU_ERROR("Unable to set context buffer");
+//	//	return;
+//	//}
+//	img.flagImageChanged();
+//
+//
+//	
+//	if(bSmooth){//Smooth
+//        img.blur((smooth * 2) + 1); //needs to be an odd number
+//        if(!bMiniMode)
+//        subtractBg = img; //for drawing
+//    }
+//
+//    if(bHighpass){//HighPass
+//        img.cuda_highpass(ctx, highpassBlur, highpassNoise);
+//        if(!bMiniMode)
+//        highpassImg = img; //for drawing
+//    }
+//
+//    if(bAmplify){//Amplify
+//        img.cuda_amplify(ctx, img, highpassAmp);
+//        if(!bMiniMode)
+//        amplifyImg = img; //for drawing
+//    }
+//
+//	if (bDynamicTH)
+//		img.adaptiveThreshold(threshold, -threshSize);
+//	else
+//		img.threshold(threshold); //Threshold
+//
+//    if(!bMiniMode)
+//    grayDiff = img; //for drawing
+//	
+//	//delete gpu_im;
+//}
 
-    if(!bMiniMode)
-    grayDiff = img; //for drawing
-	
-}
+
 
 /****************************************************************
  *	GPU Filters

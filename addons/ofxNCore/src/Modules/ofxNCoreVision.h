@@ -25,6 +25,7 @@
 #include "ofxThread.h"
 #include "ofxXmlSettings.h"
 #include "ofxFiducialTracker.h"
+#include "ofxFC2MovieWriter.h"
 
 // Our Addon
 #include "ofxNCore.h"
@@ -149,6 +150,10 @@ class ofxNCoreVision : public ofxGuiListener
 		trackingPanel_trackObjects,
 		trackingPanel_trackFiducials,
 
+		logPanel,   //Panel added for logging and saving tracking data
+		logPanel_saveBgImage,
+		logPanel_saveMovie,
+
 		templatePanel,
 		savePanel,
 		kParameter_SaveXml,
@@ -217,6 +222,9 @@ public:
 		bDrawOutlines = 1;
 		bGPUMode = 0;
 		bTUIOMode = 0;
+		bSaveMovie = 0;
+		bSavingMovie = 0;
+		bSaveBgImage = 0;
 		bFidMode = 0;
 		bMulticamDialog = false;
 		showConfiguration = 0;
@@ -346,6 +354,9 @@ public:
 	bool				bShowPressure;
 	bool				bDrawOutlines;
 	bool				bTUIOMode;
+	bool				bSaveBgImage;
+	bool				bSaveMovie;
+	bool				bSavingMovie;
 	bool  				bFullscreen;
 	bool 				bCalibration;
 	bool				bShowLabels;
@@ -437,6 +448,7 @@ public:
 	Filters*			filter;
 	CPUImageFilter      processedImg;
 	ofxCvColorImage		sourceImg;
+	CPUImageFilter		sourceGrayImg;
 
 	//XML Settings Vars
 	ofxXmlSettings		XML;
@@ -455,6 +467,7 @@ public:
 	struct tm *			timeinfo;
 	char				fileName [80];
 	FILE *				stream;
+	ofxFC2MovieWriter *	movieWriter;
 
 	void				removeMainPanels();
 	void				removeMulticameraPanels();

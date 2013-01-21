@@ -5,8 +5,8 @@
             <TYPE>DIRECTSHOW</TYPE>
             <FRAME>
                 <RAW>0</RAW>
-                <WIDTH>320</WIDTH>
-                <HEIGHT>240</HEIGHT>
+                <WIDTH>1280</WIDTH>
+                <HEIGHT>1024</HEIGHT>
                 <LEFT>0</LEFT>
                 <TOP>0</TOP>
             </FRAME>
@@ -45,7 +45,7 @@
                     <VALUE>0</VALUE>
                     <AUTO>1</AUTO>
                 </EXPOSURE>
-                <FRAMERATE>15</FRAMERATE>
+                <FRAMERATE>60</FRAMERATE>
             </SENSOR>
         </SETTINGS>
     </CAMERA>

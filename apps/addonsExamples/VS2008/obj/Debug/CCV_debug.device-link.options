@@ -1,2 +1,5 @@
 "obj\Debug/gpu_filter_api.cu.obj" 
 "obj\Debug/gpu_blur_tex.cu.obj" 
+"obj\Debug/gpu_sub.cu.obj" 
+"obj\Debug/gpu_grayscale.cu.obj" 
+"obj\Debug/gpu_amplify.cu.obj" 

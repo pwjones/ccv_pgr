@@ -19,11 +19,9 @@
 #define CAMERA_EXPOSURE_TIME  2200.0f
 
 class Filters {
-  
 	public:
 
 	  Filters(){
-
 		camWidth = 320;
 		camHeight = 240;
 		exposureStartTime = CAMERA_EXPOSURE_TIME;
@@ -80,7 +78,7 @@ class Filters {
 	bool bMiniMode;
 	unsigned int backHistogram[256];
 
-		TiledBernsenThresholder *thresholder;
+	TiledBernsenThresholder *thresholder;
 	int fiducialThreshold;
 	bool thresoldRemoveBackround;
 	unsigned char* data;
@@ -117,7 +115,7 @@ class Filters {
     virtual void applyCPUFilters(CPUImageFilter& img) = 0;
     virtual void draw() = 0;
 	// This is for the CUDA extension
-	virtual void applyCUDAFilters(gpu_context_t *ctx, CPUImageFilter& img) = 0;
+	//virtual void applyCUDAFilters(gpu_context_t *ctx, CPUImageFilter& img) = 0;
 
     virtual void allocateGPU() = 0;
     virtual void applyGPUFilters() = 0;

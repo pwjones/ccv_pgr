@@ -132,7 +132,7 @@ protected:
 	unsigned char* cameraFrame;
 	unsigned char* rawCameraFrame;
 	ofxCameraBaseSettings* cameraBaseSettings;
-	ofxTimeStamp timestamp;
+	ofxTimeStamp timestamp; //This is the timestamp struct of the current frame
 };
 
 #endif // OFX_CAMERABASE_H
