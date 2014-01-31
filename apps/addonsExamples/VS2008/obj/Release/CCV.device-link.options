@@ -1,2 +1,5 @@
 "obj\Release/gpu_filter_api.cu.obj" 
 "obj\Release/gpu_blur_tex.cu.obj" 
+"obj\Release/gpu_sub.cu.obj" 
+"obj\Release/gpu_grayscale.cu.obj" 
+"obj\Release/gpu_amplify.cu.obj" 

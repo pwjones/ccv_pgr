@@ -1,4 +1,4 @@
-﻿#ifndef __TOUCHLIB_RECT2D__
+#ifndef __TOUCHLIB_RECT2D__
 #define __TOUCHLIB_RECT2D__
 
 #include "vector2d.h"

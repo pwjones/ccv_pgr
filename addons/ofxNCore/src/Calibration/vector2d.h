@@ -1,4 +1,4 @@
-﻿#ifndef __TOUCHLIB_VECTOR2D__
+#ifndef __TOUCHLIB_VECTOR2D__
 #define __TOUCHLIB_VECTOR2D__
 
 
