@@ -1,0 +1,56 @@
+diff a/apps/addonsExamples/VS2008/bin/data/xml/app_settings.xml b/apps/addonsExamples/VS2008/bin/data/xml/app_settings.xml	(rejected hunks)
+@@ -42,22 +57,24 @@
+         <HEIGHT>600</HEIGHT>
+     </WINDOW>
+     <BOOLEAN>
+-        <PRESSURE>205</PRESSURE>
++        <PRESSURE>176</PRESSURE>
+         <LABELS>1</LABELS>
+         <OUTLINES>1</OUTLINES>
+         <LEARNBG>0</LEARNBG>
+         <TUIO>1</TUIO>
+         <WINTOUCH>0</WINTOUCH>
++        <!-- WINTOUCH is not activly available. -->
+         <VMIRROR>0</VMIRROR>
+         <HMIRROR>0</HMIRROR>
+         <HIGHPASS>1</HIGHPASS>
+         <AMPLIFY>1</AMPLIFY>
+         <SMOOTH>0</SMOOTH>
+         <GPU>0</GPU>
++        <!-- GPU is not activly availale. -->
+         <DYNAMICBG>0</DYNAMICBG>
+         <DYNAMICTH>0</DYNAMICTH>
+         <SNAPSHOT>0</SNAPSHOT>
+-        <MINIMODE>0</MINIMODE>
++        <MINIMODE>1</MINIMODE>
+         <HEIGHTWIDTH>0</HEIGHTWIDTH>
+         <OSCMODE>1</OSCMODE>
+         <TCPMODE>0</TCPMODE>
+@@ -69,20 +86,20 @@
+     </BOOLEAN>
+     <INT>
+         <MINMOVEMENT>0</MINMOVEMENT>
+-        <MINBLOBSIZE>11</MINBLOBSIZE>
+-        <MAXBLOBSIZE>108</MAXBLOBSIZE>
++        <MINBLOBSIZE>1</MINBLOBSIZE>
++        <MAXBLOBSIZE>93</MAXBLOBSIZE>
+         <BGLEARNRATE>73.690910</BGLEARNRATE>
+         <THRESHOLD>69</THRESHOLD>
+         <HIGHPASSBLUR>9</HIGHPASSBLUR>
+-        <HIGHPASSNOISE>9</HIGHPASSNOISE>
+-        <HIGHPASSAMP>182</HIGHPASSAMP>
+-        <SMOOTH>1</SMOOTH>
++        <HIGHPASSNOISE>2</HIGHPASSNOISE>
++        <HIGHPASSAMP>13</HIGHPASSAMP>
++        <SMOOTH>5</SMOOTH>
+         <MINTEMPAREA>0</MINTEMPAREA>
+         <MAXTEMPAREA>0</MAXTEMPAREA>
+         <THRESHOLDSIZE>7</THRESHOLDSIZE>
+     </INT>
+     <FIDUCIAL>
+-        <TILE>20</TILE>
+-        <THRESHOLD>72</THRESHOLD>
++        <TILE>21</TILE>
++        <THRESHOLD>21</THRESHOLD>
+     </FIDUCIAL>
+ </CONFIG>

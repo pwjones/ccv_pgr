@@ -229,7 +229,7 @@ public:
 		bMulticamDialog = false;
 		showConfiguration = 0;
 		//camera
-		camRate = 30;
+		camRate = 60;
 		camWidth = 320;
 		camHeight = 240;
 		//ints/floats
