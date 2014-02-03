@@ -10,7 +10,7 @@
 
 #include "ofxNCoreVision.h"
 #include "../Controls/gui.h"
-#include "API/gpu_filter_api.h"
+// #include "API/gpu_filter_api.h"
 #include "FlyCapture2.h"
 #include "ofxFC2MovieWriter.h"
 
@@ -143,6 +143,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	//Setup the movieWriter to save the incoming video
 	movieWriter = new ofxFC2MovieWriter();
 
+	/*
 	//CUDA context initialization
 	if ( gpu_context_create(&ctx) != GPU_OK )
 	{
@@ -153,6 +154,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 		GPU_ERROR("Unable to initialize GPU context");
 		//break;
 	}
+	*/
 
 	#ifdef TARGET_WIN32
 		//get rid of the console window

@@ -11,11 +11,15 @@
 #include "ofxCvColorImage.h"
 #include "ofxCvGrayscaleImage.h"
 #include "ofxCvFloatImage.h"
+
+/* 
+// These are the CUDA libraries needed
 #include "cuda.h"
 #include "../../cudaFilter/Amplify/gpu_amplify.h"
 #include "../../cudaFilter/GaussBlurTex/gpu_blur_tex.h"
 #include "../../cudaFilter/BgSub/gpu_sub.h"
 #include "../../cudaFilter/API/gpu_filter_api.h"
+*/
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -31,6 +35,7 @@ void CPUImageFilter::amplify ( CPUImageFilter& mom, float level ) {
 	flagImageChanged();
 }
 
+/*
 void CPUImageFilter::cuda_amplify (gpu_context_t *ctx, CPUImageFilter& mom, float level ) {
 	gpu_error_t cudaErr;
 	float scalef = level / 128.0f;
@@ -49,6 +54,8 @@ void CPUImageFilter::cuda_amplify (gpu_context_t *ctx, CPUImageFilter& mom, floa
 	swapTemp();
 	flagImageChanged();
 }
+*/
+
 void CPUImageFilter::highpass ( float blur1, float blur2 ) {
 	
 	//Blur Original Image
@@ -66,6 +73,7 @@ void CPUImageFilter::highpass ( float blur1, float blur2 ) {
 	flagImageChanged();
 }
 
+/*
 void CPUImageFilter::cuda_highpass (gpu_context_t *ctx, float blur1, float blur2)
 {
 	gpu_error_t cudaErr;
@@ -118,6 +126,7 @@ void CPUImageFilter::cuda_highpass (gpu_context_t *ctx, float blur1, float blur2
 	swapTemp();
 	flagImageChanged();
 }
+*/
 
 //--------------------------------------------------------------------------------
 void CPUImageFilter::operator =	( unsigned char* _pixels ) {

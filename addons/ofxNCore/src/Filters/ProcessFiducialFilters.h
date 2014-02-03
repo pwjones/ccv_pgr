@@ -65,10 +65,12 @@ class ProcessFiducialFilters : public Filters {
    		if (showProcessedFrame)
 			if(!bMiniMode)	grayDiff = img; //for drawing
     }
-    void applyCUDAFilters(gpu_context_t *ctx, CPUImageFilter& img)
+/* 
+	void applyCUDAFilters(gpu_context_t *ctx, CPUImageFilter& img)
 	{
 		applyCPUFilters(img);
 	}
+*/
 	void updateSettings()
 	{
 		if (thresholder!=NULL)

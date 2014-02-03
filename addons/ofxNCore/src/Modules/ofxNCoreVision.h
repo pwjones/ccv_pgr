@@ -229,7 +229,7 @@ public:
 		bMulticamDialog = false;
 		showConfiguration = 0;
 		//camera
-		camRate = 60;
+		camRate = 90;
 		camWidth = 320;
 		camHeight = 240;
 		//ints/floats
@@ -483,8 +483,10 @@ public:
 	float draggingXOffset;
 	float draggingYOffset;
 	int rawCamId;
+	
+	/*
 	// CUDA variables
 	gpu_context_t *ctx;
-
+	*/
 };
 #endif
