@@ -304,6 +304,20 @@ void ofxNCoreVision::addMainPanels()
 		panel2x->adjustToNewContent(120, 0);
 	}
 
+	//Save file selections
+	ofxGuiPanel* savePanel1 = controls->addPanel(appPtr->saveFilePanel, "Saving", MAIN_FILTERS_X+MAIN_FILTERS_W*0, 570, OFXGUI_PANEL_BORDER, 7);
+	//char *home = 
+	string logLabel = "Log File: ";
+	logLabel.append(logFileName);
+	savePanel1->addButton(saveFilePanel_logFileName, logLabel, OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger);
+	logLabel = "Saved Movie: ";
+	logLabel.append(savedMovieFileName);
+	savePanel1->addButton(saveFilePanel_movieFileName, logLabel, OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger);
+	//savePanel1->addButton(backgroundPanel_dynamic, "Dynamic Subtract", 10, 10, kofxGui_Button_Off, kofxGui_Button_Switch);
+	//savePanel1->addSlider(appPtr->backgroundPanel_learn_rate, "Subtract Speed", MAIN_FILTERS_Z, 13, 1.0f, 2000.0f, backgroundLearnRate, kofxGui_Display_Int, 0);
+	savePanel1->mObjWidth = 256;
+	savePanel1->mObjHeight = 95;
+
 //----------------------------------------------
 	updateMainPanels();
 //	controls->forceUpdate(false);

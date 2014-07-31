@@ -188,6 +188,10 @@ class ofxNCoreVision : public ofxGuiListener
 
 		dragging_image,
 
+		saveFilePanel,
+		saveFilePanel_movieFileName,
+		saveFilePanel_logFileName
+
 	};
 
 public:
@@ -367,6 +371,9 @@ public:
 	bool				bAutoBackground;
 	//modes
 	bool				bGPUMode;
+	// Saved data
+	string				logFileName;
+	string				savedMovieFileName;
 
 	//Area slider variables
 	int					minTempArea;

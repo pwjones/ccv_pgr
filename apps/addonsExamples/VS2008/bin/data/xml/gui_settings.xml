@@ -69,7 +69,7 @@
         </OBJECT>
     </OBJECT>
     <OBJECT>
-        <ID>53</ID>
+        <ID>56</ID>
         <TYPE>PANEL</TYPE>
         <NAME>Settings</NAME>
         <LEFT>15.000000</LEFT>
@@ -81,7 +81,7 @@
         <BORDER>10</BORDER>
         <SPACING>10</SPACING>
         <OBJECT>
-            <ID>54</ID>
+            <ID>57</ID>
             <TYPE>BUTTON</TYPE>
             <NAME>Save (s)</NAME>
             <LEFT>10.000000</LEFT>
@@ -93,7 +93,7 @@
             <VALUE>0</VALUE>
         </OBJECT>
         <OBJECT>
-            <ID>73</ID>
+            <ID>76</ID>
             <TYPE>BUTTON</TYPE>
             <NAME>Fiducial settings (m)</NAME>
             <LEFT>10.000000</LEFT>
@@ -139,7 +139,7 @@
             <HEIGHT>10.000000</HEIGHT>
             <DISPLAY>2</DISPLAY>
             <STEPS>0</STEPS>
-            <VALUE>0</VALUE>
+            <VALUE>1</VALUE>
         </OBJECT>
         <OBJECT>
             <ID>7</ID>
@@ -240,20 +240,20 @@
             <VALUE>0</VALUE>
         </OBJECT>
     </OBJECT>
-	<OBJECT>
-        <ID>74</ID>
+    <OBJECT>
+        <ID>52</ID>
         <TYPE>PANEL</TYPE>
         <NAME>Log/Save</NAME>
         <LEFT>15.000000</LEFT>
-        <TOP>450.000000</TOP>
-        <WIDTH>98.000000</WIDTH>
-        <HEIGHT>75.000000</HEIGHT>
+        <TOP>455.000000</TOP>
+        <WIDTH>118.000000</WIDTH>
+        <HEIGHT>62.000000</HEIGHT>
         <DISPLAY>2</DISPLAY>
         <STEPS>0</STEPS>
         <BORDER>10</BORDER>
         <SPACING>10</SPACING>
         <OBJECT>
-            <ID>75</ID>
+            <ID>53</ID>
             <TYPE>BUTTON</TYPE>
             <NAME>Save Bg Image</NAME>
             <LEFT>10.000000</LEFT>
@@ -265,7 +265,7 @@
             <VALUE>0</VALUE>
         </OBJECT>
         <OBJECT>
-            <ID>76</ID>
+            <ID>54</ID>
             <TYPE>BUTTON</TYPE>
             <NAME>Save Movie/Log</NAME>
             <LEFT>10.000000</LEFT>
@@ -276,9 +276,9 @@
             <STEPS>0</STEPS>
             <VALUE>0</VALUE>
         </OBJECT>
-	</OBJECT>
+    </OBJECT>
     <OBJECT>
-        <ID>70</ID>
+        <ID>15</ID>
         <TYPE>PANEL</TYPE>
         <NAME>Input</NAME>
         <LEFT>251.000000</LEFT>
@@ -325,7 +325,7 @@
             <STEPS>0</STEPS>
             <MIN>1.000000</MIN>
             <MAX>500.000000</MAX>
-            <VALUE>22.000000</VALUE>
+            <VALUE>1.000000</VALUE>
         </OBJECT>
         <OBJECT>
             <ID>40</ID>
@@ -339,7 +339,7 @@
             <STEPS>0</STEPS>
             <MIN>1.000000</MIN>
             <MAX>1000.000000</MAX>
-            <VALUE>807.000000</VALUE>
+            <VALUE>93.000000</VALUE>
         </OBJECT>
     </OBJECT>
     <OBJECT>
@@ -378,7 +378,7 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>255.000000</MAX>
-            <VALUE>189.000000</VALUE>
+            <VALUE>100.000000</VALUE>
         </OBJECT>
         <OBJECT>
             <ID>38</ID>
@@ -392,7 +392,7 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>15.000000</MAX>
-            <VALUE>0.000000</VALUE>
+            <VALUE>3.000000</VALUE>
         </OBJECT>
         <OBJECT>
             <ID>37</ID>
@@ -480,7 +480,7 @@
             <HEIGHT>12.000000</HEIGHT>
             <DISPLAY>2</DISPLAY>
             <STEPS>0</STEPS>
-            <VALUE>1</VALUE>
+            <VALUE>0</VALUE>
         </OBJECT>
         <OBJECT>
             <ID>25</ID>
@@ -519,7 +519,7 @@
             <HEIGHT>12.000000</HEIGHT>
             <DISPLAY>2</DISPLAY>
             <STEPS>0</STEPS>
-            <VALUE>1</VALUE>
+            <VALUE>0</VALUE>
         </OBJECT>
         <OBJECT>
             <ID>31</ID>
@@ -533,7 +533,7 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>200.000000</MAX>
-            <VALUE>29.000000</VALUE>
+            <VALUE>9.000000</VALUE>
         </OBJECT>
         <OBJECT>
             <ID>32</ID>
@@ -572,7 +572,7 @@
             <HEIGHT>12.000000</HEIGHT>
             <DISPLAY>2</DISPLAY>
             <STEPS>0</STEPS>
-            <VALUE>1</VALUE>
+            <VALUE>0</VALUE>
         </OBJECT>
         <OBJECT>
             <ID>28</ID>
@@ -586,7 +586,7 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>300.000000</MAX>
-            <VALUE>190.000000</VALUE>
+            <VALUE>13.000000</VALUE>
         </OBJECT>
     </OBJECT>
 </UI>

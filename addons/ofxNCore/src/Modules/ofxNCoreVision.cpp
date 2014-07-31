@@ -203,6 +203,8 @@ void ofxNCoreVision::loadXMLSettings()
 	if (XML.getValue("CONFIG:MULTIPLEXER:CAMERATYPES:FLEA", 0))
 		supportedCameraTypes.push_back(FLEA);
 	videoFileName				= XML.getValue("CONFIG:VIDEO:FILENAME", "test_videos/RearDI.m4v");
+	savedMovieFileName			= XML.getValue("CONFIG:VIDEO:SAVEDFILENAME", "output/video.avi");
+	logFileName					= XML.getValue("CONFIG:VIDEO:LOGFILENAME", "output/trackingLog.txt");
 	bcamera						= XML.getValue("CONFIG:SOURCE","VIDEO") == "MULTIPLEXER";
 	maxBlobs					= XML.getValue("CONFIG:BLOBS:MAXNUMBER", 20);
 	bShowLabels					= XML.getValue("CONFIG:BOOLEAN:LABELS",0);
@@ -522,6 +524,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 		}
 		if (bSaveBgImage) { // This implementation works, but is not ideal because it needs the Flea3 camera, and the
 							// getNewImage method to be public, which it shouldn't be.
+			printf("Printing bgImage\n");
 			unsigned char *saveImg = sourceImg.getPixels();
 			ofxFlea3 *cam = (ofxFlea3 *) multiplexerManager->getCameraBase(0);
 			FlyCapture2::Image fcImage = FlyCapture2::Image();
@@ -530,12 +533,14 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			//FlyCapture2::Image fcImage = FlyCapture2::Image(h, w, w, saveImg, sizeof(w*h*sizeof(unsigned char)), FlyCapture2::PIXEL_FORMAT_MONO8);
 			fcImage.Save("savedBg.jpg");
 			bSaveBgImage = 0;
+
 		}
 		if (bSaveMovie) { // Do movie saving things - this functionality also needs the FlyCapture2 library
 			if (bSavingMovie) {//then already saving and just want to append
 				movieWriter->writeGrayMovieFrame(sourceGrayImg.getPixels(), sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
 			} else { //start saving the movie
-				movieWriter->init("I:/odor_tracking/temp/tracking", MJPG, 20, sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
+				printf("Trying to initialize the movie saving");
+				movieWriter->init("F:/Data/ccv_movies/mov", MJPG, 20, sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
 				movieWriter->writeGrayMovieFrame(sourceGrayImg.getPixels(), sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
 				bSavingMovie = 1;
 			}
