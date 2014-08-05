@@ -540,8 +540,9 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			if (bSavingMovie) {//then already saving and just want to append
 				movieWriter->writeGrayMovieFrame(sourceGrayImg.getPixels(), sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
 			} else { //start saving the movie
-				printf("Trying to initialize the movie saving");
-				movieWriter->init("F:/Data/ccv_movies/mov", MJPG, 20, sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
+				//printf("Trying to initialize the movie saving\n");
+				//movieWriter->init("F:/Data/ccv_movies/mov", MJPG, fps, sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
+				movieWriter->init(savedMovieFileName.c_str(), MJPG, fps, sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
 				movieWriter->writeGrayMovieFrame(sourceGrayImg.getPixels(), sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
 				bSavingMovie = 1;
 			}
@@ -569,18 +570,20 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			} else { // open up the file and start saving 
 				const char *logfn_base = logFileName.c_str();
 				char logfn[100];
-				char timestr[80];
+				char *timestr;
 				//time(&rawtime);
 				rawtime = time(NULL);
 				timeinfo = localtime(&rawtime);
-				strftime(timestr,80,"%Y-%m-%d-%H%M%S",timeinfo);
-				sprintf(logfn, "%s_%s.txt", logfn_base, timestr); 
+				//strftime(timestr,80,"%Y-%m-%d-%H%M%S",timeinfo);
+				timestr = ofxNCoreVision::makeFormattedTimestamp();
+				sprintf(logfn, "%s_%s.txt", logfn_base, timestr);
 				logFile.open(logfn, ios::out);
 				if (logFile.fail()) {
 					printf("Failed opening the log file: %s\n", logfn);
 				} else {
 					printf("Succeeded opening the log file: %s\n", logfn);
 				}
+				free(timestr);
 			}
 		} else {
 			if (logFile.is_open()) {
@@ -1354,3 +1357,14 @@ void ofxNCoreVision::updateCalibrationGridSize( int x, int y )
 		multiplexerManager->setCalibratonGridSize( x, y );
 }
 
+char * ofxNCoreVision::makeFormattedTimestamp()
+{
+time_t				lrawtime;
+struct tm *			ltimeinfo;
+char *timestr = (char *)malloc(sizeof(char)*80);
+
+lrawtime = time(NULL);
+ltimeinfo = localtime(&lrawtime);
+strftime(timestr,80,"%Y-%m-%d-%H%M%S",ltimeinfo);
+return(timestr);
+}

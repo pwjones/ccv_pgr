@@ -224,6 +224,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\addons\ofxLogFileWriter\ofxLogFileWriter.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\testApp.cpp"
 				>
 			</File>
@@ -1111,6 +1115,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="ofxEdgeDetector"
+				>
+				<File
+					RelativePath="..\..\..\addons\ofxEdgeDetector\ofxEdgeDetector.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\addons\ofxEdgeDetector\ofxEdgeDetector.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="res"
@@ -1134,10 +1150,6 @@
 		</File>
 		<File
 			RelativePath=".\ClassDiagram2.cd"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\addons\ofxLogFileWriter\ofxLogFileWriter.h"
 			>
 		</File>
 	</Files>

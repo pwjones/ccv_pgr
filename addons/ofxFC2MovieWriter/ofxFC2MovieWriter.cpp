@@ -6,11 +6,13 @@
 #include <vector>
 #include <stdlib.h>
 #include <io.h>
+#include <time.h>
 
 using namespace FlyCapture2;
 
 // Some functions that are to just be used here
 bool fileExists(const char *filename);
+//char *makeFormattedTimestamp();
 
 ofxFC2MovieWriter::ofxFC2MovieWriter()
 {
@@ -20,25 +22,19 @@ ofxFC2MovieWriter::ofxFC2MovieWriter()
 
 void ofxFC2MovieWriter::init(string fileNameBase, AviType aviType, float frameRate, int width, int height)
 {
-	char temp_str[25];
+	char *timeStr;
 	int version = 0;
 	size_t strLen = fileNameBase.length();
-	string ext = "-0000.avi";
-
-	// The filewriter generates some annoying filenames - check for existing files
+	string ext = ".avi";
 	string endstr, tempName;
-	do {
-		version++;
-		sprintf(temp_str, "%d", version);
-		endstr = temp_str;
-		tempName = fileNameBase;
-		tempName.append(endstr);
-		tempName.append(ext);
-	} while ( fileExists(tempName.c_str()) );
+	
+	// Generate a filename consisting of the fileNameBase and a timestamp
+	timeStr = makeFormattedTimestamp();
 	tempName = fileNameBase;
-	tempName.append(endstr);
+	tempName.append(timeStr);
+	tempName.append(ext);
 	aviFileName = tempName;
-
+	printf("Trying to open file: %s", aviFileName.c_str());
 	switch (aviType)
     {
     case UNCOMPRESSED:
@@ -108,6 +104,16 @@ ofxFC2MovieWriter::~ofxFC2MovieWriter()
 	}
 }
 
+char *ofxFC2MovieWriter::makeFormattedTimestamp()
+{
+char *timestr = (char *)malloc(sizeof(char)*80);
+
+rawtime = time(NULL);
+timeinfo = localtime(&rawtime);
+strftime(timestr,80,"%Y-%m-%d-%H%M%S",timeinfo);
+return(timestr);
+}
+
 bool fileExists(const char *filename)
 {
 	/* Check for existence */
@@ -121,3 +127,4 @@ bool fileExists(const char *filename)
 	   return 0;
    }
 }
+

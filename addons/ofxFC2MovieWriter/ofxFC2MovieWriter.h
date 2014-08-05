@@ -30,6 +30,9 @@ class ofxFC2MovieWriter
 		Error error;
 		AVIRecorder *movRecorder;
 		bool fileOpen;
+		time_t rawtime;
+		struct tm *timeinfo;
+		char *makeFormattedTimestamp();
 
 };
 

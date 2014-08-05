@@ -322,9 +322,9 @@ public:
 	std::map<int, Blob> getBlobs();
 	std::map<int, Blob> getObjects();
 	unsigned char* capturedData;
-
+	// Misc
 	void updateMainPanels();
-
+	static char *makeFormattedTimestamp();
 	/***************************************************************
 	 *					Video Capture Devices
 	 ***************************************************************/
