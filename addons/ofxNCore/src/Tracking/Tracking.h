@@ -31,10 +31,10 @@ public:
 	void doFiducialCalculation();
 	void setCameraSize(int width,int height);
 	ofxFiducialTracker*	fidfinder;
-
 	CalibrationUtils* calibrate;
 	bool isCalibrating;
 	int MOVEMENT_FILTERING;
+	std::vector<Blob>		trackedBlobs; //tracked blobs
 	std::map<int, Blob> getTrackedBlobs();
 	std::map<int, Blob> getTrackedObjects();
 
@@ -43,9 +43,8 @@ private:
 	int trackKnn(ContourFinder *newBlobs, Blob *track, int k, double thresh);
 	int						IDCounter;	  //counter of last blob
 	int						fightMongrel;
-	std::vector<Blob>		trackedBlobs; //tracked blobs
+	
 	std::map<int, Blob>     calibratedBlobs;
-
 	std::map<int,Blob>		trackedObjects;
 	std::map<int, Blob>		calibratedObjects;
 };

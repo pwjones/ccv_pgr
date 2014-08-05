@@ -16,6 +16,7 @@
 #ifdef TARGET_WIN32
 	#include "ofxMultiplexerManager.h"
 	#include "ofxMultiplexer.h"
+	#include <time.h>
 #endif
 #include "ofxOpenCv.h"
 #include "ofxDirList.h"
@@ -232,6 +233,7 @@ public:
 		bFidMode = 0;
 		bMulticamDialog = false;
 		showConfiguration = 0;
+		bSavingLog = 0;
 		//camera
 		camRate = 90;
 		camWidth = 320;
@@ -361,6 +363,7 @@ public:
 	bool				bSaveBgImage;
 	bool				bSaveMovie;
 	bool				bSavingMovie;
+	bool				bSavingLog;
 	bool  				bFullscreen;
 	bool 				bCalibration;
 	bool				bShowLabels;
@@ -475,6 +478,7 @@ public:
 	char				fileName [80];
 	FILE *				stream;
 	ofxFC2MovieWriter *	movieWriter;
+	ofstream			logFile;
 
 	void				removeMainPanels();
 	void				removeMulticameraPanels();

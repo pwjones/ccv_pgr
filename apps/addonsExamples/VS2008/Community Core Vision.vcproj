@@ -220,6 +220,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\addons\ofxLogFileWriter\ofxLogFileWriter.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\testApp.cpp"
 				>
 			</File>
@@ -825,6 +829,10 @@
 						Name="Tracking"
 						>
 						<File
+							RelativePath="..\..\..\addons\ofxNCore\src\Tracking\blob.cpp"
+							>
+						</File>
+						<File
 							RelativePath="..\..\..\addons\ofxNCore\src\Tracking\Blob.h"
 							>
 						</File>
@@ -1126,6 +1134,10 @@
 		</File>
 		<File
 			RelativePath=".\ClassDiagram2.cd"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\addons\ofxLogFileWriter\ofxLogFileWriter.h"
 			>
 		</File>
 	</Files>

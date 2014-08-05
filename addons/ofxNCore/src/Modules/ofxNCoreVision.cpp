@@ -203,8 +203,8 @@ void ofxNCoreVision::loadXMLSettings()
 	if (XML.getValue("CONFIG:MULTIPLEXER:CAMERATYPES:FLEA", 0))
 		supportedCameraTypes.push_back(FLEA);
 	videoFileName				= XML.getValue("CONFIG:VIDEO:FILENAME", "test_videos/RearDI.m4v");
-	savedMovieFileName			= XML.getValue("CONFIG:VIDEO:SAVEDFILENAME", "output/video.avi");
-	logFileName					= XML.getValue("CONFIG:VIDEO:LOGFILENAME", "output/trackingLog.txt");
+	savedMovieFileName			= XML.getValue("CONFIG:VIDEO:SAVEDFILENAME", "data/output/video");
+	logFileName					= XML.getValue("CONFIG:VIDEO:LOGFILENAME", "data/output/trackingLog");
 	bcamera						= XML.getValue("CONFIG:SOURCE","VIDEO") == "MULTIPLEXER";
 	maxBlobs					= XML.getValue("CONFIG:BLOBS:MAXNUMBER", 20);
 	bShowLabels					= XML.getValue("CONFIG:BOOLEAN:LABELS",0);
@@ -413,6 +413,7 @@ void ofxNCoreVision::initDevice()
 *****************************************************************************/
 void ofxNCoreVision::_update(ofEventArgs &e)
 {
+	int ii;
 	if(debugMode) if((stream = freopen(fileName, "a", stdout)) == NULL){}
 
 	bNewFrame = false;
@@ -451,12 +452,12 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 
 		// Calculate FPS of Camera
 		frames++;
-		float time = ofGetElapsedTimeMillis();
-		if (time > (lastFPSlog + 1000))
+		float etime = ofGetElapsedTimeMillis();
+		if (etime > (lastFPSlog + 1000))
 		{
 			fps = frames;
 			frames = 0;
-			lastFPSlog = time;
+			lastFPSlog = etime;
 		}//End calculation
 
 		float beforeTime = ofGetElapsedTimeMillis();
@@ -548,6 +549,43 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			if (bSavingMovie) {
 				movieWriter->closeMovieFile();
 				bSavingMovie = 0;
+			}
+		}
+		if (bSavingLog) { // This is writing the blob info directly to a log file.
+			if (logFile.is_open()) {
+				//printf("The log file is open\n");
+				string blobStr;
+				char tstr[50], headStr[100];
+				// Do file saving stuff
+				sprintf(headStr, "Areas: %d\n", tracker.trackedBlobs.size());
+				logFile << headStr;
+				for (ii=0; ii<tracker.trackedBlobs.size(); ii++) {
+					blobStr = tracker.trackedBlobs[ii].print();
+					sprintf(tstr, "%0.2f", tracker.trackedBlobs[ii].lastTimeTimeWasChecked);
+					printf(blobStr.c_str());
+					logFile << "t:" << tstr << " " << blobStr << "\n";
+				}
+				
+			} else { // open up the file and start saving 
+				const char *logfn_base = logFileName.c_str();
+				char logfn[100];
+				char timestr[80];
+				//time(&rawtime);
+				rawtime = time(NULL);
+				timeinfo = localtime(&rawtime);
+				strftime(timestr,80,"%Y-%m-%d-%H%M%S",timeinfo);
+				sprintf(logfn, "%s_%s.txt", logfn_base, timestr); 
+				logFile.open(logfn, ios::out);
+				if (logFile.fail()) {
+					printf("Failed opening the log file: %s\n", logfn);
+				} else {
+					printf("Succeeded opening the log file: %s\n", logfn);
+				}
+			}
+		} else {
+			if (logFile.is_open()) {
+				printf("Closing the log file.\n");
+				logFile.close();
 			}
 		}
 	}
@@ -1269,6 +1307,9 @@ void ofxNCoreVision::_exit(ofEventArgs &e)
 	delete vidPlayer; vidPlayer = NULL;
 	delete filter;		filter = NULL;
 	delete movieWriter;
+	if (logFile.is_open()) {
+		logFile.close();
+	}
 	// -------------------------------- SAVE STATE ON EXIT
 	printf("Vision module has exited!\n");
 }

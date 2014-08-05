@@ -47,18 +47,18 @@ void ofxNCoreVision::setupControls()
 	controls->mGlobals->mTextColor.b = 0;
 	controls->mGlobals->mTextColor.a = 1;
 	//button color
-	controls->mGlobals->mButtonColor.r = 1;
+	controls->mGlobals->mButtonColor.r = 0;
 	controls->mGlobals->mButtonColor.g = 0;
-	controls->mGlobals->mButtonColor.b = 0;
+	controls->mGlobals->mButtonColor.b = 1;
 	controls->mGlobals->mButtonColor.a = .8;
 	//slider tip color
 	controls->mGlobals->mHandleColor.r = 0;
 	controls->mGlobals->mHandleColor.g = 0;
 	controls->mGlobals->mHandleColor.b = 0;
 	//slider color
-	controls->mGlobals->mSliderColor.r = 1;
+	controls->mGlobals->mSliderColor.r = 0;
 	controls->mGlobals->mSliderColor.g = 0;
-	controls->mGlobals->mSliderColor.b = 0;
+	controls->mGlobals->mSliderColor.b = 1;
 	controls->mGlobals->mSliderColor.a = .8;
 
 	this->addMainPanels();
@@ -140,6 +140,8 @@ void ofxNCoreVision::updateMainPanels()
 	// Log/Save Panel
 	controls->update(appPtr->logPanel_saveBgImage, kofxGui_Set_Bool, &appPtr->bSaveBgImage, sizeof(bool));
 	controls->update(appPtr->logPanel_saveMovie, kofxGui_Set_Bool, &appPtr->bSaveMovie, sizeof(bool));
+	controls->update(appPtr->saveFilePanel_movieFileName, kofxGui_Set_Bool, &appPtr->bSavingMovie, sizeof(bool));
+	controls->update(appPtr->saveFilePanel_logFileName, kofxGui_Set_Bool, &appPtr->bSavingLog, sizeof(bool));
 	//controls->update(appPtr->optionPanel_win_hid, kofxGui_Set_Bool, &appPtr->bWinTouch, sizeof(bool));
 	//TUIO Height Width
 //	controls->update(appPtr->optionPanel_tuio_height_width, kofxGui_Set_Bool, &appPtr->myTUIO.bHeightWidth, sizeof(bool));
@@ -305,18 +307,15 @@ void ofxNCoreVision::addMainPanels()
 	}
 
 	//Save file selections
-	ofxGuiPanel* savePanel1 = controls->addPanel(appPtr->saveFilePanel, "Saving", MAIN_FILTERS_X+MAIN_FILTERS_W*0, 570, OFXGUI_PANEL_BORDER, 7);
-	//char *home = 
+	ofxGuiPanel* saveLogPanel = controls->addPanel(appPtr->saveFilePanel, "Saving", MAIN_FILTERS_X+MAIN_FILTERS_W*0, 570, OFXGUI_PANEL_BORDER, 7);
 	string logLabel = "Log File: ";
 	logLabel.append(logFileName);
-	savePanel1->addButton(saveFilePanel_logFileName, logLabel, OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger);
+	saveLogPanel->addButton(saveFilePanel_logFileName, logLabel, OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	logLabel = "Saved Movie: ";
 	logLabel.append(savedMovieFileName);
-	savePanel1->addButton(saveFilePanel_movieFileName, logLabel, OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger);
-	//savePanel1->addButton(backgroundPanel_dynamic, "Dynamic Subtract", 10, 10, kofxGui_Button_Off, kofxGui_Button_Switch);
-	//savePanel1->addSlider(appPtr->backgroundPanel_learn_rate, "Subtract Speed", MAIN_FILTERS_Z, 13, 1.0f, 2000.0f, backgroundLearnRate, kofxGui_Display_Int, 0);
-	savePanel1->mObjWidth = 256;
-	savePanel1->mObjHeight = 95;
+	saveLogPanel->addButton(saveFilePanel_movieFileName, logLabel, OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
+	saveLogPanel->mObjWidth = 256;
+	saveLogPanel->mObjHeight = 95;
 
 //----------------------------------------------
 	updateMainPanels();
@@ -457,7 +456,8 @@ void ofxNCoreVision::removeMainPanels()
 		controls->removePanel( this->calibrationPanel );
 	controls->removePanel( this->propertiesPanel );
 	controls->removePanel( this->optionPanel );
-	controls->removePanel( this->savePanel );	
+	controls->removePanel( this->savePanel );
+	controls->removePanel( this->saveFilePanel );
 	if (contourFinder.bTrackObjects)
 		controls->removePanel( this->templatePanel );
 	controls->removePanel( this->trackingPanel );
@@ -472,7 +472,7 @@ void ofxNCoreVision::removeMulticameraPanels()
 	controls->removePanel( this->devicesListPanel );
 }
 
-void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int length)
+void ofxNCoreVision::handleGui(int parameterId, int task, void* data, int length)
 {
 	printf( "DEBUG: foxNCoreVision::handleGui\n" );
 	switch(parameterId)
@@ -747,6 +747,11 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 		case logPanel_saveMovie:
 			if(length == sizeof(bool))
 				bSaveMovie=*(bool*)data;
+			break;
+		case saveFilePanel_logFileName:
+			if(length == sizeof(bool))
+				bSavingLog=*(bool*)data;
+			printf("bSavingLog = %d\n", bSavingLog);
 			break;
 		//Tracking Panel
 		case trackingPanel_trackFingers:
