@@ -154,6 +154,7 @@ class ofxNCoreVision : public ofxGuiListener
 		logPanel,   //Panel added for logging and saving tracking data
 		logPanel_saveBgImage,
 		logPanel_saveMovie,
+		logPanel_logFile,
 
 		templatePanel,
 		savePanel,

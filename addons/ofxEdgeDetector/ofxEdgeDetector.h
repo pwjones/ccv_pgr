@@ -11,6 +11,6 @@ public:
 	~ofxEdgeDetector();
 
 	void detectEdges();
-}
+};
 
 #endif // OFXEDGEDETECTOR_H

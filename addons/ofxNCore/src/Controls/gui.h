@@ -140,8 +140,8 @@ void ofxNCoreVision::updateMainPanels()
 	// Log/Save Panel
 	controls->update(appPtr->logPanel_saveBgImage, kofxGui_Set_Bool, &appPtr->bSaveBgImage, sizeof(bool));
 	controls->update(appPtr->logPanel_saveMovie, kofxGui_Set_Bool, &appPtr->bSaveMovie, sizeof(bool));
+	controls->update(appPtr->logPanel_logFile, kofxGui_Set_Bool, &appPtr->bSavingLog, sizeof(bool));
 	controls->update(appPtr->saveFilePanel_movieFileName, kofxGui_Set_Bool, &appPtr->bSavingMovie, sizeof(bool));
-	controls->update(appPtr->saveFilePanel_logFileName, kofxGui_Set_Bool, &appPtr->bSavingLog, sizeof(bool));
 	//controls->update(appPtr->optionPanel_win_hid, kofxGui_Set_Bool, &appPtr->bWinTouch, sizeof(bool));
 	//TUIO Height Width
 //	controls->update(appPtr->optionPanel_tuio_height_width, kofxGui_Set_Bool, &appPtr->myTUIO.bHeightWidth, sizeof(bool));
@@ -200,11 +200,14 @@ void ofxNCoreVision::addMainPanels()
 	trackingPanel->mObjHeight = 95;
 
 	// Saving/Logging
-	ofxGuiPanel* logPanel = controls->addPanel(appPtr->logPanel, "Log/Save", MAIN_PANEL_SECOND_X, 455 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+	ofxGuiPanel* logPanel = controls->addPanel(appPtr->logPanel, "Logging/Saving", MAIN_PANEL_SECOND_X, 455 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	logPanel->addButton(appPtr->logPanel_saveBgImage, "Save Bg Image", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
-	logPanel->addButton(appPtr->logPanel_saveMovie, "Save Movie/Log", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
+	logPanel->addButton(appPtr->logPanel_saveMovie, "Save Movie", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
+	string logLabel = "Log: ";
+	logLabel.append(logFileName);
+	logPanel->addButton(appPtr->logPanel_logFile, logLabel, OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	logPanel->mObjWidth = 200;
-	logPanel->mObjHeight = 75;
+	logPanel->mObjHeight = 125;
 
 
 	// ---------------------------------- START IO PANELS -----------------------------------------------------------------------------------------
@@ -308,9 +311,9 @@ void ofxNCoreVision::addMainPanels()
 
 	//Save file selections
 	ofxGuiPanel* saveLogPanel = controls->addPanel(appPtr->saveFilePanel, "Saving", MAIN_FILTERS_X+MAIN_FILTERS_W*0, 570, OFXGUI_PANEL_BORDER, 7);
-	string logLabel = "Log File: ";
-	logLabel.append(logFileName);
-	saveLogPanel->addButton(saveFilePanel_logFileName, logLabel, OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
+	//string logLabel = "Log File: ";
+	//logLabel.append(logFileName);
+	//saveLogPanel->addButton(logPanel_logFile, logLabel, OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	logLabel = "Saved Movie: ";
 	logLabel.append(savedMovieFileName);
 	saveLogPanel->addButton(saveFilePanel_movieFileName, logLabel, OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
@@ -748,7 +751,7 @@ void ofxNCoreVision::handleGui(int parameterId, int task, void* data, int length
 			if(length == sizeof(bool))
 				bSaveMovie=*(bool*)data;
 			break;
-		case saveFilePanel_logFileName:
+		case logPanel_logFile:
 			if(length == sizeof(bool))
 				bSavingLog=*(bool*)data;
 			printf("bSavingLog = %d\n", bSavingLog);
