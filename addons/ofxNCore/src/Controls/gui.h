@@ -68,6 +68,8 @@ void ofxNCoreVision::setupControls()
 
 void ofxNCoreVision::updateMainPanels()
 {
+	bool decoyBool;
+
 	controls->forceUpdate(false);
 	controls->activate(true);
 
@@ -142,6 +144,7 @@ void ofxNCoreVision::updateMainPanels()
 	controls->update(appPtr->logPanel_saveMovie, kofxGui_Set_Bool, &appPtr->bSaveMovie, sizeof(bool));
 	controls->update(appPtr->logPanel_logFile, kofxGui_Set_Bool, &appPtr->bSavingLog, sizeof(bool));
 	controls->update(appPtr->saveFilePanel_movieFileName, kofxGui_Set_Bool, &appPtr->bSavingMovie, sizeof(bool));
+	controls->update(appPtr->logPanel_detectEdges, kofxGui_Set_Bool, &appPtr->bDetectEdges, sizeof(bool));
 	//controls->update(appPtr->optionPanel_win_hid, kofxGui_Set_Bool, &appPtr->bWinTouch, sizeof(bool));
 	//TUIO Height Width
 //	controls->update(appPtr->optionPanel_tuio_height_width, kofxGui_Set_Bool, &appPtr->myTUIO.bHeightWidth, sizeof(bool));
@@ -202,6 +205,7 @@ void ofxNCoreVision::addMainPanels()
 	// Saving/Logging
 	ofxGuiPanel* logPanel = controls->addPanel(appPtr->logPanel, "Logging/Saving", MAIN_PANEL_SECOND_X, 455 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	logPanel->addButton(appPtr->logPanel_saveBgImage, "Save Bg Image", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
+	logPanel->addButton(appPtr->logPanel_detectEdges, "Detect Paths", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger);
 	logPanel->addButton(appPtr->logPanel_saveMovie, "Save Movie", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	string logLabel = "Log: ";
 	logLabel.append(logFileName);

@@ -127,7 +127,8 @@ void ofxCvColorImage::setFromGrayscalePlanarImages( ofxCvGrayscaleImage& red, of
         greenRoi.width == roi.width && greenRoi.height == roi.height &&
         blueRoi.width == roi.width && blueRoi.height == roi.height )
     {
-         cvCvtPlaneToPix(red.getCvImage(), green.getCvImage(), blue.getCvImage(),NULL, cvImage);
+		 cvMerge(red.getCvImage(), green.getCvImage(), blue.getCvImage(),NULL, cvImage);
+         //cvCvtPlaneToPix(red.getCvImage(), green.getCvImage(), blue.getCvImage(),NULL, cvImage);
          flagImageChanged();
 	} else {
         ofLog(OF_LOG_ERROR, "in setFromGrayscalePlanarImages, ROI/size mismatch");
@@ -286,7 +287,7 @@ void ofxCvColorImage::convertToGrayscalePlanarImages(ofxCvGrayscaleImage& red, o
         greenRoi.width == roi.width && greenRoi.height == roi.height &&
         blueRoi.width == roi.width && blueRoi.height == roi.height )
     {
-        cvCvtPixToPlane(cvImage, red.getCvImage(), green.getCvImage(), blue.getCvImage(), NULL);
+        cvSplit(cvImage, red.getCvImage(), green.getCvImage(), blue.getCvImage(), NULL);
         red.flagImageChanged();
         green.flagImageChanged();
         blue.flagImageChanged();
@@ -300,34 +301,20 @@ void ofxCvColorImage::convertToGrayscalePlanarImage (ofxCvGrayscaleImage& grayIm
 	
 	ofRectangle roi = getROI();
     ofRectangle grayRoi = grayImage.getROI();
-   
+	IplImage *dest;
+	IplImage const **src;
+	int fromTo[] = {0,0};
+
+	src = (const IplImage **)&cvImage; // casting necessary to make it work. Is there a better way?
+	dest = grayImage.getCvImage();
 	if( grayRoi.width == roi.width && grayRoi.height == roi.height ){
-
-		switch (whichPlane){
-				
-			case 0:
-				cvCvtPixToPlane(cvImage, grayImage.getCvImage(), NULL, NULL, NULL);
-				grayImage.flagImageChanged();
-				break;
-			case 1:
-				cvCvtPixToPlane(cvImage, NULL, grayImage.getCvImage(), NULL, NULL);
-				grayImage.flagImageChanged();
-				break;
-			case 2:
-				cvCvtPixToPlane(cvImage, NULL, NULL, grayImage.getCvImage(), NULL);
-				grayImage.flagImageChanged();
-				break;
-		}
-			
+		fromTo[0] = whichPlane; //assign the source plane - always same dest plane
+		cvMixChannels((const CvArr **)src, 3, (CvArr **)&dest, 1, fromTo, 1);
+		grayImage.flagImageChanged();	
 	} else {
-    
 		ofLog(OF_LOG_ERROR, "in convertToGrayscalePlanarImages, ROI/size mismatch");
-	
-	}
-	
+	}	
 }
-
-
 
 
 // Draw Image

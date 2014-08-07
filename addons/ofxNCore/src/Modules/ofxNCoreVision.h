@@ -27,6 +27,7 @@
 #include "ofxXmlSettings.h"
 #include "ofxFiducialTracker.h"
 #include "ofxFC2MovieWriter.h"
+#include "ofxEdgeDetector.h"
 
 // Our Addon
 #include "ofxNCore.h"
@@ -153,6 +154,7 @@ class ofxNCoreVision : public ofxGuiListener
 
 		logPanel,   //Panel added for logging and saving tracking data
 		logPanel_saveBgImage,
+		logPanel_detectEdges,
 		logPanel_saveMovie,
 		logPanel_logFile,
 
@@ -235,6 +237,7 @@ public:
 		bMulticamDialog = false;
 		showConfiguration = 0;
 		bSavingLog = 0;
+		bDetectEdges = 0;
 		//camera
 		camRate = 90;
 		camWidth = 320;
@@ -460,6 +463,7 @@ public:
 	CPUImageFilter      processedImg;
 	ofxCvColorImage		sourceImg;
 	CPUImageFilter		sourceGrayImg;
+	ofxEdgeDetector		pathImg;  // The object to detect paths from the background image
 
 	//XML Settings Vars
 	ofxXmlSettings		XML;
@@ -480,6 +484,7 @@ public:
 	FILE *				stream;
 	ofxFC2MovieWriter *	movieWriter;
 	ofstream			logFile;
+	bool				bDetectEdges;
 
 	void				removeMainPanels();
 	void				removeMulticameraPanels();

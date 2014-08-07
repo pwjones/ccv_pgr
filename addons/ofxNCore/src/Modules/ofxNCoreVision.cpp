@@ -591,6 +591,10 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 				logFile.close();
 			}
 		}
+		if (bDetectEdges) {
+			// Do some edge detection
+			// Seems like this is likely to just block the updating, which is ok
+		}
 	}
 }
 
