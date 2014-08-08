@@ -15,35 +15,59 @@ ofxEdgeDetector::~ofxEdgeDetector()
 {
 }
 
+void ofxEdgeDetector::updateImage(ofxCvGrayscaleImage& src_img)
+{
+	//Mat temp;
+	IplImage *cvIm;
+	cvIm = src_img.getCvImage();
+	
+	Mat newMat = cvarrToMat(cvIm);
+	bgImg = newMat.clone();
+	//namedWindow( "Update Window", WINDOW_AUTOSIZE ); // Create a window for display.
+    //imshow( "Update Window", bgImg );                // Show our image inside it.
+	//cvCopy( cvIm , &newMat, 0 );
+	//bgImg = newMat;
+	//bgImg = &temp; 
+}
+
 void ofxEdgeDetector::detectEdges()
 {
-	IplImage* img = cvLoadImage( "my3.jpg", 0);
-	cvNamedWindow( "example-input" );
-	cvNamedWindow( "example-output" );
+	//IplImage im = bgImg;
+	//IplImage *img = &im;
+	//= bgImg.getCvImage();
+	string origWind = "Original Image";
+	string edgeWind = "Detected Edges";
+	//Mat image = bgImg;
+	IplImage im = bgImg;
+	IplImage *img = &im;
+    //image = imread("savedBg.jpg", CV_LOAD_IMAGE_GRAYSCALE); // Read the file
 
-	// Show the original image
-	cvShowImage("example-input", img);
+    if(! bgImg.data )                      // Check for invalid input
+    {
+        cout <<  "Could not open or find the image" << std::endl ;
+        return;
+    }
 
-	// Make sure image is divisible by 2
-	assert( img->width%2 == 0 && img->height%2 == 0);
+	//assert( img->width%2 == 0 && img->height%2 == 0);
+	cv::Size s = bgImg.size();
+	namedWindow( origWind, WINDOW_NORMAL ); // Create our windows
+	resizeWindow(origWind, s.width/2, s.height/2);
+	namedWindow( edgeWind, WINDOW_NORMAL );
+	resizeWindow(edgeWind, s.width/2, s.height/2);
+	imshow(origWind, bgImg); // Show the original image
 
 	// Create an image for the output
-	IplImage* out = cvCreateImage( cvSize(img->width/2,img->height/2), img->depth, img->nChannels );
-
-	// Reduce the image by 2
-	cvPyrDown( img, out );
-
+	bgImg.copyTo(edgeImg);
+	//IplImage* out = cvCreateImage( cvSize(img->width/2,img->height/2), img->depth, img->nChannels );
+	
 	// Perform canny edge detection
-	cvCanny( out, out, 10, 100, 3 );
+	Canny( edgeImg, edgeImg, 10, 100, 3 );
 
 	// Show the processed image
-	cvShowImage("example-output", out);
-
-	cvWaitKey(0);
-	cvReleaseImage( &img );
-	cvReleaseImage( &out );
-	cvDestroyWindow( "example-input" );
-	cvDestroyWindow( "example-output" );
+	imshow(edgeWind, edgeImg);
+	waitKey(0); //wait for keyboard input over window, forever
+	destroyWindow(origWind);
+	destroyWindow(edgeWind);
  
  }
 

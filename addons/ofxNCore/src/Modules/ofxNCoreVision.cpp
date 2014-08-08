@@ -10,9 +10,10 @@
 
 #include "ofxNCoreVision.h"
 #include "../Controls/gui.h"
-// #include "API/gpu_filter_api.h"
 #include "FlyCapture2.h"
-#include "ofxFC2MovieWriter.h"
+// #include "API/gpu_filter_api.h"
+
+//#include "ofxFC2MovieWriter.h"
 
 /******************************************************************************
 * The setup function is run once to perform initializations in the application
@@ -142,7 +143,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 
 	//Setup the movieWriter to save the incoming video
 	movieWriter = new ofxFC2MovieWriter();
-
+	//pathImg = ofxEdgeDetector();
 	/*
 	//CUDA context initialization
 	if ( gpu_context_create(&ctx) != GPU_OK )
@@ -593,6 +594,9 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 		}
 		if (bDetectEdges) {
 			// Do some edge detection
+			pathImg.updateImage(filter->grayImg);
+			pathImg.detectEdges();
+			bDetectEdges = 0;
 			// Seems like this is likely to just block the updating, which is ok
 		}
 	}

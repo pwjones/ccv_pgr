@@ -760,6 +760,11 @@ void ofxNCoreVision::handleGui(int parameterId, int task, void* data, int length
 				bSavingLog=*(bool*)data;
 			printf("bSavingLog = %d\n", bSavingLog);
 			break;
+		case logPanel_detectEdges:
+			if(length == sizeof(bool))
+				bDetectEdges=*(bool*)data;
+			printf("bDetectEdges = %d\n", bDetectEdges);
+			break;
 		//Tracking Panel
 		case trackingPanel_trackFingers:
 			if(length == sizeof(bool))
