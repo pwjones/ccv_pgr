@@ -17,12 +17,28 @@ public:
 	~ofxEdgeDetector();
 	void updateImage(ofxCvGrayscaleImage& src_img);
 	void detectEdges();
-	
+	void cannyThreshold(int newThresh, void *);
+	void drawSelectedContours(vector<int>& seli);
+	void findNearbyContours(int x, int y, vector<int>& neari);
+	void keyResponder(int c);
+	vector<int> selContours;
+
 protected:
 	//ofxCvGrayscaleImage bgImg;
-	Mat bgImg, edgeImg;
-	Mat paths;
-	Mat seedPts;
+	Mat bgImg, edgeImg, contourImg;
+	Mat paths, seedPts;
+	cv::Size imSize;
+	int lowerThresh, ratio;
+	string origWind, edgeWind, contourWind;
+	vector<vector<cv::Point> > contours;
+	vector<Vec4i> hierarchy;
+	
+	
+	void computeContours();
+	void selectPaths();
+	void refinePaths();
+
+	
 
 };
 
