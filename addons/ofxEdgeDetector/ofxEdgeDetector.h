@@ -18,10 +18,10 @@ public:
 	void updateImage(ofxCvGrayscaleImage& src_img);
 	void detectEdges();
 	void cannyThreshold(int newThresh, void *);
-	void drawSelectedContours(vector<int>& seli);
-	void findNearbyContours(int x, int y, vector<int>& neari);
 	void keyResponder(int c);
+	void selectContours(int x, int y);
 	vector<int> selContours;
+	vector<vector<cv::Point> > pathPts;
 
 protected:
 	//ofxCvGrayscaleImage bgImg;
@@ -32,13 +32,24 @@ protected:
 	string origWind, edgeWind, contourWind;
 	vector<vector<cv::Point> > contours;
 	vector<Vec4i> hierarchy;
+	int activePath;
+	vector<vector<int> > pathContours;
 	
 	
+	void initWindows();
 	void computeContours();
 	void selectPaths();
+	void findNearbyContours(int x, int y, vector<int>& neari);
 	void refinePaths();
+	Mat drawSelectedContours(vector<int>& seli); //draws contours in selContours, also returns the image
+	Mat drawSelectedPaths(int pathi[], int ni); //draws the contours in pathContours, also returns the image
+	Mat closePathImg(int pathi[], int ni);
+	Mat& closePathImg(Mat& im);
+	Mat drawPathOverlay(int pathi[], int ni);
+	Mat drawPathOverlay(vector<vector<cv::Point> > pts);
+	Mat drawContourPoints(const vector<cv::Point>& contourPts, int matrixType, Vec3b *newColor = 0, bool blend = 0);
+	Mat drawContourPoints(const vector<cv::Point>& contourPts, Mat img, int matrixType, Vec3b *color = 0, bool blend = 0);
 
-	
 
 };
 
