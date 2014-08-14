@@ -37,6 +37,7 @@ public:
 	std::vector<Blob>		trackedBlobs; //tracked blobs
 	std::map<int, Blob> getTrackedBlobs();
 	std::map<int, Blob> getTrackedObjects();
+	void getBlobsCenterOfMass(float& x, float& y);
 
 private:
 	int camWidth,camHeight;

@@ -510,6 +510,38 @@ std::map<int, Blob> BlobTracker::getTrackedObjects()
 	return calibratedObjects;
 }
 
+void BlobTracker::getBlobsCenterOfMass(float& x, float& y)
+{
+	map<int, Blob>::iterator it;
+	int nBlobs = calibratedBlobs.size();
+	float *ypos_weighted = new float[nBlobs];
+	float *xpos_weighted = new float[nBlobs];
+	float totalMass = 0;
+	float sumX = 0, sumY = 0;
+
+	// iterate through the blobs. Get the area weighted x,y positions
+	int i = 0;
+	for( it = calibratedBlobs.begin(); it != calibratedBlobs.end(); ++it) {
+		xpos_weighted[i] = it->second.centroid.x * it->second.area;
+		ypos_weighted[i] = it->second.centroid.y * it->second.area;
+		totalMass += it->second.area;
+		i++;
+	}
+	// calculate the mean by summing and dividing my total
+	for (i = 0; i < nBlobs; i++ ) {
+		sumX += xpos_weighted[i];
+		sumY += ypos_weighted[i];
+	}
+	// set return vals
+	x = sumX/totalMass;
+	y = sumY/totalMass;
+	//clean up
+	delete [] xpos_weighted;
+	delete [] ypos_weighted;
+	
+	cout << "DEBUG: Tracked CoM   ( " << x << " ,  " << y << " )\n";
+}
+
 /*************************************************************************
 * Finds the blob in 'newBlobs' that is closest to the trackedBlob with index
 * 'ind' according to the KNN algorithm and returns the index of the winner
