@@ -53,7 +53,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\addons\ofxCMU\inc;..\..\..\addons\ofxKinect\src;..\..\..\addons\ofxDShow\src;..\..\..\addons\ofxNCore\src\Calibration;..\..\..\addons\ofxMultiplexer\inc;..\..\..\addons\ofxFC2MovieWriter;..\..\..\addons\ofxEdgeDetector;..\..\..\addons\ofxFlea3;..\..\..\addons\ofxCameraBase\inc;..\..\..\libs\openFrameworks;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\sound;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\video;..\..\..\libs\openFrameworks\events;..\..\..\libs\glut\include;..\..\..\libs\rtAudio\include;..\..\..\libs\freetype\include;..\..\..\libs\freetype\include\freetype2;..\..\..\libs\freeImage\include;..\..\..\libs\fmodex\include;..\..\..\libs\videoInput\include;..\..\..\libs\glee\include;..\..\..\libs\glu\include;..\..\..\libs\quicktime\include;..\..\..\libs\Poco\include;..\..\..\addons;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxDirList\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\include\ip;..\..\..\addons\ofxOsc\libs\oscpack\include\osc;..\..\..\addons\ofxThread\src;..\..\..\addons\ofxVectorGraphics\src;..\..\..\addons\ofxVectorGraphics\libs;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxXMLSettings\libs;..\..\..\addons\ofxXMLSettings\src;..\..\..\addons\ofx3DModelLoader\src;..\..\..\addons\ofx3DModelLoader\src\3DS;..\..\..\addons\ofxPS3\src;..\..\..\addons\ofxFFMV\src;..\..\..\addons\ofxNCore\src;..\..\..\addons\ofxNCore\src\Filters;..\..\..\addons\ofxDSVL\src;..\..\..\addons\ofxFiducialFinder\src;&quot;D:\Program Files\Point Grey Research\FlyCapture2\include&quot;;..\..\..\addons\ofxOpenCv\libs\opencv246\include"
+				AdditionalIncludeDirectories="..\..\..\addons\ofxCMU\inc;..\..\..\addons\ofxKinect\src;..\..\..\addons\ofxDShow\src;..\..\..\addons\ofxNCore\src\Calibration;..\..\..\addons\ofxMultiplexer\inc;..\..\..\addons\ofxFC2MovieWriter;..\..\..\addons\ofxEdgeDetector;..\..\..\addons\ofxFlea3;..\..\..\addons\ofxCameraBase\inc;..\..\..\libs\openFrameworks;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\sound;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\video;..\..\..\libs\openFrameworks\events;..\..\..\libs\glut\include;..\..\..\libs\rtAudio\include;..\..\..\libs\freetype\include;..\..\..\libs\freetype\include\freetype2;..\..\..\libs\freeImage\include;..\..\..\libs\fmodex\include;..\..\..\libs\videoInput\include;..\..\..\libs\glee\include;..\..\..\libs\glu\include;..\..\..\libs\quicktime\include;..\..\..\libs\Poco\include;..\..\..\addons;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxDirList\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\include\ip;..\..\..\addons\ofxOsc\libs\oscpack\include\osc;..\..\..\addons\ofxThread\src;..\..\..\addons\ofxVectorGraphics\src;..\..\..\addons\ofxVectorGraphics\libs;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxXMLSettings\libs;..\..\..\addons\ofxXMLSettings\src;..\..\..\addons\ofx3DModelLoader\src;..\..\..\addons\ofx3DModelLoader\src\3DS;..\..\..\addons\ofxPS3\src;..\..\..\addons\ofxFFMV\src;..\..\..\addons\ofxNCore\src;..\..\..\addons\ofxNCore\src\Filters;..\..\..\addons\ofxDSVL\src;..\..\..\addons\ofxFiducialFinder\src;..\..\..\addons\thinning;&quot;D:\Program Files\Point Grey Research\FlyCapture2\include&quot;;..\..\..\addons\ofxOpenCv\libs\opencv246\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;POCO_STATIC"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -149,7 +149,7 @@
 				Optimization="3"
 				FavorSizeOrSpeed="1"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="..\..\..\addons\ofxVideoPlayer\src;..\..\..\addons\ofxProcessing\src;..\..\..\addons\ofxKinect\src;..\..\..\addons\ofxVideoWriter\src;..\..\..\addons\ofxDShow\src;..\..\..\addons\ofxFC2MovieWriter;..\..\..\addons\ofxEdgeDetector;..\..\..\addons\ofxFlea3;..\..\..\addons\ofxCMU\inc;..\..\..\addons\ofxNCore\src\Calibration;..\..\..\addons\ofxMultiplexer\inc;..\..\..\addons\ofxCameraBase\inc;..\..\..\libs\openFrameworks;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\sound;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\video;..\..\..\libs\openFrameworks\events;..\..\..\libs\glut\include;..\..\..\libs\rtAudio\include;..\..\..\libs\freetype\include;..\..\..\libs\freetype\include\freetype2;..\..\..\libs\freeImage\include;..\..\..\libs\fmodex\include;..\..\..\libs\videoInput\include;..\..\..\libs\glee\include;..\..\..\libs\glu\include;..\..\..\libs\quicktime\include;..\..\..\libs\Poco\include;..\..\..\addons;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxDirList\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv246\include;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\include\ip;..\..\..\addons\ofxOsc\libs\oscpack\include\osc;..\..\..\addons\ofxThread\src;..\..\..\addons\ofxVectorGraphics\src;..\..\..\addons\ofxVectorGraphics\libs;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxXMLSettings\libs;..\..\..\addons\ofxXMLSettings\src;..\..\..\addons\ofx3DModelLoader\src;..\..\..\addons\ofx3DModelLoader\src\3DS;..\..\..\addons\ofxPS3\src;..\..\..\addons\ofxFFMV\src;..\..\..\addons\ofxNCore\src;..\..\..\addons\ofxNCore\src\Filters;..\..\..\addons\ofxDSVL\src;..\..\..\addons\ofxFiducialFinder\src;&quot;$(FC2_PATH)\include&quot;"
+				AdditionalIncludeDirectories="..\..\..\addons\ofxVideoPlayer\src;..\..\..\addons\ofxProcessing\src;..\..\..\addons\ofxKinect\src;..\..\..\addons\ofxVideoWriter\src;..\..\..\addons\ofxDShow\src;..\..\..\addons\ofxFC2MovieWriter;..\..\..\addons\ofxEdgeDetector;..\..\..\addons\ofxFlea3;..\..\..\addons\ofxCMU\inc;..\..\..\addons\ofxNCore\src\Calibration;..\..\..\addons\ofxMultiplexer\inc;..\..\..\addons\ofxCameraBase\inc;..\..\..\libs\openFrameworks;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\sound;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\video;..\..\..\libs\openFrameworks\events;..\..\..\libs\glut\include;..\..\..\libs\rtAudio\include;..\..\..\libs\freetype\include;..\..\..\libs\freetype\include\freetype2;..\..\..\libs\freeImage\include;..\..\..\libs\fmodex\include;..\..\..\libs\videoInput\include;..\..\..\libs\glee\include;..\..\..\libs\glu\include;..\..\..\libs\quicktime\include;..\..\..\libs\Poco\include;..\..\..\addons;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxDirList\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv246\include;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\include\ip;..\..\..\addons\ofxOsc\libs\oscpack\include\osc;..\..\..\addons\ofxThread\src;..\..\..\addons\ofxVectorGraphics\src;..\..\..\addons\ofxVectorGraphics\libs;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxXMLSettings\libs;..\..\..\addons\ofxXMLSettings\src;..\..\..\addons\ofx3DModelLoader\src;..\..\..\addons\ofx3DModelLoader\src\3DS;..\..\..\addons\ofxPS3\src;..\..\..\addons\ofxFFMV\src;..\..\..\addons\ofxNCore\src;..\..\..\addons\ofxNCore\src\Filters;..\..\..\addons\ofxDSVL\src;..\..\..\addons\ofxFiducialFinder\src;..\..\..\addons\thinning;&quot;$(FC2_PATH)\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;POCO_STATIC"
 				RuntimeLibrary="2"
 				OpenMP="true"
@@ -220,14 +220,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\addons\ofxLogFileWriter\ofxLogFileWriter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\addons\ofxLogFileWriter\ofxLogFileWriter.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\testApp.cpp"
 				>
 			</File>
@@ -249,6 +241,22 @@
 			</File>
 			<File
 				RelativePath="..\..\..\addons\ofxFC2MovieWriter\ofxFC2MovieWriter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\addons\ofxLogFileWriter\ofxLogFileWriter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\addons\ofxLogFileWriter\ofxLogFileWriter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\addons\thinning\thinning.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\addons\thinning\thinning.h"
 				>
 			</File>
 			<Filter

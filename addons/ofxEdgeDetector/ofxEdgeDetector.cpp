@@ -1,6 +1,7 @@
 
 #include "ofxEdgeDetector.h"
 #include "opencv2/opencv.hpp"
+#include "thinning.h"
 
 using namespace cv;
 
@@ -8,7 +9,7 @@ using namespace cv;
 static void mouseSelect( int event, int x, int y, int, void* );
 static void mouseDoNothing( int event, int x, int y, int, void* );
 void cannyThreshWrapper(int x, void *data);
-void listPointsInImg(Mat& I, vector<cv::Point>& pts);
+void listPointsInImage(Mat& I, vector<cv::Point>& pts);
 float euclidianDist(const cv::Point& p1, const cv::Point& p2);
 void keyboardInput();
 
@@ -24,7 +25,8 @@ ofxEdgeDetector::ofxEdgeDetector() {
 	edgeWind = "Detected Edges";
 	contourWind = "Contours";
 	activePath = 1;
-	pathPts.reserve(2);
+	pathPts.reserve(2); // make sure that there are at least 2 spots in vector.
+	skelPathPts.reserve(2);
 	edgeObj = this;
 
 }
@@ -46,11 +48,13 @@ void ofxEdgeDetector::updateImage(ofxCvGrayscaleImage& src_img)
 void ofxEdgeDetector::detectEdges()
 {	
 	// Read in an image - useful for developing in the dark
-    bgImg = imread("savedBg.jpg", CV_LOAD_IMAGE_GRAYSCALE); // Read the file
+    /*
+	bgImg = imread("savedBg.jpg", CV_LOAD_IMAGE_GRAYSCALE); // Read the file
 	if( ! bgImg.data ) {  // Check for invalid input
         cout <<  "Could not open or find the image" << std::endl ;
         return;
     }
+	*/
 
 	initWindows(); // open up the display windows
 	bgImg.copyTo(edgeImg); // Make a copy of bgImg
@@ -63,6 +67,21 @@ void ofxEdgeDetector::detectEdges()
 	destroyWindow(edgeWind);
 	destroyWindow(contourWind);
  }
+
+double ofxEdgeDetector::minPathDist(cv::Point p)
+{
+	cv::Size s = bgImg.size();
+	double minDist = euclidianDist(cv::Point(0,0), cv::Point(s.width, s.height)); 
+	if (skelPathPts.size() > 0) {
+		int l = skelPathPts[0].size();
+		for (int i=0; i< l; i++ ) {
+			double dist = euclidianDist(p, skelPathPts[0][i]);
+			if (dist < minDist)
+				minDist = dist;
+		}
+	}
+	return(minDist);
+}
 
 void ofxEdgeDetector::initWindows()
 {
@@ -130,7 +149,7 @@ void ofxEdgeDetector::selectPaths()
 		//waitKey(0);
 		pathPts[i].clear();
 		//cout << "Before listPnts:" << pathPts[i].size() << "\n"; 
-		listPointsInImg(pathIm, pathPts[i]);
+		listPointsInImage(pathIm, pathPts[i]);
 		//cout << "After listPnts:" << pathPts[i].size() << "\n"; 
 		//pathIm = drawPathOverlay(&sp[i],1);
 	}
@@ -140,6 +159,39 @@ void ofxEdgeDetector::selectPaths()
 	setMouseCallback(contourWind, mouseDoNothing, 0 );
 	//waitKey(0);
 }
+
+void ofxEdgeDetector::thinPaths()
+{
+	Mat pIm, skelIm;
+	vector<cv::Point> pts;
+
+	skelPathPts.clear();
+	for (int i = 0; i<pathPts.size(); i++) {
+		pIm = drawContourPoints(pathPts[i], CV_8UC1);
+		thinning(pIm, skelIm);
+		
+		listPointsInImage(skelIm, pts);
+		skelPathPts.push_back(pts);
+		
+		//namedWindow( "skeleton", WINDOW_NORMAL ); 
+		//resizeWindow( "skeleton", skelIm.size().width/3, skelIm.size().height/3);
+		//imshow("skeleton", skelIm);
+		//imshow(contourWind, pIm);
+		//waitKey(0);
+	}
+	pIm = drawPathOverlay(pathPts);
+	skelIm = drawContourPoints(skelPathPts[0], CV_8UC3);
+	skelIm = drawContourPoints(skelPathPts[1], skelIm, CV_8UC3);
+	Mat combo = skelIm.clone();
+	addWeighted(pIm, .5, skelIm, .5, 0, combo);
+	//namedWindow( "skeleton", WINDOW_NORMAL ); 
+	//resizeWindow( "skeleton", skelIm.size().width/3, skelIm.size().height/3);
+	imshow(contourWind, combo);
+	// checking the path dist
+	cout << "Distance from 0: " << minPathDist(cv::Point(0,0)) << "\n";
+	cout << "Distance from (1280,1024): " << minPathDist(cv::Point(1280,1024)) << "\n";
+}
+
 // -----------------------------------
 void ofxEdgeDetector::refinePaths()
 {
@@ -168,47 +220,31 @@ void ofxEdgeDetector::computeContours()
 	vector<Vec4i> hier;
 
 	Mat edgeTemp = edgeImg.clone();
-	
-	imshow(contourWind, edgeTemp);
-
 	findContours( edgeTemp, contourTemp, hier, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
 	
 	// Drawing the contours actually fills in the gaps really well - leverage that
 	Mat contourImg = Mat::zeros( edgeImg.size(), CV_8UC1 ); //color version
-	Scalar color(255, 255, 255);
+	uchar color = 255;
 	for( int i = 0; i< contourTemp.size(); i++ ) {
-       //Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
 	   drawContours( contourImg, contourTemp, i, color, 2, 8, hier, 0, cv::Point() );
 	}
 	// Since the contours returned don't really give a dense enough output, we go through
 	// the image and pick out the individual drawn points as the contour
 	vector<cv::Point> contourPts;
-	listPointsInImg( contourImg, contourPts );
+	listPointsInImage( contourImg, contourPts );
 	Mat contourImg2 = drawContourPoints(contourPts, CV_8UC1);
-	// Close the contours - morphological closing operation
-	//Mat closed = contourImg2.clone();
-
-	//closed = closePathImg(contourImg2);
-	/*Vec3b drawC;
-	drawC[0] = 0; drawC[1] = 255; drawC[2] = 0;
-	Mat inputImg =  Mat::zeros( edgeImg.size(), CV_8UC3 );
-	cvtColor(bgImg, inputImg, CV_GRAY2RGB); 
-	Mat closed = drawContourPoints(contourPts, inputImg, CV_8UC3, &drawC, 1);
-	cv::Size s = closed.size();
-	namedWindow("closed", WINDOW_NORMAL);
-	resizeWindow("closed", s.width/2, s.height/2);
-	imshow("closed", closed);*/
 	
 	/// Find contours, again - this time for the grouping.
 	edgeTemp = contourImg2.clone();
 	findContours( edgeTemp, contours, hierarchy, CV_RETR_LIST, CV_CHAIN_APPROX_NONE, cv::Point(0, 0) );
+	
 	/// Draw the new contours
 	Mat drawing = Mat::zeros( edgeImg.size(), CV_8UC3 );
 	for( int i = 0; i< contours.size(); i++ ) {
        Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
 	   drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, cv::Point() );
 	}
-	imshow(contourWind, drawing);
+	imshow(contourWind, drawing);	
 }
 
 Mat ofxEdgeDetector::drawContourPoints(const vector<cv::Point>& contourPts, int matrixType, Vec3b *newColor, bool blend)
@@ -229,8 +265,8 @@ Mat ofxEdgeDetector::drawContourPoints(const vector<cv::Point>& contourPts, Mat 
 		color[0] = 255; color[1] = 255; color[2] = 255;
 	} else
 		color = *newColor;
-	cout << "drawContourPoints: newColor:" << (int)color[0] << "  " << (int)color[1] << "  " << (int)color[2] << "\n";
-	cout << "blend = " << blend << "\n"; 
+	//cout << "drawContourPoints: newColor:" << (int)color[0] << "  " << (int)color[1] << "  " << (int)color[2] << "\n";
+	//cout << "blend = " << blend << "\n"; 
 	if (matrixType == CV_8UC1) {
 		//Mat img = Mat::zeros( edgeImg.size(), CV_8UC1 );
 		for( int i = 0; i< contourPts.size(); i++ ) { //now draw it point by point
@@ -269,16 +305,15 @@ Mat ofxEdgeDetector::drawContourPoints(const vector<cv::Point>& contourPts, Mat 
 void ofxEdgeDetector::keyResponder(int c)
 {
         while( c != 27 && c != 113) { //while the user does not hit 'Esc' or 'q'
-            cout << "Hit 'r' to refine paths, 's' to reThreshold or select, and 'Esc' or 'q' to exit\n";
 			switch( (char)c ) {
-			case 'r':
-				refinePaths();
+			case 't':
+				thinPaths();
 				break;
 			case 's':
 				selectPaths();
-				//cannyThreshold(lowerThresh, 0);
 				break; 
 			}
+			cout << "Hit 'r' to refine paths, 's' to reThreshold or select, and 'Esc' or 'q' to exit\n";	
 			c = waitKey(0);
 		}
 }
@@ -290,7 +325,7 @@ Mat ofxEdgeDetector::drawSelectedContours(vector<int>& seli)
 	for( int i = 0; i< seli.size(); i++ ) {
        Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
 	   drawContours( drawing, contours, seli[i], color, 2, 8, hierarchy, 0, cv::Point() );
-	   cout << "Drawing contour " << seli[i] << "\n";
+	   //cout << "Drawing contour " << seli[i] << "\n";
 	}
 	imshow(contourWind, drawing);
 	return(drawing);
@@ -306,10 +341,10 @@ Mat ofxEdgeDetector::drawSelectedPaths(int pathi[], int ni)
 		int pi = pathi[i];
 		int ci = (pi % ncolor) * 3;
 		Scalar color = Scalar( colors[ci], colors[ci+1], colors[ci+2] );
-		cout << "drawSelectedPaths: loop i = " << pi << " ci = " << ci << "\n";
-		cout << "drawSelectedPaths: contours is " << contours.size() << " elements long\n";
+		//cout << "drawSelectedPaths: loop i = " << pi << " ci = " << ci << "\n";
+		//cout << "drawSelectedPaths: contours is " << contours.size() << " elements long\n";
 		for ( int j=0; j < pathContours[pi].size(); j++) {
-			cout << "In drawSelectedPaths drawing contour " << pathContours[pi][j] << "\n";
+			//cout << "In drawSelectedPaths drawing contour " << pathContours[pi][j] << "\n";
 			drawContours( drawing, contours, pathContours[pi][j], color, 2, 8, hierarchy, 0, cv::Point() );
 		}
 	}
@@ -324,7 +359,7 @@ Mat ofxEdgeDetector::drawPathOverlay(int pathi[], int ni)
 {
 	Vec3b color;
 	int ncolor = 3;
-	uchar colors[] = {1, 255, 1, 1, 1, 255, 255, 255, 255};
+	uchar colors[] = {1, 128, 1, 1, 1, 128, 255, 255, 255};
 	cv::Size s = bgImg.size();
 	Mat drawing = Mat::zeros( s, CV_8UC3 );
 	cvtColor(bgImg, drawing, CV_GRAY2RGB,0);  //writing the background image
@@ -337,10 +372,8 @@ Mat ofxEdgeDetector::drawPathOverlay(int pathi[], int ni)
 			for ( int k=0; k < contours[cont_i].size(); k++) { //for each point in the contour
 				cv::Point2i pnt = contours[cont_i][k];
 				Vec3b val = drawing.at<Vec3b>(pnt);
-				//drawing the wrong location
 				drawing.at<Vec3b>( contours[cont_i][k] ) = (val + color)/2;
 			}
-			//drawContours( drawing, contours, pathContours[pi][j], color, 2, 8, hierarchy, 0, cv::Point() );
 		}
 	}
 
@@ -355,26 +388,19 @@ Mat ofxEdgeDetector::drawPathOverlay(vector<vector<cv::Point> > pts)
 {
 	Vec3b color;
 	int ncolor = 3;
-	uchar colors[] = {1, 255, 1, 1, 1, 255, 255, 255, 255};
+	uchar colors[] = {1, 128, 1, 1, 1, 128, 255, 255, 255};
 	cv::Size s = bgImg.size();
 	Mat drawing = Mat::zeros( s, CV_8UC3 );
 	cvtColor(bgImg, drawing, CV_GRAY2RGB);  //writing the background image
-	imshow(contourWind, drawing);
-	waitKey(0);
 	for( int i= 0; i< pts.size(); i++ ) { //for each path
 		int ci = (i % ncolor) * 3;
 		color[0] = colors[ci]; color[1] = colors[ci+1]; color[2] = colors[ci+2]; //set the tint color
 		drawing = drawContourPoints(pts[i], drawing, CV_8UC3, &color, 1);
 		imshow(contourWind, drawing);
-		waitKey(0);
-
 	}
-
-	namedWindow( "overlay", WINDOW_NORMAL ); // in case the window doesn't exist already
-	resizeWindow("overlay", s.width/2, s.height/2);
-	imshow("overlay", drawing);
 	return (drawing);
 }
+
 // ---------------------------------------------------------------------------
 static void mouseSelect( int event, int x, int y, int, void* )
 {
@@ -382,16 +408,19 @@ static void mouseSelect( int event, int x, int y, int, void* )
         return;
 	edgeObj->selectContours(x, y);
 }
+
 // ---------------------------------------------------------------------------
 static void mouseDoNothing( int event, int x, int y, int, void* )
 {
 }
+
 // ---------------------------------------------------------------------------
 void ofxEdgeDetector::selectContours(int x, int y) 
 {
 	findNearbyContours(x, y, selContours);
 	drawSelectedContours(selContours);
 }
+
 // ---------------------------------------------------------------------------
 void ofxEdgeDetector::findNearbyContours(int x, int y, vector<int>& neari)
 {
@@ -413,11 +442,12 @@ void ofxEdgeDetector::findNearbyContours(int x, int y, vector<int>& neari)
 	//return(neari);
 }
 
+
 // ------------------------  Local Functions   -----------------                 
 
-// listPointsInImg: returns the set of points that aren't black in the first channel
+// listPointsInImage: returns the set of points that aren't black in the first channel
 // -----------------------------------------------------------------------------------
-static void listPointsInImg(Mat& I, vector<cv::Point>& pts)
+static void listPointsInImage(Mat& I, vector<cv::Point>& pts)
 {  
 	// accept only char type matrices
     CV_Assert(I.depth() != sizeof(uchar));
@@ -467,6 +497,7 @@ void cannyThreshWrapper(int x, void *data)
 
 void keyboardInput()
 {
+	cout << "Hit 's' select paths, 't' to thin them, or 'Esc' or 'q' to exit\n";
 	int c = waitKey(0);
 	edgeObj->keyResponder(c);
 }

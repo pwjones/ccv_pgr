@@ -13,18 +13,28 @@ using namespace cv;
 class ofxEdgeDetector
 {
 public:
+
 	ofxEdgeDetector();
 	~ofxEdgeDetector();
 	void updateImage(ofxCvGrayscaleImage& src_img);
 	void detectEdges();
+	void thinPaths();
+	double minPathDist(cv::Point p);
+	
+	// These need to be public to be accessed by GUI routines. Don't use
 	void cannyThreshold(int newThresh, void *);
 	void keyResponder(int c);
 	void selectContours(int x, int y);
 	vector<int> selContours;
+
 	vector<vector<cv::Point> > pathPts;
+	vector<vector<cv::Point> > skelPathPts;
 
 protected:
-	//ofxCvGrayscaleImage bgImg;
+	// Internally, we handle all of the image processing in OpenCV 2.x style C++
+	// function calls.  The Mat image stucture is much more convenient than the 
+	// former style
+
 	Mat bgImg, edgeImg, contourImg;
 	Mat paths, seedPts;
 	cv::Size imSize;
@@ -35,6 +45,7 @@ protected:
 	int activePath;
 	vector<vector<int> > pathContours;
 	
+
 	
 	void initWindows();
 	void computeContours();
@@ -49,7 +60,6 @@ protected:
 	Mat drawPathOverlay(vector<vector<cv::Point> > pts);
 	Mat drawContourPoints(const vector<cv::Point>& contourPts, int matrixType, Vec3b *newColor = 0, bool blend = 0);
 	Mat drawContourPoints(const vector<cv::Point>& contourPts, Mat img, int matrixType, Vec3b *color = 0, bool blend = 0);
-
 
 };
 
