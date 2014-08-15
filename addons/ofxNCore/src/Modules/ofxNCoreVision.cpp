@@ -520,7 +520,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 		//Sending TUIO messages
 		if (myTUIO.bOSCMode || myTUIO.bTCPMode || myTUIO.bBinaryMode)
 		{
-			printf("sending data osc : %d TCP : %d binary : %d\n", myTUIO.bOSCMode, myTUIO.bTCPMode, myTUIO.bBinaryMode);
+			//printf("sending data osc : %d TCP : %d binary : %d\n", myTUIO.bOSCMode, myTUIO.bTCPMode, myTUIO.bBinaryMode);
 			myTUIO.setMode(contourFinder.bTrackFingers , contourFinder.bTrackObjects, contourFinder.bTrackFiducials);
 			myTUIO.sendTUIO(&getBlobs(),&getObjects(),&fidfinder.fiducialsList);
 		}
@@ -561,10 +561,10 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 				// Do file saving stuff
 				sprintf(headStr, "Areas: %d\n", tracker.trackedBlobs.size());
 				logFile << headStr;
-				for (ii=0; ii<tracker.trackedBlobs.size(); ii++) {
-					blobStr = tracker.trackedBlobs[ii].print();
-					sprintf(tstr, "%0.2f", tracker.trackedBlobs[ii].lastTimeTimeWasChecked);
-					printf(blobStr.c_str());
+				for (ii=0; ii < contourFinder.nBlobs; ii++) {
+					blobStr = contourFinder.blobs[ii].print();
+					sprintf(tstr, "%0.2f", contourFinder.blobs[ii].lastTimeTimeWasChecked);
+					//printf(blobStr.c_str());
 					logFile << "t:" << tstr << " " << blobStr << "\n";
 				}
 				
@@ -630,7 +630,8 @@ void ofxNCoreVision::getPixels()
 				//if(gpu_set_input( ctx, (unsigned char *)capturedData) != GPU_OK) {
 				//	GPU_ERROR("Unable to set context buffer");
 				//	return;
-				//}	
+				//}
+				
 			}
 		#endif
 	}
@@ -901,6 +902,8 @@ void ofxNCoreVision::drawFingerOutlines()
 			{
 				float xpos = contourFinder.blobs[i].centroid.x * (326.0f/camWidth);
 				float ypos = contourFinder.blobs[i].centroid.y * (246.0f/camHeight);
+				//if (i == 0)
+				//	cout << "drawFingerOutlines: " << xpos << " , " << ypos << "\n";
 
 				ofSetColor(0xCCFFCC);
 				char idStr[1024];
@@ -909,6 +912,18 @@ void ofxNCoreVision::drawFingerOutlines()
 
 				verdana.drawString(idStr, xpos + MAIN_FILTERS_X+335, ypos + contourFinder.blobs[i].boundingRect.height/2 + 45);
 			}
+		}
+		if (bDrawOutlines) { //also draw the center of mass of the tracked blobs
+			float xpos, ypos;
+
+			contourFinder.getBlobsCenterOfMass(xpos, ypos);
+			xpos = xpos * (326.0f/camWidth);
+			ypos = ypos * (246.0f/camHeight);
+
+			ofSetColor(0xCCFFCC);
+			char idStr[] = "x";
+			//cout << "COM: " << xpos << " , " << ypos << "\n";
+			verdana.drawString(idStr, xpos + MAIN_FILTERS_X, ypos + MAIN_TOP_OFFSET);
 		}
 	}
 	//Object Drawing

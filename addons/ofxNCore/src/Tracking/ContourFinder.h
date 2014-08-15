@@ -41,7 +41,9 @@ class ContourFinder
 
     vector <Blob>		blobs;      // the blobs, in a std::vector...
 	vector <Blob>		objects;
-
+	
+	void getBlobsCenterOfMass(float& xpos, float& ypos); // the center of mass of the blobs
+	
 	bool bTrackFingers;
 	bool bTrackObjects;
 	bool bTrackFiducials;

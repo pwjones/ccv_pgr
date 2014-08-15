@@ -35,11 +35,13 @@ string Blob::print()
 	string ptStr = string("Points: ");
 	char ptChar[40], posStr[40], areaStr[40];
 	string wholeStr = string();
+	float height = ofGetHeight();
+	float width = ofGetWidth();
 
 	sprintf(posStr, "Pos:[%.2f,%.2f] ", centroid.x, centroid.y);
 	sprintf(areaStr, "Area:%d ", nPts); 
 	for (int i = 0; i < nPts; i++) {
-		sprintf(ptChar, "[%d,%d]", pts[i].x, pts[i].y);
+		sprintf(ptChar, "[%d,%d]", (int)pts[i].x, (int)pts[i].y);
 		ptStr.append(ptChar);
 	}
 	wholeStr.append(posStr);

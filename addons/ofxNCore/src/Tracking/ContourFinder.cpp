@@ -196,6 +196,7 @@ int ContourFinder::findContours( ofxCvGrayscaleImage&  input,
 				{
 					CV_READ_SEQ_ELEM( pt, reader );
 					blob.pts.push_back( ofPoint((float)pt.x, (float)pt.y) );
+					// Note: these points are whole number positions, not linear position in data array either
 				}
 				blob.nPts = blob.pts.size();
 
@@ -217,3 +218,32 @@ int ContourFinder::findContours( ofxCvGrayscaleImage&  input,
 	return nBlobs;
 }
 
+void ContourFinder::getBlobsCenterOfMass(float& xpos, float& ypos)
+{
+	float *ypos_weighted = new float[nBlobs];
+	float *xpos_weighted = new float[nBlobs];
+	float totalMass = 0;
+	float sumX = 0, sumY = 0;
+
+	// iterate through the blobs. Get the area weighted x,y positions
+	for( int i = 0; i < nBlobs; i++) {
+		xpos_weighted[i] = blobs[i].centroid.x * blobs[i].area;
+		ypos_weighted[i] = blobs[i].centroid.y * blobs[i].area;
+		totalMass += blobs[i].area;
+		//cout << "x: " << xpos_weighted[i] << "  y: " << ypos_weighted[i];
+	}
+	//cout << "\n";
+	// calculate the mean by summing and dividing my total
+	for ( int i = 0; i < nBlobs; i++ ) {
+		sumX += xpos_weighted[i];
+		sumY += ypos_weighted[i];
+	}
+	//x = sumX/nBlobs;
+	//y = sumY/nBlobs;
+	// set return vals
+	xpos = sumX/totalMass;
+	ypos = sumY/totalMass;
+	//clean up
+	delete [] xpos_weighted;
+	delete [] ypos_weighted;
+}

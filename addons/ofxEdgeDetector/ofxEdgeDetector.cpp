@@ -284,7 +284,7 @@ Mat ofxEdgeDetector::drawContourPoints(const vector<cv::Point>& contourPts, Mat 
 				else
 					img.at<Vec3b>(contourPts[i]) = color;
 			} else {
-				cout << "Point (" << contourPts[i].x << ", " << contourPts[i].y << ") out of bounds\n";
+				//cout << "Point (" << contourPts[i].x << ", " << contourPts[i].y << ") out of bounds\n";
 			}
 			//cout << "Point: (" << contourPts[i].x << ", " << contourPts[i].y << ")\n";
 			//cout << "Color: " << 
