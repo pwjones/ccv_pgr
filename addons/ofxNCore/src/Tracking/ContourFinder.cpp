@@ -58,17 +58,13 @@ int ContourFinder::findContours( ofxCvGrayscaleImage&  input,
     // 320x240 image better to make two ContourFinder objects then to use
     // one, because you will get penalized less.
 
-	if( inputCopy.width == 0 ) 
-	{
+	if( inputCopy.width == 0 ) {
 		inputCopy.allocate( input.width, input.height );
 		inputCopy = input;
-	} 
-	else 
-	{
-		if( inputCopy.width == input.width && inputCopy.height == input.height ) 
+	} else {
+		if( inputCopy.width == input.width && inputCopy.height == input.height ) {
 			inputCopy = input;
-		else 
-		{
+		} else {
 			// we are allocated, but to the wrong size --
 			// been checked for memory leaks, but a warning:
 			// be careful if you call this function with alot of different

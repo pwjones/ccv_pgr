@@ -31,10 +31,11 @@ void ofxFC2MovieWriter::init(string fileNameBase, AviType aviType, float frameRa
 	// Generate a filename consisting of the fileNameBase and a timestamp
 	timeStr = makeFormattedTimestamp();
 	tempName = fileNameBase;
+	tempName.append("_");
 	tempName.append(timeStr);
 	tempName.append(ext);
 	aviFileName = tempName;
-	printf("Trying to open file: %s", aviFileName.c_str());
+	printf("Trying to open file: %s\n", aviFileName.c_str());
 	switch (aviType)
     {
     case UNCOMPRESSED:

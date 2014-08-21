@@ -157,6 +157,7 @@ class ofxNCoreVision : public ofxGuiListener
 		logPanel_detectEdges,
 		logPanel_saveMovie,
 		logPanel_logFile,
+		logPanel_saveBothMovieLog,
 
 		templatePanel,
 		savePanel,
@@ -222,6 +223,7 @@ public:
 		fps			= 0;
 		lastFPSlog	= 0;
 		differenceTime = 0;
+		saveMovieSubsample = 3;
 		//bools
 		bCalibration= 0;
 		bFullscreen = 0;
@@ -237,9 +239,10 @@ public:
 		bMulticamDialog = false;
 		showConfiguration = 0;
 		bSavingLog = 0;
+		bSaveMovieLog = 0;
 		bDetectEdges = 0;
 		//camera
-		camRate = 90;
+		camRate = 100;
 		camWidth = 320;
 		camHeight = 240;
 		//ints/floats
@@ -353,6 +356,7 @@ public:
 	unsigned int 		camHeight;
 	int					winWidth;
 	int					winHeight;
+	int					saveMovieSubsample;
 	int					MIN_BLOB_SIZE;
 	int					MAX_BLOB_SIZE;
 	float				backgroundLearnRate;
@@ -368,6 +372,7 @@ public:
 	bool				bSaveMovie;
 	bool				bSavingMovie;
 	bool				bSavingLog;
+	bool				bSaveMovieLog;
 	bool  				bFullscreen;
 	bool 				bCalibration;
 	bool				bShowLabels;
@@ -415,6 +420,7 @@ public:
 	int  				fps;
 	float				lastFPSlog;
 	int					differenceTime;
+	int					framesSinceSave;
 
 	//Fonts
 	ofTrueTypeFont		verdana;
@@ -463,7 +469,7 @@ public:
 	CPUImageFilter      processedImg;
 	ofxCvColorImage		sourceImg;
 	CPUImageFilter		sourceGrayImg;
-	ofxEdgeDetector		pathImg;  // The object to detect paths from the background image
+	ofxEdgeDetector		pathDetector;  // The object to detect paths from the background image
 
 	//XML Settings Vars
 	ofxXmlSettings		XML;

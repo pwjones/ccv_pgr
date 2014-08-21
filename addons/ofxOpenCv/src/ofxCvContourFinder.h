@@ -34,7 +34,7 @@ class ofxCvContourFinder : public ofBaseDraws {
     virtual int  findContours( ofxCvGrayscaleImage& input,
                                int minArea, int maxArea,
                                int nConsidered, bool bFindHoles,
-                               bool bUseApproximation = true);
+                               bool bUseApproximation = false);
                                // approximation = don't do points for all points 
                                // of the contour, if the contour runs
                                // along a straight line, for example...

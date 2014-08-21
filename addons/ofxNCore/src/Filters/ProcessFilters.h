@@ -365,22 +365,23 @@ void applyCPUFilters(CPUImageFilter& img){
  ****************************************************************/
     void draw()
     {
-		// SEE ofxNCoreVision: MAIN_TOP_OFFSET
-		if (drawAllData)
-		{
-			grayImg.draw(250, 25, 326, 246);
-			grayDiff.draw(250+335, 25, 326, 246);
+		if (!bMiniMode) {
+			if (drawAllData) {
+				grayImg.draw(250, 25, 326, 246);
+				grayDiff.draw(250+335, 25, 326, 246);
+			}
+			//
+			floatBgImg.draw(250+137*0, 365, 129, 96);
+			subtractBg.draw(250+137*1, 365, 129, 96);
+			highpassImg.draw(250+137*2, 365, 129, 96);
+			amplifyImg.draw(250+137*3, 365, 129, 96);
+		} else if (bMiniMode) {
+			grayImg.draw(0, 0, ofGetWidth(), ofGetHeight()-96);
 		}
-		//
-        floatBgImg.draw(250+137*0, 365, 129, 96);
-        subtractBg.draw(250+137*1, 365, 129, 96);
-        highpassImg.draw(250+137*2, 365, 129, 96);
-		amplifyImg.draw(250+137*3, 365, 129, 96);
     }
 
     void drawGPU()
-    {
-	
+	{
         drawGLTexture(500, 700, 320, 240, gpuSourceTex);
         drawGLTexture(500, 800, 128, 96, gpuBGTex);
         gaussVFilter->drawOutputTexture(500, 900, 128, 96);

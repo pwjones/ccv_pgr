@@ -143,7 +143,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 
 	//Setup the movieWriter to save the incoming video
 	movieWriter = new ofxFC2MovieWriter();
-	//pathImg = ofxEdgeDetector();
+	//pathDetector = ofxEdgeDetector();
 	/*
 	//CUDA context initialization
 	if ( gpu_context_create(&ctx) != GPU_OK )
@@ -447,10 +447,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 	}
 	else//else process camera frame
 	{
-		// Main Application BG Color
-		//ofBackground(0, 0, 0);
-		//ofBackground(255, 255, 255);
-
+		
 		// Calculate FPS of Camera
 		frames++;
 		float etime = ofGetElapsedTimeMillis();
@@ -476,8 +473,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 					fidfinder.findFiducials( filter_fiducial->gpuReadBackImageGS );
 			}
 		}
-		else
-		{
+		else { // not GPUmode
 			grabFrameToCPU();
 			//sourceImg.setFromGrayscalePlanarImages(processedImg, processedImg, processedImg);
 			sourceGrayImg.setFromPixels(processedImg.getPixels(), processedImg.getWidth(), processedImg.getHeight()); //copy that image
@@ -504,9 +500,6 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			tracker.doFiducialCalculation();
 		}
 
-		//get DSP time
-		differenceTime = ofGetElapsedTimeMillis() - beforeTime;
-
 		//Dynamic Background subtraction LearRate
 		if (filter->bDynamicBG)
 		{
@@ -524,8 +517,27 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			myTUIO.setMode(contourFinder.bTrackFingers , contourFinder.bTrackObjects, contourFinder.bTrackFiducials);
 			myTUIO.sendTUIO(&getBlobs(),&getObjects(),&fidfinder.fiducialsList);
 		}
-		if (bSaveBgImage) { // This implementation works, but is not ideal because it needs the Flea3 camera, and the
-							// getNewImage method to be public, which it shouldn't be.
+
+		if (bDetectEdges) {
+			// Do some edge detection
+			pathDetector.updateImage(filter->grayImg);
+			pathDetector.detectEdges();
+			bDetectEdges = 0;
+			// Seems like this is likely to just block the updating, which is ok
+		}
+
+		// Report the distance from the trail
+		if (pathDetector.pathsDetected() && contourFinder.bTrackFingers && contourFinder.nBlobs > 0) {
+			float comx, comy;
+
+			contourFinder.getBlobsCenterOfMass(comx, comy);
+			float minDist = pathDetector.minPathDist(cv::Point(comx, comy), 0);
+			//printf("  COM: ( %f, %f )     Dist to path: %f\n", comx, comy, minDist);
+		}
+		
+		// This implementation works, but is not ideal because it needs the Flea3 camera, and the
+		// getNewImage method to be public, which it shouldn't be.
+		if (bSaveBgImage) { 
 			printf("Printing bgImage\n");
 			unsigned char *saveImg = sourceImg.getPixels();
 			ofxFlea3 *cam = (ofxFlea3 *) multiplexerManager->getCameraBase(0);
@@ -537,15 +549,24 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			bSaveBgImage = 0;
 
 		}
+
 		if (bSaveMovie) { // Do movie saving things - this functionality also needs the FlyCapture2 library
 			if (bSavingMovie) {//then already saving and just want to append
-				movieWriter->writeGrayMovieFrame(sourceGrayImg.getPixels(), sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
+				if (framesSinceSave % saveMovieSubsample == 0) {
+					movieWriter->writeGrayMovieFrame(sourceGrayImg.getPixels(), sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
+					framesSinceSave = 0;
+				}
+				framesSinceSave++;
 			} else { //start saving the movie
 				//printf("Trying to initialize the movie saving\n");
 				//movieWriter->init("F:/Data/ccv_movies/mov", MJPG, fps, sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
-				movieWriter->init(savedMovieFileName.c_str(), MJPG, fps, sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
-				movieWriter->writeGrayMovieFrame(sourceGrayImg.getPixels(), sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
+				printf("Starting to save movie on frame: %d\n", frames);
+				movieWriter->init(savedMovieFileName.c_str(), MJPG, fps/saveMovieSubsample, sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
+				//movieWriter->writeGrayMovieFrame(sourceGrayImg.getPixels(), sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
+				// Movie lags the log by a single frame (I don't understand why), so write an extra one on opening - PWJ, 8/20/2014
+				//movieWriter->writeGrayMovieFrame(sourceGrayImg.getPixels(), sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
 				bSavingMovie = 1;
+				framesSinceSave = 1;
 			}
 		} else {
 			if (bSavingMovie) {
@@ -553,7 +574,9 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 				bSavingMovie = 0;
 			}
 		}
-		if (bSavingLog) { // This is writing the blob info directly to a log file.
+
+		// This is writing the blob info directly to a log file.
+		if (bSavingLog) { 
 			if (logFile.is_open()) {
 				//printf("The log file is open\n");
 				string blobStr;
@@ -580,11 +603,14 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 				sprintf(logfn, "%s_%s.txt", logfn_base, timestr);
 				logFile.open(logfn, ios::out);
 				if (logFile.fail()) {
-					printf("Failed opening the log file: %s\n", logfn);
+					printf("Frame: %d     Failed opening the log file: %s\n", frames, logfn);
 				} else {
-					printf("Succeeded opening the log file: %s\n", logfn);
+					printf("Frame  %d     Succeeded opening the log file: %s\n", frames, logfn);
 				}
 				free(timestr);
+				// print a header with the path information
+				logFile << "MovieSubsample:" << saveMovieSubsample << "\n";
+				logFile << pathDetector.print();
 			}
 		} else {
 			if (logFile.is_open()) {
@@ -592,13 +618,9 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 				logFile.close();
 			}
 		}
-		if (bDetectEdges) {
-			// Do some edge detection
-			pathImg.updateImage(filter->grayImg);
-			pathImg.detectEdges();
-			bDetectEdges = 0;
-			// Seems like this is likely to just block the updating, which is ok
-		}
+		
+		//get DSP time
+		differenceTime = ofGetElapsedTimeMillis() - beforeTime;
 	}
 }
 
@@ -829,21 +851,22 @@ void ofxNCoreVision::drawFullMode()
 		ofSetColor(0x555555);
 		verdana.drawString(buf, DEBUG_TEXT_OFFSET_X2, DEBUG_TEXT_OFFSET_Y2);
 	}
-	/*
-	else
-	{
-		ofSetColor(128,128,128,128);
-		ofFill();
-		ofRect(10,385,702, 206);
-		ofRect(10,10,702, 370);
-	}
-	*/
 }
 
 void ofxNCoreVision::drawMiniMode()
 {
 	ofBackground(0, 0, 0);
 
+	////// ------- cut from the full draw
+	if (bGPUMode) filter->drawGPU();
+	else {
+		filter->drawAllData = !bFidtrackInterface;
+		filter->draw();
+		if (bFidtrackInterface)
+			filter_fiducial->draw();
+	}
+	///// -------- end cut from full draw 
+	
 	//black background
 	ofSetColor(0,0,0);
 	ofRect(0,0,ofGetWidth(), ofGetHeight());
@@ -884,6 +907,7 @@ void ofxNCoreVision::drawMiniMode()
 	ofFill();
 	ofCircle(ofGetWidth() - 17 , ofGetHeight() - 10, 5);
 	ofNoFill();
+	ofSetColor(255,255,255);
 }
 
 void ofxNCoreVision::drawFingerOutlines()
@@ -950,7 +974,6 @@ void ofxNCoreVision::drawFingerOutlines()
 			}
 		}
 	}
-
 
 	ofSetColor(0xFFFFFF);
 }

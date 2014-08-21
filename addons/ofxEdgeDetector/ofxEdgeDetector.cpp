@@ -27,11 +27,17 @@ ofxEdgeDetector::ofxEdgeDetector() {
 	activePath = 1;
 	pathPts.reserve(2); // make sure that there are at least 2 spots in vector.
 	skelPathPts.reserve(2);
+	detected = 0;
 	edgeObj = this;
 
 }
 ofxEdgeDetector::~ofxEdgeDetector()
 {
+}
+
+bool ofxEdgeDetector::pathsDetected()
+{
+	return(detected);
 }
 // ------------------------------------------------------------
 void ofxEdgeDetector::updateImage(ofxCvGrayscaleImage& src_img)
@@ -68,14 +74,20 @@ void ofxEdgeDetector::detectEdges()
 	destroyWindow(contourWind);
  }
 
-double ofxEdgeDetector::minPathDist(cv::Point p)
+double ofxEdgeDetector::minPathDist(cv::Point p, int pathNum)
 {
 	cv::Size s = bgImg.size();
+	 // use the skeleton path points if they are there
+	vector<vector<cv::Point> >& pts = (skelPathPts.size() > 0) ? skelPathPts : pathPts;
+		
 	double minDist = euclidianDist(cv::Point(0,0), cv::Point(s.width, s.height)); 
-	if (skelPathPts.size() > 0) {
-		int l = skelPathPts[0].size();
-		for (int i=0; i< l; i++ ) {
-			double dist = euclidianDist(p, skelPathPts[0][i]);
+	if (pts.size() > 0) {
+		if (pathNum+1 > pts.size()) //check to not overindex the paths
+			pathNum = 0;
+
+		int len = pts[pathNum].size();
+		for (int i=0; i< len; i++ ) { //check each point in the 1st path
+			double dist = euclidianDist(p, pts[0][i]);
 			if (dist < minDist)
 				minDist = dist;
 		}
@@ -142,14 +154,19 @@ void ofxEdgeDetector::selectPaths()
 		pathPts.push_back(pv);
 	}
 	int sp[] = {0, 1};
+	//pathPts.clear();
+	vector<cv::Point> tempPts;
 	for ( int i = 0; i < 2; i++ ) { // going to fill the paths by closing
 		//Mat pathIm = drawSelectedPaths(sp[i], 1);
 		Mat pathIm = closePathImg(&sp[i], 1);
 		//imshow(contourWind, pathIm);
 		//waitKey(0);
-		pathPts[i].clear();
-		//cout << "Before listPnts:" << pathPts[i].size() << "\n"; 
-		listPointsInImage(pathIm, pathPts[i]);
+		//pathPts[i].clear();
+		//cout << "Before listPnts:" << pathPts[i].size() << "\n";
+		tempPts.clear();
+		listPointsInImage(pathIm, tempPts);
+		pathPts[i] = tempPts;
+		//listPointsInImage(pathIm, pathPts[i]);
 		//cout << "After listPnts:" << pathPts[i].size() << "\n"; 
 		//pathIm = drawPathOverlay(&sp[i],1);
 	}
@@ -157,7 +174,7 @@ void ofxEdgeDetector::selectPaths()
 	drawPathOverlay(pathPts);
 	setMouseCallback(origWind, mouseDoNothing, 0 );
 	setMouseCallback(contourWind, mouseDoNothing, 0 );
-	//waitKey(0);
+	detected = 1;
 }
 
 void ofxEdgeDetector::thinPaths()
@@ -178,6 +195,7 @@ void ofxEdgeDetector::thinPaths()
 		//imshow("skeleton", skelIm);
 		//imshow(contourWind, pIm);
 		//waitKey(0);
+		pts.clear();
 	}
 	pIm = drawPathOverlay(pathPts);
 	skelIm = drawContourPoints(skelPathPts[0], CV_8UC3);
@@ -188,8 +206,8 @@ void ofxEdgeDetector::thinPaths()
 	//resizeWindow( "skeleton", skelIm.size().width/3, skelIm.size().height/3);
 	imshow(contourWind, combo);
 	// checking the path dist
-	cout << "Distance from 0: " << minPathDist(cv::Point(0,0)) << "\n";
-	cout << "Distance from (1280,1024): " << minPathDist(cv::Point(1280,1024)) << "\n";
+	cout << "Distance from 0: " << minPathDist(cv::Point(0,0), 0) << "\n";
+	cout << "Distance from (1280,1024): " << minPathDist(cv::Point(1280,1024), 0) << "\n";
 }
 
 // -----------------------------------
@@ -442,6 +460,35 @@ void ofxEdgeDetector::findNearbyContours(int x, int y, vector<int>& neari)
 	//return(neari);
 }
 
+// --------------------------------
+string ofxEdgeDetector::print()
+{
+	std::stringstream pathstr;
+	char ptstr[50];
+
+	//Print the formatted points for the paths, skeletonized and full
+	pathstr << "Paths:" << pathPts.size() << "\n";
+	for (int i=0; i< pathPts.size(); i++) {
+		pathstr << "Path " << i << ":";
+		for ( int j=0; j < pathPts[i].size(); j++ ) {
+			sprintf(ptstr, "[%d,%d]", pathPts[i][j].x, pathPts[i][j].y);
+			pathstr << ptstr;
+		}
+		pathstr << "\n";
+	}
+
+	//Print the formatted points for the paths, skeletonized
+	pathstr << "skeletonPaths:" << skelPathPts.size() << "\n";
+	for (int i=0; i< skelPathPts.size(); i++) {
+		pathstr << "Path " << i << ":";
+		for ( int j=0; j < skelPathPts[i].size(); j++ ) {
+			sprintf(ptstr, "[%d,%d]", skelPathPts[i][j].x, skelPathPts[i][j].y);
+			pathstr << ptstr;
+		}
+		pathstr << "\n";
+	}
+	return(pathstr.str());
+}
 
 // ------------------------  Local Functions   -----------------                 
 

@@ -19,7 +19,9 @@ public:
 	void updateImage(ofxCvGrayscaleImage& src_img);
 	void detectEdges();
 	void thinPaths();
-	double minPathDist(cv::Point p);
+	double minPathDist(cv::Point p, int pathNum);
+	bool pathsDetected();
+	string print();
 	
 	// These need to be public to be accessed by GUI routines. Don't use
 	void cannyThreshold(int newThresh, void *);
@@ -44,8 +46,7 @@ protected:
 	vector<Vec4i> hierarchy;
 	int activePath;
 	vector<vector<int> > pathContours;
-	
-
+	bool detected;
 	
 	void initWindows();
 	void computeContours();

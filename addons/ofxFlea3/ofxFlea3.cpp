@@ -186,6 +186,7 @@ void ofxFlea3::initFlea3(int wid,int hei,int startX,int startY)
 			PrintError( error );
 			return;
 		}
+		printf("Attempting to set camera framerate to %d fps\n", framerate); 
 		frmRate.valueA = framerate;
 		frmRate.absValue = framerate;
 		error = cams[i].SetProperty( &frmRate );

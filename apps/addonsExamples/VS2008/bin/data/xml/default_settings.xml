@@ -129,7 +129,7 @@
             <SENSOR>
             	<MODE>0</MODE>
                 <DEPTH>1</DEPTH>
-                <FRAMERATE>60</FRAMERATE>
+                <FRAMERATE>90</FRAMERATE>
             </SENSOR>
         </SETTINGS>
     </CAMERA>

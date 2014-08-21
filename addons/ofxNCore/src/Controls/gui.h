@@ -143,6 +143,7 @@ void ofxNCoreVision::updateMainPanels()
 	controls->update(appPtr->logPanel_saveBgImage, kofxGui_Set_Bool, &appPtr->bSaveBgImage, sizeof(bool));
 	controls->update(appPtr->logPanel_saveMovie, kofxGui_Set_Bool, &appPtr->bSaveMovie, sizeof(bool));
 	controls->update(appPtr->logPanel_logFile, kofxGui_Set_Bool, &appPtr->bSavingLog, sizeof(bool));
+	controls->update(appPtr->logPanel_saveBothMovieLog, kofxGui_Set_Bool, &appPtr->bSaveMovieLog, sizeof(bool));
 	controls->update(appPtr->saveFilePanel_movieFileName, kofxGui_Set_Bool, &appPtr->bSavingMovie, sizeof(bool));
 	controls->update(appPtr->logPanel_detectEdges, kofxGui_Set_Bool, &appPtr->bDetectEdges, sizeof(bool));
 	//controls->update(appPtr->optionPanel_win_hid, kofxGui_Set_Bool, &appPtr->bWinTouch, sizeof(bool));
@@ -210,6 +211,7 @@ void ofxNCoreVision::addMainPanels()
 	string logLabel = "Log: ";
 	logLabel.append(logFileName);
 	logPanel->addButton(appPtr->logPanel_logFile, logLabel, OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
+	logPanel->addButton(appPtr->logPanel_saveBothMovieLog, "Save Movie and Log", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	logPanel->mObjWidth = 200;
 	logPanel->mObjHeight = 125;
 
@@ -760,10 +762,23 @@ void ofxNCoreVision::handleGui(int parameterId, int task, void* data, int length
 				bSavingLog=*(bool*)data;
 			printf("bSavingLog = %d\n", bSavingLog);
 			break;
+		case logPanel_saveBothMovieLog:
+			if(length == sizeof(bool)) {
+				bSaveMovieLog=*(bool*)data;
+				bSavingLog = *(bool*)data;
+				bSaveMovie = *(bool*)data;
+			}
+			printf("bSavingMovieLog = %d\n", bSaveMovieLog);
+			break;
 		case logPanel_detectEdges:
 			if(length == sizeof(bool))
 				bDetectEdges=*(bool*)data;
-			printf("bDetectEdges = %d\n", bDetectEdges);
+			if (bDetectEdges) { //Trigger edge detection
+				pathDetector.updateImage(filter->grayImg);
+				pathDetector.detectEdges();
+				printf("bDetectEdges = %d\n", bDetectEdges);
+				bDetectEdges = 0;
+			}
 			break;
 		//Tracking Panel
 		case trackingPanel_trackFingers:
@@ -860,14 +875,8 @@ void ofxNCoreVision::handleGui(int parameterId, int task, void* data, int length
 					controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
 				}
 			}
-			//clear blobs
-//				myTUIO.blobs.clear();
+
 			break;
-// 		case optionPanel_tuio_height_width:
-// 			if(length == sizeof(bool))
-// 				myTUIO.bHeightWidth = *(bool*)data;
-// 			break;
-		//Background
 		case backgroundPanel_dynamic:
 			if(length == sizeof(bool))
 				filter->bDynamicBG = *(bool*)data;
@@ -882,7 +891,6 @@ void ofxNCoreVision::handleGui(int parameterId, int task, void* data, int length
 			if(length == sizeof(float))
 				backgroundLearnRate = *(float*)data;
 			break;
-		//Highpass
 		case highpassPanel_use:
 			if(length == sizeof(bool))
 			{

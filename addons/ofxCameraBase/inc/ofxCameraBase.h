@@ -29,7 +29,7 @@ public:
 		height = 480;
 		left = 0;
 		top = 0;
-		framerate = 30;
+		framerate = 90;
 		isInitialized = false;
 		index = 0;
 		memset((void*)&guid,0,sizeof(GUID));
