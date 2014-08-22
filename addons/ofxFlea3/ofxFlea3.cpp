@@ -123,15 +123,12 @@ void ofxFlea3::initFlea3(int wid,int hei,int startX,int startY)
 		//Get embedded information
 		EmbeddedImageInfo info;
 		error = cams[i].GetEmbeddedImageInfo(&info);
-		//Set embedded timestamp
-		info.timestamp.onOff = true;
-		//Set embedded information
-		error = cams[i].SetEmbeddedImageInfo(&info);
+		info.timestamp.onOff = true; //Set embedded timestamp
+		error = cams[i].SetEmbeddedImageInfo(&info); //Set embedded information
 		
 		// Format 7 is the custom video mode that allows "non-standard" resolutions and frame rates.
 		// Must use format 7 specific methods
 		// Query for available Format 7 modes
-
 		Format7Info fmt7Info;
 		bool supported;
 		fmt7Info.mode = k_fmt7Mode;
@@ -334,6 +331,22 @@ void ofxFlea3::getCameraFeature(CAMERA_BASE_FEATURE featureCode,int* firstValue,
 			*isEnabled = deviceProperty.onOff;
 			*minValue = 0;
 			*maxValue = (int) deviceProperty.valueA;
+		}
+	}
+}
+
+void ofxFlea3::setTriggerMode(bool isEnabled, unsigned int polarity, unsigned int source, float delayms)
+{
+	TriggerMode trig;
+	trig.onOff = isEnabled;
+	trig.polarity = polarity;
+	trig.source = source;
+	//delayms = 0;
+
+	for (int i = 0; i<camNum; i++) {
+		Error error = cams[i].SetTriggerMode(&trig);
+		if (error != PGRERROR_OK) {
+			printf("Error setting camera trigger modes %d\n", i);
 		}
 	}
 }
