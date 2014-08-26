@@ -63,7 +63,7 @@
 #define MAIN_PANEL_PADDING 10
 
 // MAIN FILTER POSITIONS
-#define MAIN_TOP_OFFSET 25
+#define MAIN_TOP_OFFSET 20
 #define MAIN_FILTERS_W 137
 #define MAIN_FILTERS_X 250
 #define MAIN_FILTERS_Z 110
@@ -193,10 +193,9 @@ class ofxNCoreVision : public ofxGuiListener
 
 		dragging_image,
 
-		saveFilePanel,
-		saveFilePanel_movieFileName,
-		saveFilePanel_logFileName
-
+		triggerPanel,
+		triggerPanel_use,
+	
 	};
 
 public:
@@ -241,6 +240,7 @@ public:
 		bSavingLog = 0;
 		bSaveMovieLog = 0;
 		bDetectEdges = 0;
+		bUseCameraTrig = 0;
 		//camera
 		camRate = 100;
 		camWidth = 320;
@@ -378,6 +378,7 @@ public:
 	bool				bShowLabels;
 	bool				bNewFrame;
 	bool				bMulticamDialog;
+	bool				bUseCameraTrig;
 	bool				interleaveMode;
 	//filters
 	bool				bAutoBackground;
