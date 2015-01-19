@@ -220,6 +220,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\parallelPort.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\testApp.cpp"
 				>
 			</File>
@@ -301,6 +305,14 @@
 				<Filter
 					Name="src"
 					>
+					<File
+						RelativePath="..\..\..\addons\ofxNetwork\src\CSerial.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\addons\ofxNetwork\src\CSerial.h"
+						>
+					</File>
 					<File
 						RelativePath="..\..\..\addons\ofxNetwork\src\ofxNetwork.h"
 						>
@@ -1158,6 +1170,10 @@
 		</File>
 		<File
 			RelativePath=".\ClassDiagram2.cd"
+			>
+		</File>
+		<File
+			RelativePath=".\parallelPort.h"
 			>
 		</File>
 	</Files>

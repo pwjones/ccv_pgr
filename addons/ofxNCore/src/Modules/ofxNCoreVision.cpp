@@ -260,6 +260,8 @@ void ofxNCoreVision::loadXMLSettings()
 	tmpFlashPort				= XML.getValue("CONFIG:NETWORK:TUIOFLASHPORT_OUT", 3000);
 	myTUIO.version              = XML.getValue("CONFIG:NETWORK:VERSION",0);
 	myTUIO.setup(tmpLocalHost.c_str(), tmpPort, tmpFlashPort); //have to convert tmpLocalHost to a const char*
+	serialPortName				= XML.getValue("CONFIG:NETWORK:SERIAL", "COM3");
+	parallelPortName			= XML.getValue("CONFIG:NETWORK:PARALLEL", "LPT1");
 	//--------------------------------------------------------------
 	//  END XML SETUP
 
@@ -526,14 +528,68 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			// Seems like this is likely to just block the updating, which is ok
 		}
 
-		// Report the distance from the trail
-		if (pathDetector.pathsDetected() && contourFinder.bTrackFingers && contourFinder.nBlobs > 0) {
-			float comx, comy;
-
-			contourFinder.getBlobsCenterOfMass(comx, comy);
-			float minDist = pathDetector.minPathDist(cv::Point(comx, comy), 0);
-			//printf("  COM: ( %f, %f )     Dist to path: %f\n", comx, comy, minDist);
+		if (bParallel) {
+			if (!bParallelOpen) {
+				printf("Opening a parallel port connection\n");
+				char tmpName[28];
+				strcpy(tmpName, parallelPortName.c_str());
+				unsigned int ad = checkParallelAddress(tmpName);
+				if (ad != parallelAd) {
+					printf("Parallel port does not equal the standard address\n");
+					parallelAd = ad;
+				} 
+				OpenPortTalk();
+				if (ad)
+					bParallelOpen = 1;
+			}
+			setOutOff(parallelAd);
+			if (giveReward) // this will stay high for a frame, long enough to read without pausing execution
+				toggleOut(parallelAd);
+			if (isInputHigh(parallelAd)) {
+				//Reset some things
+			}	
 		}
+
+		// Serial port output
+		if (bSerial) {
+			if (!bSerialOpen) {
+				printf("Opening a serial port connection\n");
+				char tmpName[28];
+				strcpy(tmpName, serialPortName.c_str());
+				//bool serialSuccess = OpenSerialPort(SerialPortName, dcb, hPort);
+				bool serialSuccess = serialOut.Open(tmpName, 115200);
+				if (serialSuccess)
+					bSerialOpen = 1;
+			}
+			if (contourFinder.bTrackFingers && contourFinder.nBlobs > 0) {
+				float comx, comy;
+				char tmp[80];
+				string serialMsg;
+
+				if (pathDetector.pathsDetected()) { //send distance to trail and CenterOfMass
+					contourFinder.getBlobsCenterOfMass(comx, comy);
+					float minDist = pathDetector.minPathDist(cv::Point(comx, comy), 0);
+					//printf("  COM: ( %f, %f )     Dist to path: %f\n", comx, comy, minDist);
+					sprintf(tmp, "xpos=%d\nypos=%d\ndistToTrail=%.d;\n", (int)comx, (int)comy, (int)minDist);
+					serialMsg = tmp;
+					serialOut.SendData(serialMsg.c_str(), serialMsg.length());
+				} else { // just send CenterOfMass
+					contourFinder.getBlobsCenterOfMass(comx, comy);
+					sprintf(tmp, "xpos=%d\nypos=%d;\n", (int)comx, (int)comy);
+					serialMsg = tmp;
+					serialOut.SendData(serialMsg.c_str(), serialMsg.length());
+				}
+			}
+		} else {
+			if (bSerialOpen) { //closing the serial port
+				bool closeSuccess = serialOut.Close();
+				if (closeSuccess)
+					bSerialOpen = 0;
+			}
+		}
+
+
+		
 		
 		// This implementation works, but is not ideal because it needs the Flea3 camera, and the
 		// getNewImage method to be public, which it shouldn't be.
@@ -618,7 +674,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 				logFile.close();
 			}
 		}
-		
+
 		//get DSP time
 		differenceTime = ofGetElapsedTimeMillis() - beforeTime;
 	}

@@ -28,7 +28,7 @@ class ofxFlea3 : ofxCameraBase
 		int getCameraBaseCount();
 		CAMERA_BASE_FEATURE* getSupportedFeatures(int* featuresCount);
 		void callSettingsDialog();
-		void setTriggerMode(bool isEnabled, unsigned int polarity, unsigned int source, float delayms = 0);
+		void setTriggerMode(bool isEnabled, unsigned int polarity=1, unsigned int source=0, float delayms = 0);
 		// These are supposed to be protected
 		void getNewFrame(Image *newFrame);
 		void getNewFrame(Image *newFrame, TimeStamp *ts);

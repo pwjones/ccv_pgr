@@ -17,6 +17,8 @@
 	#include "ofxMultiplexerManager.h"
 	#include "ofxMultiplexer.h"
 	#include <time.h>
+	#include <stdio.h>
+	#include <Windows.h>
 #endif
 #include "ofxOpenCv.h"
 #include "ofxDirList.h"
@@ -28,6 +30,7 @@
 #include "ofxFiducialTracker.h"
 #include "ofxFC2MovieWriter.h"
 #include "ofxEdgeDetector.h"
+#include "CSerial.h"
 
 // Our Addon
 #include "ofxNCore.h"
@@ -100,6 +103,7 @@ class ofxNCoreVision : public ofxGuiListener
 		optionPanel_tuio_tcp,
 		optionPanel_bin_tcp,
 		optionPanel_win_hid,
+		optionPanel_serial,
 
 		calibrationPanel,
 		calibrationPanel_calibrate,
@@ -231,6 +235,8 @@ public:
 		bDrawOutlines = 1;
 		bGPUMode = 0;
 		bTUIOMode = 0;
+		bSerial = 0;
+		bSerialOpen = 0;
 		bSaveMovie = 0;
 		bSavingMovie = 0;
 		bSaveBgImage = 0;
@@ -282,6 +288,10 @@ public:
 		delete filter;		filter = NULL;
 		delete filter_fiducial;		filter_fiducial = NULL;
 		delete multiplexer;		multiplexer = NULL;
+
+		if (bSerialOpen) { //closing the serial port
+			serialOut.Close();
+		}
 	}
 
 	/****************************************************************
@@ -368,6 +378,8 @@ public:
 	bool				bShowPressure;
 	bool				bDrawOutlines;
 	bool				bTUIOMode;
+	bool				bSerial, bSerialOpen;
+	bool				bParallel, bParallelOpen;
 	bool				bSaveBgImage;
 	bool				bSaveMovie;
 	bool				bSavingMovie;
@@ -481,6 +493,11 @@ public:
 	string				tmpLocalHost;
     int					tmpPort;
 	int					tmpFlashPort;
+	string				serialPortName;
+	CSerial				serialOut;
+	string				parallelPortName;
+	unsigned int		parallelAd = 0x378;
+
 
 	//Logging
 	char				dateStr [9];
@@ -492,6 +509,7 @@ public:
 	ofxFC2MovieWriter *	movieWriter;
 	ofstream			logFile;
 	bool				bDetectEdges;
+	
 
 	void				removeMainPanels();
 	void				removeMulticameraPanels();

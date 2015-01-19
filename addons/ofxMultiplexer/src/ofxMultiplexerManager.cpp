@@ -266,6 +266,14 @@ void ofxMultiplexerManager::stopCalibration()
 	isMultiplexerNeedToUpdate = true;
 	this->applySettingsToMultiplexer();
 }
+void ofxMultiplexerManager::setTriggerModeForAllCameras(bool useTrig, unsigned int polarity, unsigned int source, float delayms)
+{
+	for (int i=0 ; i<cameraBases.size();i++) {
+		cameraBases[i]->setTriggerMode(useTrig, polarity, source, delayms);
+	}
+}
+
+
 void ofxMultiplexerManager::resumeCaptureFromAllCameras()
 {
 	for (int i=0;i<cameraBases.size();i++)

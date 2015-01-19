@@ -48,6 +48,7 @@ public:
 	void addCameraBaseToMultiplexerAtPosition(int position,ofxCameraBase* cameraBase);
 	void removeCameraBaseFromMultiplexerAtPosition(int position);
 	void removeAllCameraBasesFromMultiplexer();
+	void setTriggerModeForAllCameras(bool useTrig, unsigned int polarity = 1, unsigned int source = 1, float delayms = 0);
 	//getters
 	ofxCameraBase* getCameraBase(int index);
 	ofxCameraBase* getCameraBase(CAMERATYPE cameraType,GUID guid);

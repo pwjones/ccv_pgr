@@ -139,6 +139,8 @@ void ofxNCoreVision::updateMainPanels()
 	controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
 	controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
 	controls->update(appPtr->optionPanel_bin_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bBinaryMode, sizeof(bool));
+	controls->update(appPtr->optionPanel_serial, kofxGui_Set_Bool, &appPtr->bSerial, sizeof(bool));
+	
 	// Log/Save Panel
 	controls->update(appPtr->logPanel_saveBgImage, kofxGui_Set_Bool, &appPtr->bSaveBgImage, sizeof(bool));
 	controls->update(appPtr->logPanel_saveMovie, kofxGui_Set_Bool, &appPtr->bSaveMovie, sizeof(bool));
@@ -182,21 +184,22 @@ void ofxNCoreVision::addMainPanels()
 	oPanel->addButton(appPtr->optionPanel_bin_tcp, "Binary TCP (n)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	oPanel->addButton(appPtr->optionPanel_tuio_osc, "TUIO UDP (t)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	oPanel->addButton(appPtr->optionPanel_tuio_tcp, "Flash XML (f)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
+	oPanel->addButton(appPtr->optionPanel_serial, "Serial Position (s)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	oPanel->mObjWidth = 200;
-	oPanel->mObjHeight = 87;
+	oPanel->mObjHeight = 100;
 
 	// Templates
 
 
 	// Transforms
-	ofxGuiPanel* propPanel = controls->addPanel(appPtr->propertiesPanel, "Transforms", MAIN_PANEL_SECOND_X, 261 - (bcamera ? 0 : 80), 12, OFXGUI_PANEL_SPACING);
+	ofxGuiPanel* propPanel = controls->addPanel(appPtr->propertiesPanel, "Transforms", MAIN_PANEL_SECOND_X, 273 - (bcamera ? 0 : 80), 12, OFXGUI_PANEL_SPACING);
 	propPanel->addButton(appPtr->propertiesPanel_flipV, "Flip Vertical (v)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	propPanel->addButton(appPtr->propertiesPanel_flipH, "Flip Horizontal (h)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	propPanel->mObjWidth = 200;
 	propPanel->mObjHeight = 67;
 
 	// Tracking
-	ofxGuiPanel* trackingPanel = controls->addPanel(appPtr->trackingPanel, "Track", MAIN_PANEL_SECOND_X, 338 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+	ofxGuiPanel* trackingPanel = controls->addPanel(appPtr->trackingPanel, "Track", MAIN_PANEL_SECOND_X, 350 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	trackingPanel->addButton(appPtr->trackingPanel_trackFingers, "Fingers (g)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	trackingPanel->addButton(appPtr->trackingPanel_trackFiducials, "Fiducials (d)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	trackingPanel->addButton(appPtr->trackingPanel_trackObjects, "Objects (j)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
@@ -204,7 +207,7 @@ void ofxNCoreVision::addMainPanels()
 	trackingPanel->mObjHeight = 87;
 
 	// Saving/Logging
-	ofxGuiPanel* logPanel = controls->addPanel(appPtr->logPanel, "Logging/Saving", MAIN_PANEL_SECOND_X, 435 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+	ofxGuiPanel* logPanel = controls->addPanel(appPtr->logPanel, "Logging/Saving", MAIN_PANEL_SECOND_X, 447 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	logPanel->addButton(appPtr->logPanel_saveBgImage, "Save Bg Image", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	logPanel->addButton(appPtr->logPanel_detectEdges, "Detect Paths", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger);
 	logPanel->addButton(appPtr->logPanel_saveMovie, "Save Movie", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
@@ -217,7 +220,7 @@ void ofxNCoreVision::addMainPanels()
 
 	// Triggering
 	//Save file selections
-	ofxGuiPanel* triggerPanel = controls->addPanel(appPtr->triggerPanel, "", MAIN_PANEL_SECOND_X, 565 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+	ofxGuiPanel* triggerPanel = controls->addPanel(appPtr->triggerPanel, "", MAIN_PANEL_SECOND_X, 577 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	triggerPanel->addButton(triggerPanel_use, "Use External Cam Trigger", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	triggerPanel->mObjWidth = 200;
 	triggerPanel->mObjHeight = 35;
@@ -780,6 +783,9 @@ void ofxNCoreVision::handleGui(int parameterId, int task, void* data, int length
 			if(length == sizeof(bool))
 				bUseCameraTrig=*(bool*)data;
 			printf("bUseCameraTrig = %d\n", bUseCameraTrig);
+			if(bUseCameraTrig) {
+				multiplexerManager->setTriggerModeForAllCameras(bUseCameraTrig);
+			}
 			break;
 		//Tracking Panel
 		case trackingPanel_trackFingers:
@@ -876,8 +882,14 @@ void ofxNCoreVision::handleGui(int parameterId, int task, void* data, int length
 					controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
 				}
 			}
-
+				bSerial = *(bool*)data;
 			break;
+
+		case optionPanel_serial:
+			if(length == sizeof(bool))
+				bSerial = *(bool*)data;
+			break;
+
 		case backgroundPanel_dynamic:
 			if(length == sizeof(bool))
 				filter->bDynamicBG = *(bool*)data;
@@ -919,80 +931,58 @@ void ofxNCoreVision::handleGui(int parameterId, int task, void* data, int length
 			}
 			break;
 		case highpassPanel_noise:
-			if(length == sizeof(float))
-			{
-				if(!bFidMode)
-				{
+			if(length == sizeof(float)) {
+				if(!bFidMode) {
 					filter->highpassNoise = *(float*)data;
-				}
-				else
-				{
+				} else {
 					filter_fiducial->highpassNoise = *(float*)data;
 				}
 			}
 			break;
 		//Amplify
 		case amplifyPanel_use:
-			if(length == sizeof(bool))
-			{
-				if(!bFidMode)
-				{
+			if(length == sizeof(bool)) {
+				if(!bFidMode) {
 					filter->bAmplify = *(bool*)data;
-				}
-				else
-				{
+				} else {
 					filter_fiducial->bAmplify = *(bool*)data;
 				}
 			}
 			break;
 		case amplifyPanel_amp:
-			if(length == sizeof(float))
-			{
-				if(!bFidMode)
-				{
+			if(length == sizeof(float)) {
+				if(!bFidMode) {
 					filter->highpassAmp = *(float*)data;
-				}
-				else
-				{
+				} else {
 					filter_fiducial->highpassAmp = *(float*)data;
 				}
 			}
 			break;
 			
 		case trackedPanel_low_normalizing:
-			if(length == sizeof(float))
-			{
+			if(length == sizeof(float)) {
 				filter->normalizingLowLevel = *(float*)data;
 			}
 			break;
 		case trackedPanel_high_normalizing:
-			if(length == sizeof(float))
-			{
+			if(length == sizeof(float)) {
 				filter->normalizingHighLevel = *(float*)data;
 			}
 			break;
 		case trackedPanel_darkblobs:
-			if(length == sizeof(bool))
-			{
-				if(!bFidMode)
-				{
+			if(length == sizeof(bool)) {
+				if(!bFidMode) {
 					filter->bTrackDark = *(bool*)data;
-				}
-				else
-				{
+				} else {
 					filter_fiducial->bTrackDark = *(bool*)data;
 				}
 			}
 			break;
 		case trackedPanel_threshold:
-			if(length == sizeof(float))
-			{
-				if(!bFidMode)
-				{
+			if(length == sizeof(float)) {
+				if(!bFidMode) {
 					filter->threshold = *(float*)data;
-				}
-				else
-				{
+				} else {
 					filter_fiducial->threshold = *(float*)data;
 				}
 			}
@@ -1019,27 +1009,19 @@ void ofxNCoreVision::handleGui(int parameterId, int task, void* data, int length
 			break;
 		//smooth
 		case smoothPanel_smooth:
-			if(length == sizeof(float))
-			{
-				if(!bFidMode)
-				{
+			if(length == sizeof(float)) {
+				if(!bFidMode) {
 					filter->smooth = *(float*)data;
-				}
-				else
-				{
+				} else {
 					filter_fiducial->smooth = *(float*)data;
 				}
 			}
 			break;
 		case smoothPanel_use:
-			if(length == sizeof(bool))
-			{
-				if(!bFidMode)
-				{
+			if(length == sizeof(bool)) {
+				if(!bFidMode) {
 					filter->bSmooth = *(bool*)data;
-				}
-				else
-				{
+				} else {
 					filter_fiducial->bSmooth = *(bool*)data;
 				}
 			}

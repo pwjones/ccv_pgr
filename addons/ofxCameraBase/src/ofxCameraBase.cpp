@@ -263,6 +263,10 @@ void ofxCameraBase::updateCurrentFrame()
 	}
 }
 
+void ofxCameraBase::setTriggerMode(bool isEnabled, unsigned int polarity, unsigned int source, float delayms)
+{
+	printf("ofxCameraBase::setTriggerMode   isEnabled = %u polarity = %u source = %u delay=%f\n", isEnabled, polarity, source, delayms);
+}
 void ofxCameraBase::loadCameraSettings(ofxXmlSettings* xmlSettings)
 {
 	width = xmlSettings->getValue("SETTINGS:FRAME:WIDTH", -1);

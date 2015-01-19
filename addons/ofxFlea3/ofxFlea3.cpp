@@ -344,6 +344,7 @@ void ofxFlea3::setTriggerMode(bool isEnabled, unsigned int polarity, unsigned in
 	//delayms = 0;
 
 	for (int i = 0; i<camNum; i++) {
+		printf("ofxFlea3::setTriggerMode, cam:%d - isEnabled = %u polarity = %u source = %u delay=%f\n", i, isEnabled, polarity, source, delayms);
 		Error error = cams[i].SetTriggerMode(&trig);
 		if (error != PGRERROR_OK) {
 			printf("Error setting camera trigger modes %d\n", i);

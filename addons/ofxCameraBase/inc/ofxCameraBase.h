@@ -43,6 +43,7 @@ public:
 		rawCameraFrame = NULL;
 		isPaused = false;
 		isRaw = 0;
+		useExternalTrigger = false;
 	}
 	//Virtual destructor for CameraBase class
 	virtual ~ofxCameraBase(){}
@@ -77,6 +78,8 @@ public:
 	void resumeCamera() { isPaused = false; }
 	//check is camera capturing is paused
 	bool isCameraPaused() { return isPaused;}
+	// set the camera trigger mode - 
+	void setTriggerMode(bool isEnabled, unsigned int polarity = 1, unsigned int source = 0, float delayms = 0);
 	//get camera Type
 	CAMERATYPE getBaseCameraType() { return cameraType; }
 	//get camera type name
@@ -133,6 +136,7 @@ protected:
 	unsigned char* rawCameraFrame;
 	ofxCameraBaseSettings* cameraBaseSettings;
 	ofxTimeStamp timestamp; //This is the timestamp struct of the current frame
+	bool useExternalTrigger;
 };
 
 #endif // OFX_CAMERABASE_H

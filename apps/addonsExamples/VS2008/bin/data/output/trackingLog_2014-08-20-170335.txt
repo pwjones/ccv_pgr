@@ -1,0 +1,25 @@
+MovieSubsample:1
+Paths:0
+skeletonPaths:0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
+Areas: 0
