@@ -529,6 +529,11 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			// Seems like this is likely to just block the updating, which is ok
 		}
 
+		if (bUseDaq) {
+			if (!bDaqOpen) { // open it!
+				printf("Opening the NI-DAQ session");
+			}
+		}
 		// Parallel Port IO - Doesn't work
 		if (bParallel) {
 			if (!bParallelOpen) {
