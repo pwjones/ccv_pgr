@@ -30,7 +30,10 @@
 #include "ofxFiducialTracker.h"
 #include "ofxFC2MovieWriter.h"
 #include "ofxEdgeDetector.h"
+#include "ofxTrackerHistory.h"
 #include "CSerial.h"
+#include "parallelPort.h"
+#include <NIDAQmx.h>
 
 // Our Addon
 #include "ofxNCore.h"
@@ -279,6 +282,13 @@ public:
 		draggingImage = new ofxGuiImage();
 		interleaveMode = false;
 		bFidtrackInterface = false;
+		// NI DAQ
+		nidaqHandle = 0;
+		outputLine = "Dev1/port1/line2";
+		inputLine = "Dev1/port1/line3";
+		bDaqOpen = 0;
+		bUseDaq = 1;
+		daqErrorStr = "\0";
 	}
 
 	~ofxNCoreVision()
@@ -380,6 +390,8 @@ public:
 	bool				bTUIOMode;
 	bool				bSerial, bSerialOpen;
 	bool				bParallel, bParallelOpen;
+	bool				bUseDaq, bDaqOpen;
+	bool				bGiveReward;
 	bool				bSaveBgImage;
 	bool				bSaveMovie;
 	bool				bSavingMovie;
@@ -496,8 +508,12 @@ public:
 	string				serialPortName;
 	CSerial				serialOut;
 	string				parallelPortName;
-	unsigned int		parallelAd = 0x378;
-
+	unsigned int		parallelAd;
+	// NI DAQ Digital IO
+	TaskHandle			nidaqHandle;
+	string				outputLine;
+	string				inputLine;
+	char				daqErrorStr[2048]; 
 
 	//Logging
 	char				dateStr [9];

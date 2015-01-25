@@ -1,3 +1,11 @@
+/* Class: ofxEdgeDetector
+ ------------------------------------------------------------------
+ The purpose of the this class is to provide the functionality to detect and store edge contours based on a given image.
+ It also has the capability to provide distance information about how close the edges are from given locations.
+ 
+ Peter Jones, Fall/Winter 2014-2015
+ */
+
 #ifndef OFXEDGEDETECTOR_H
 #define OFXEDGEDETECTOR_H
 
@@ -9,28 +17,29 @@
 
 using namespace cv;
 
-//class CPUImageFilter();
 class ofxEdgeDetector
 {
 public:
 
 	ofxEdgeDetector();
 	~ofxEdgeDetector();
-	void updateImage(ofxCvGrayscaleImage& src_img);
-	void detectEdges();
-	void thinPaths();
-	double minPathDist(cv::Point p, int pathNum);
-	bool pathsDetected();
-	string print();
-	
-	// These need to be public to be accessed by GUI routines. Don't use
+	void updateImage(ofxCvGrayscaleImage& src_img); //The image that the edges are based on
+	void detectEdges(); // Basic detection
+	void thinPaths(); // Algorithmically thin the paths down to a single pixel width
+	double minPathDist(cv::Point p, int pathNum); // The minimum distance to a point on the path
+	vector<double> pathDist(cv::Point p, int pathNum, bool useSkel); // Distance to each point in path.
+	bool pathsDetected(); // Have paths been identified from the image
+	string print(); // Print info about the paths
+	vector<int> numPathPoints(bool useSkel);
+
+	// These need to be public to be accessed by GUI routines. Don't use.
 	void cannyThreshold(int newThresh, void *);
 	void keyResponder(int c);
 	void selectContours(int x, int y);
 	vector<int> selContours;
 
-	vector<vector<cv::Point> > pathPts;
-	vector<vector<cv::Point> > skelPathPts;
+	vector<vector<cv::Point> > pathPts; // Each path is a vector of points. There can also be multiple paths.
+	vector<vector<cv::Point> > skelPathPts; // The skeletonized paths.
 
 protected:
 	// Internally, we handle all of the image processing in OpenCV 2.x style C++
@@ -47,6 +56,7 @@ protected:
 	int activePath;
 	vector<vector<int> > pathContours;
 	bool detected;
+	bool skelDetected;
 	
 	void initWindows();
 	void computeContours();

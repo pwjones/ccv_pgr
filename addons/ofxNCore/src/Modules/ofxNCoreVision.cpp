@@ -11,6 +11,7 @@
 #include "ofxNCoreVision.h"
 #include "../Controls/gui.h"
 #include "FlyCapture2.h"
+#include "pt_ioctl.c"
 // #include "API/gpu_filter_api.h"
 
 //#include "ofxFC2MovieWriter.h"
@@ -27,7 +28,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 //	if ( filter_fiducial == NULL ){filter_fiducial = new ProcessFilters();}
 	if ( filter_fiducial == NULL ){filter_fiducial = new ProcessFiducialFilters();}
 
-
+	parallelAd = 0x378;
 	//Load Settings from config file
 	loadXMLSettings();
 
@@ -528,12 +529,13 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			// Seems like this is likely to just block the updating, which is ok
 		}
 
+		// Parallel Port IO - Doesn't work
 		if (bParallel) {
 			if (!bParallelOpen) {
 				printf("Opening a parallel port connection\n");
 				char tmpName[28];
 				strcpy(tmpName, parallelPortName.c_str());
-				unsigned int ad = checkParallelAddress(tmpName);
+				unsigned int ad = getParallelAddress(tmpName);
 				if (ad != parallelAd) {
 					printf("Parallel port does not equal the standard address\n");
 					parallelAd = ad;
@@ -543,11 +545,15 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 					bParallelOpen = 1;
 			}
 			setOutOff(parallelAd);
-			if (giveReward) // this will stay high for a frame, long enough to read without pausing execution
+			if (bGiveReward) // this will stay high for a frame, long enough to read without pausing execution
 				toggleOut(parallelAd);
 			if (isInputHigh(parallelAd)) {
 				//Reset some things
 			}	
+		} else {
+			if (bParallelOpen) {
+				// Close the parallel port
+			}
 		}
 
 		// Serial port output
@@ -588,9 +594,6 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			}
 		}
 
-
-		
-		
 		// This implementation works, but is not ideal because it needs the Flea3 camera, and the
 		// getNewImage method to be public, which it shouldn't be.
 		if (bSaveBgImage) { 

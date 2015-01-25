@@ -28,9 +28,10 @@ ofxEdgeDetector::ofxEdgeDetector() {
 	pathPts.reserve(2); // make sure that there are at least 2 spots in vector.
 	skelPathPts.reserve(2);
 	detected = 0;
+	skelDetected = 0;
 	edgeObj = this;
-
 }
+
 ofxEdgeDetector::~ofxEdgeDetector()
 {
 }
@@ -39,6 +40,21 @@ bool ofxEdgeDetector::pathsDetected()
 {
 	return(detected);
 }
+
+// ----------------------------------------------------------
+vector<int> ofxEdgeDetector::numPathPoints(bool useSkel)
+{
+	if (useSkel && skelDetected)
+		vector<vector<cv::Point>>& pts = (skelPathPts.size() > 0) ? skelPathPts: pathPts;
+	else 
+		vector<vector<cv::Point>>& pts = pathPts;
+	
+	vector<int> npts(pathPts.size(),-1);
+	for(int i = 0; i<npts.size(); i++) {
+		npts[i] = pathPts[i].size();
+	}
+}
+		
 // ------------------------------------------------------------
 void ofxEdgeDetector::updateImage(ofxCvGrayscaleImage& src_img)
 {
@@ -77,7 +93,7 @@ void ofxEdgeDetector::detectEdges()
 double ofxEdgeDetector::minPathDist(cv::Point p, int pathNum)
 {
 	cv::Size s = bgImg.size();
-	 // use the skeleton path points if they are there
+	// use the skeleton path points if they are there, the full path if not
 	vector<vector<cv::Point> >& pts = (skelPathPts.size() > 0) ? skelPathPts : pathPts;
 		
 	double minDist = euclidianDist(cv::Point(0,0), cv::Point(s.width, s.height)); 
@@ -94,6 +110,25 @@ double ofxEdgeDetector::minPathDist(cv::Point p, int pathNum)
 	}
 	return(minDist);
 }
+
+vector<double> ofxEdgeDetector::pathDist(cv::Point p, int pathNum, bool useSkel)
+{
+	cv::Size s = bgImg.size();
+	vector<cv::Point> *pts;
+	// use the skeleton path points if they are there, the full path if not
+	if (useSkel) {
+		pts = (skelPathPts.size() > 0) ? &skelPathPts[pathNum]: &pathPts[pathNum];
+	} else {
+		pts = &pathPts[pathNum];
+	}
+		
+	vector<double> dist(pts->size(), -1); 
+	for (int i=0; i< pts->size(); i++ ) { //check each point in the 1st path
+		dist[i] = euclidianDist(p, (*pts)[i]);
+	}
+	return(dist);
+}
+
 
 void ofxEdgeDetector::initWindows()
 {
@@ -208,6 +243,7 @@ void ofxEdgeDetector::thinPaths()
 	// checking the path dist
 	cout << "Distance from 0: " << minPathDist(cv::Point(0,0), 0) << "\n";
 	cout << "Distance from (1280,1024): " << minPathDist(cv::Point(1280,1024), 0) << "\n";
+	skelDetected = 1;
 }
 
 // -----------------------------------
