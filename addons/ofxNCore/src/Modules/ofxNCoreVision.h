@@ -33,7 +33,10 @@
 #include "ofxTrackerHistory.h"
 #include "CSerial.h"
 #include "parallelPort.h"
+extern "C" {
 #include <NIDAQmx.h>
+#pragma comment(linker, "/DEFAULTLIB:NIDAQmx.lib")
+}
 
 // Our Addon
 #include "ofxNCore.h"
@@ -107,6 +110,7 @@ class ofxNCoreVision : public ofxGuiListener
 		optionPanel_bin_tcp,
 		optionPanel_win_hid,
 		optionPanel_serial,
+		optionPanel_daq,
 
 		calibrationPanel,
 		calibrationPanel_calibrate,
@@ -283,12 +287,14 @@ public:
 		interleaveMode = false;
 		bFidtrackInterface = false;
 		// NI DAQ
-		nidaqHandle = 0;
-		outputLine = "Dev1/port1/line2";
-		inputLine = "Dev1/port1/line3";
+		nidaqInHandle = 0;
+		nidaqOutHandle = 0;
+		outputLine = "Dev1/port0/line7";
+		inputLine = "Dev1/port1/line0";
 		bDaqOpen = 0;
 		bUseDaq = 1;
-		daqErrorStr = "\0";
+		daqOut = 0;
+		daqErrorStr[0] = '\0';
 	}
 
 	~ofxNCoreVision()
@@ -301,6 +307,10 @@ public:
 
 		if (bSerialOpen) { //closing the serial port
 			serialOut.Close();
+		}
+		if (bDaqOpen) {
+			DAQmxStopTask(&nidaqInHandle);
+			DAQmxStopTask(&nidaqOutHandle);
 		}
 	}
 
@@ -510,10 +520,11 @@ public:
 	string				parallelPortName;
 	unsigned int		parallelAd;
 	// NI DAQ Digital IO
-	TaskHandle			nidaqHandle;
+	TaskHandle			nidaqInHandle, nidaqOutHandle;
 	string				outputLine;
 	string				inputLine;
 	char				daqErrorStr[2048]; 
+	bool				daqOut;
 
 	//Logging
 	char				dateStr [9];
@@ -534,6 +545,8 @@ public:
 	void				updateCameraGridSize( int x, int y );
 	void				updateCalibrationGridSize( int x, int y );
 	void				setFiducialSettings(bool isFiducialsSettings);
+	void				DAQmxErrorCheck(int32 error, TaskHandle handle);
+
 	ofxGuiGrid* camsGrid;
 	ofxGuiGrid* devGrid;
 	ofxGuiImage* draggingImage;

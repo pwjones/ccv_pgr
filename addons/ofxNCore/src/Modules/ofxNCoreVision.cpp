@@ -11,7 +11,6 @@
 #include "ofxNCoreVision.h"
 #include "../Controls/gui.h"
 #include "FlyCapture2.h"
-#include "pt_ioctl.c"
 // #include "API/gpu_filter_api.h"
 
 //#include "ofxFC2MovieWriter.h"
@@ -528,39 +527,44 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			bDetectEdges = 0;
 			// Seems like this is likely to just block the updating, which is ok
 		}
-
+		int32 err; // used for the error codes from the Ni-DAQ
 		if (bUseDaq) {
 			if (!bDaqOpen) { // open it!
-				printf("Opening the NI-DAQ session");
+				printf("Opening the NI-DAQ session\n");
+				// Create the channels
+				err = DAQmxCreateTask("",&nidaqInHandle); DAQmxErrorCheck(err, nidaqInHandle);
+				err = DAQmxCreateDIChan(nidaqInHandle,inputLine.c_str(),"",DAQmx_Val_ChanPerLine); DAQmxErrorCheck(err, nidaqInHandle);
+				err = DAQmxStartTask(nidaqInHandle); DAQmxErrorCheck(err, nidaqInHandle);// Now start the task
+				err = DAQmxCreateTask("",&nidaqOutHandle); DAQmxErrorCheck(err, nidaqOutHandle);
+				err = DAQmxCreateDOChan(nidaqOutHandle,outputLine.c_str(),"",DAQmx_Val_ChanPerLine); DAQmxErrorCheck(err, nidaqOutHandle);
+				err = DAQmxStartTask(nidaqOutHandle); DAQmxErrorCheck(err, nidaqOutHandle);// Now start the task
+				if (!err) { //success
+					printf("DAQ successfully started\n");
+					bDaqOpen = 1;
+				} else { //if we error, don't use the DAQ
+					bUseDaq = 0;
+				}
+			} else {
+				// Give a high pulse for 10 frames of every 100
+				if (frames == 1) {  // Every 1000 frames
+					daqOut = !daqOut; // flip the output
+					uInt8 data[1] = {daqOut};
+					err = DAQmxWriteDigitalLines(nidaqOutHandle,1,1,10.0,DAQmx_Val_GroupByChannel,data,NULL,NULL); 
+					DAQmxErrorCheck(err, nidaqOutHandle);
+				}
+				if (frames == 0) { //Every 1000 frames
+					uInt32 readData;
+					int32  read;
+					err = DAQmxReadDigitalU32(nidaqInHandle,1,10.0,DAQmx_Val_GroupByChannel,&readData,1,&read,NULL);
+					DAQmxErrorCheck(err, nidaqOutHandle);
+					printf("Data acquired: 0x%X\n",readData);
+				}
 			}
+		} else if (bDaqOpen) {
+				//DAQmxErrorCheck (DAQmxStopTask(&nidaqInHandle), nidaqInHandle);
+				//DAQmxErrorCheck (DAQmxStopTask(&nidaqOutHandle), nidaqOutHandle);
 		}
-		// Parallel Port IO - Doesn't work
-		if (bParallel) {
-			if (!bParallelOpen) {
-				printf("Opening a parallel port connection\n");
-				char tmpName[28];
-				strcpy(tmpName, parallelPortName.c_str());
-				unsigned int ad = getParallelAddress(tmpName);
-				if (ad != parallelAd) {
-					printf("Parallel port does not equal the standard address\n");
-					parallelAd = ad;
-				} 
-				OpenPortTalk();
-				if (ad)
-					bParallelOpen = 1;
-			}
-			setOutOff(parallelAd);
-			if (bGiveReward) // this will stay high for a frame, long enough to read without pausing execution
-				toggleOut(parallelAd);
-			if (isInputHigh(parallelAd)) {
-				//Reset some things
-			}	
-		} else {
-			if (bParallelOpen) {
-				// Close the parallel port
-			}
-		}
-
+		
 		// Serial port output
 		if (bSerial) {
 			if (!bSerialOpen) {
@@ -1477,4 +1481,24 @@ lrawtime = time(NULL);
 ltimeinfo = localtime(&lrawtime);
 strftime(timestr,80,"%Y-%m-%d-%H%M%S",ltimeinfo);
 return(timestr);
+}
+
+void ofxNCoreVision::DAQmxErrorCheck(int32 error, TaskHandle handle)
+{
+	if (error) {
+		if( DAQmxFailed(error) )
+			DAQmxGetExtendedErrorInfo(daqErrorStr,2048);
+		if( handle!=0 ) {
+			/*********************************************/
+			// DAQmx Stop Code
+			/*********************************************/
+			DAQmxStopTask(handle);
+			DAQmxClearTask(handle);
+		}
+		if( DAQmxFailed(error) )
+			printf("DAQmx Error: %s\n",daqErrorStr);
+		printf("End of program, press Enter key to quit\n");
+		getchar();
+		//return 0;
+	}
 }

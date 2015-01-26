@@ -140,6 +140,7 @@ void ofxNCoreVision::updateMainPanels()
 	controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
 	controls->update(appPtr->optionPanel_bin_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bBinaryMode, sizeof(bool));
 	controls->update(appPtr->optionPanel_serial, kofxGui_Set_Bool, &appPtr->bSerial, sizeof(bool));
+	controls->update(appPtr->optionPanel_daq, kofxGui_Set_Bool, &appPtr->bUseDaq, sizeof(bool));
 	
 	// Log/Save Panel
 	controls->update(appPtr->logPanel_saveBgImage, kofxGui_Set_Bool, &appPtr->bSaveBgImage, sizeof(bool));
@@ -185,21 +186,22 @@ void ofxNCoreVision::addMainPanels()
 	oPanel->addButton(appPtr->optionPanel_tuio_osc, "TUIO UDP (t)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	oPanel->addButton(appPtr->optionPanel_tuio_tcp, "Flash XML (f)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	oPanel->addButton(appPtr->optionPanel_serial, "Serial Position (s)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
+	oPanel->addButton(appPtr->optionPanel_daq, "DAQ DIO", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	oPanel->mObjWidth = 200;
-	oPanel->mObjHeight = 100;
+	oPanel->mObjHeight = 120;
 
 	// Templates
 
 
 	// Transforms
-	ofxGuiPanel* propPanel = controls->addPanel(appPtr->propertiesPanel, "Transforms", MAIN_PANEL_SECOND_X, 273 - (bcamera ? 0 : 80), 12, OFXGUI_PANEL_SPACING);
+	ofxGuiPanel* propPanel = controls->addPanel(appPtr->propertiesPanel, "Transforms", MAIN_PANEL_SECOND_X, 293 - (bcamera ? 0 : 80), 12, OFXGUI_PANEL_SPACING);
 	propPanel->addButton(appPtr->propertiesPanel_flipV, "Flip Vertical (v)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	propPanel->addButton(appPtr->propertiesPanel_flipH, "Flip Horizontal (h)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	propPanel->mObjWidth = 200;
 	propPanel->mObjHeight = 67;
 
 	// Tracking
-	ofxGuiPanel* trackingPanel = controls->addPanel(appPtr->trackingPanel, "Track", MAIN_PANEL_SECOND_X, 350 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+	ofxGuiPanel* trackingPanel = controls->addPanel(appPtr->trackingPanel, "Track", MAIN_PANEL_SECOND_X, 370 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	trackingPanel->addButton(appPtr->trackingPanel_trackFingers, "Fingers (g)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	trackingPanel->addButton(appPtr->trackingPanel_trackFiducials, "Fiducials (d)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	trackingPanel->addButton(appPtr->trackingPanel_trackObjects, "Objects (j)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
@@ -207,7 +209,7 @@ void ofxNCoreVision::addMainPanels()
 	trackingPanel->mObjHeight = 87;
 
 	// Saving/Logging
-	ofxGuiPanel* logPanel = controls->addPanel(appPtr->logPanel, "Logging/Saving", MAIN_PANEL_SECOND_X, 447 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+	ofxGuiPanel* logPanel = controls->addPanel(appPtr->logPanel, "Logging/Saving", MAIN_PANEL_SECOND_X, 467 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	logPanel->addButton(appPtr->logPanel_saveBgImage, "Save Bg Image", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	logPanel->addButton(appPtr->logPanel_detectEdges, "Detect Paths", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger);
 	logPanel->addButton(appPtr->logPanel_saveMovie, "Save Movie", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
@@ -220,7 +222,7 @@ void ofxNCoreVision::addMainPanels()
 
 	// Triggering
 	//Save file selections
-	ofxGuiPanel* triggerPanel = controls->addPanel(appPtr->triggerPanel, "", MAIN_PANEL_SECOND_X, 577 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+	ofxGuiPanel* triggerPanel = controls->addPanel(appPtr->triggerPanel, "", MAIN_PANEL_SECOND_X, 597 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	triggerPanel->addButton(triggerPanel_use, "Use External Cam Trigger", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	triggerPanel->mObjWidth = 200;
 	triggerPanel->mObjHeight = 35;
@@ -888,6 +890,11 @@ void ofxNCoreVision::handleGui(int parameterId, int task, void* data, int length
 		case optionPanel_serial:
 			if(length == sizeof(bool))
 				bSerial = *(bool*)data;
+			break;
+		
+		case optionPanel_daq:
+			if(length == sizeof(bool))
+				bUseDaq = *(bool*)data;
 			break;
 
 		case backgroundPanel_dynamic:
