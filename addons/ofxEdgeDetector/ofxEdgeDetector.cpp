@@ -53,6 +53,7 @@ vector<int> ofxEdgeDetector::numPathPoints(bool useSkel)
 	for(int i = 0; i<npts.size(); i++) {
 		npts[i] = pathPts[i].size();
 	}
+	return(npts);
 }
 		
 // ------------------------------------------------------------

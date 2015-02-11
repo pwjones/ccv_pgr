@@ -32,7 +32,7 @@ public:
 	string print(); // Print info about the paths
 	vector<int> numPathPoints(bool useSkel);
 
-	// These need to be public to be accessed by GUI routines. Don't use.
+	// These need to be public to be accessed by GUI routines. Please don't use otherwise.
 	void cannyThreshold(int newThresh, void *);
 	void keyResponder(int c);
 	void selectContours(int x, int y);

@@ -15,6 +15,9 @@
 //#include "arrayfire.h"
 #include <malloc.h>
 
+#define MAIN_WINDOW_WIDTH  326.0f
+#define MAIN_WINDOW_HEIGHT 246.0f
+
 //using namespace cv;
 //using namespace af;
 
@@ -282,7 +285,7 @@ void applyCPUFilters(CPUImageFilter& img){
 //    }
 //
 //    if(bHighpass){//HighPass
-//        img.cuda_highpass(ctx, highpassBlur, highpassNoise);
+//        img.cuda_highpass(ctx, highpassBlur, highpassNoise;)
 //        if(!bMiniMode)
 //        highpassImg = img; //for drawing
 //    }
@@ -367,8 +370,8 @@ void applyCPUFilters(CPUImageFilter& img){
     {
 		if (!bMiniMode) {
 			if (drawAllData) {
-				grayImg.draw(250, 25, 326, 246);
-				grayDiff.draw(250+335, 25, 326, 246);
+				grayImg.draw(250, 25, MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
+				grayDiff.draw(250+335, 25, MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
 			}
 			//
 			floatBgImg.draw(250+137*0, 365, 129, 96);

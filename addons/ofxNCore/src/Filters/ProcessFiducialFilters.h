@@ -12,6 +12,9 @@
 
 #include "Filters.h"
 
+#define MAIN_WINDOW_WIDTH  326.0f
+#define MAIN_WINDOW_HEIGHT 246.0f
+
 class ProcessFiducialFilters : public Filters {
 
   public:
@@ -90,8 +93,8 @@ class ProcessFiducialFilters : public Filters {
  ****************************************************************/
     void draw()
     {
-        grayImg.draw(250, 25, 326, 246);
-        grayDiff.draw(250+335, 25, 326, 246);
+        grayImg.draw(250, 25, MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
+        grayDiff.draw(250+335, 25, MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
     }
 
     void drawGPU()

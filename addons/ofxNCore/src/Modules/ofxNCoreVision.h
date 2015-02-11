@@ -30,7 +30,7 @@
 #include "ofxFiducialTracker.h"
 #include "ofxFC2MovieWriter.h"
 #include "ofxEdgeDetector.h"
-#include "ofxTrackerHistory.h"
+#include "ofxTrackingHistory.h"
 #include "CSerial.h"
 #include "parallelPort.h"
 extern "C" {
@@ -42,8 +42,8 @@ extern "C" {
 #include "ofxNCore.h"
 
 // height and width of the source/tracked draw window
-#define MAIN_WINDOW_WIDTH  320.0f
-#define MAIN_WINDOW_HEIGHT 240.0f
+#define MAIN_WINDOW_WIDTH  326.0f
+#define MAIN_WINDOW_HEIGHT 246.0f
 
 // MAIN AREA POSITIONS
 #define MAIN_AREA_X 760
@@ -72,7 +72,7 @@ extern "C" {
 #define MAIN_PANEL_PADDING 10
 
 // MAIN FILTER POSITIONS
-#define MAIN_TOP_OFFSET 20
+#define MAIN_TOP_OFFSET 25
 #define MAIN_FILTERS_W 137
 #define MAIN_FILTERS_X 250
 #define MAIN_FILTERS_Z 110
@@ -141,6 +141,12 @@ class ofxNCoreVision : public ofxGuiListener
 		highpassPanel_use,
 		highpassPanel_blur,
 		highpassPanel_noise,
+
+		experimentPanel,
+		experimentPanel_run,
+		experimentPanel_reward,
+		experimentPanel_distThresh,
+		experimentPanel_followingPropThresh,
 
 		trackedPanel,
 		trackedPanel_darkblobs,
@@ -295,6 +301,11 @@ public:
 		bUseDaq = 1;
 		daqOut = 0;
 		daqErrorStr[0] = '\0';
+		trackingHist = NULL;
+		distThresh = 20;
+		followingPropThresh = .80;
+		bRewardEarned = false;
+		bRunExperiment = false;
 	}
 
 	~ofxNCoreVision()
@@ -304,6 +315,7 @@ public:
 		delete filter;		filter = NULL;
 		delete filter_fiducial;		filter_fiducial = NULL;
 		delete multiplexer;		multiplexer = NULL;
+		delete trackingHist;	trackingHist = NULL;
 
 		if (bSerialOpen) { //closing the serial port
 			serialOut.Close();
@@ -504,8 +516,7 @@ public:
 	CPUImageFilter      processedImg;
 	ofxCvColorImage		sourceImg;
 	CPUImageFilter		sourceGrayImg;
-	ofxEdgeDetector		pathDetector;  // The object to detect paths from the background image
-
+	
 	//XML Settings Vars
 	ofxXmlSettings		XML;
 	string				message;
@@ -536,7 +547,14 @@ public:
 	ofxFC2MovieWriter *	movieWriter;
 	ofstream			logFile;
 	bool				bDetectEdges;
-	
+	// Tracking
+	float				followingPropThresh;
+	float				distThresh;
+	bool				bRewardEarned;
+	bool				bRunExperiment;
+	ofxEdgeDetector		pathDetector; //To detect paths from the background image
+	ofxTrackingHistory	*trackingHist; // Keep track of the behavior over time
+
 
 	void				removeMainPanels();
 	void				removeMulticameraPanels();
@@ -546,6 +564,9 @@ public:
 	void				updateCalibrationGridSize( int x, int y );
 	void				setFiducialSettings(bool isFiducialsSettings);
 	void				DAQmxErrorCheck(int32 error, TaskHandle handle);
+	void				checkSerial();
+	void				checkDAQ();
+	void				writeLogFile();
 
 	ofxGuiGrid* camsGrid;
 	ofxGuiGrid* devGrid;

@@ -1,20 +1,20 @@
 
-#ifndef OFXTRACKERHISTORY_H
-#define OFXTRACKERHISTORY_H
+#ifndef OFXTRACKINGHISTORY_H
+#define OFXTRACKINGHISTORY_H
 
 #include "ofxOpenCv.h"
 #include "ofxEdgeDetector.h"
 
 using namespace cv;
 
-class ofxTrackerHistory
+class ofxTrackingHistory
 {
 public:
-		ofxTrackerHistory(ofxEdgeDetector *detector, double thresh);
-		~ofxTrackerHistory();
+		ofxTrackingHistory(ofxEdgeDetector *detector, double thresh);
+		~ofxTrackingHistory();
 		void updatePosition(cv::Point posUpdate);
 		double followingProportion(int path);
-		
+		void reset();
 protected:
 		ofxEdgeDetector *edgeDetector;
 		vector<cv::Point> pos;

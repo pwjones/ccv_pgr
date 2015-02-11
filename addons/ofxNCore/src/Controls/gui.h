@@ -104,6 +104,11 @@ void ofxNCoreVision::updateMainPanels()
 	//Amplify 
 	controls->update(appPtr->amplifyPanel_use, kofxGui_Set_Bool, &appPtr->filter->bAmplify, sizeof(bool));
 	controls->update(appPtr->amplifyPanel_amp, kofxGui_Set_Bool, &appPtr->filter->highpassAmp, sizeof(float));
+	// Experiment
+	controls->update(appPtr->experimentPanel_run, kofxGui_Set_Bool, &bRunExperiment, sizeof(bool));
+	controls->update(appPtr->experimentPanel_reward, kofxGui_Set_Bool, &bRewardEarned, sizeof(bool));
+	controls->update(appPtr->experimentPanel_distThresh, kofxGui_Set_Bool, &distThresh, sizeof(float));
+	controls->update(appPtr->experimentPanel_followingPropThresh, kofxGui_Set_Bool, &followingPropThresh, sizeof(float));
 	//Threshold
 
 	// Normalize
@@ -313,8 +318,7 @@ void ofxNCoreVision::addMainPanels()
 	ampPanel->mObjWidth = 128;
 	ampPanel->mObjHeight = 95;
 
-	if (contourFinder.bTrackObjects)
-	{
+	if (contourFinder.bTrackObjects) {
 		ofxGuiPanel* panel2x = controls->addPanel(appPtr->templatePanel, "Templates", MAIN_PANEL_SECOND_X, 455 - (bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 		panel2x->addButton(appPtr->kParameter_SaveTemplateXml, "Save Template" , OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger);
 		panel2x->addButton(appPtr->kParameter_LoadTemplateXml, "Load Template", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger);
@@ -326,6 +330,21 @@ void ofxNCoreVision::addMainPanels()
 		panel2x->mObjects[3]->mObjY = 105;
 		panel2x->adjustToNewContent(120, 0);
 	}
+	
+	// Experiment Panel
+	ofxGuiPanel* expPanel = controls->addPanel(appPtr->experimentPanel, "Experiment Control", MAIN_FILTERS_X+MAIN_FILTERS_W*0,570, OFXGUI_PANEL_BORDER, 7);
+	expPanel->addButton(experimentPanel_run, "Run", 12, 12, kofxGui_Button_Off, kofxGui_Button_Switch);
+	expPanel->addButton(experimentPanel_reward, "Reward", 12, 12, kofxGui_Button_Off, kofxGui_Button_Trigger);
+	expPanel->addSlider(experimentPanel_distThresh, "Thresh Dist From Trail", MAIN_FILTERS_Z, 13, 1.0f, 50.0f, distThresh, kofxGui_Display_Int, 0);
+	expPanel->addSlider(experimentPanel_followingPropThresh, "Thresh Following Prop", MAIN_FILTERS_Z, 13, 0.0f, 100.0f, followingPropThresh*100, kofxGui_Display_Int, 0);
+	//expPanel->mObjects[0]->mObjX = 105;
+	expPanel->mObjects[0]->mObjY = 30;
+	expPanel->mObjects[1]->mObjY = 50;
+	expPanel->mObjects[2]->mObjY = 70;
+	expPanel->mObjects[3]->mObjY = 95;
+	expPanel->mObjWidth = 160;
+	expPanel->mObjHeight = 140;
+
 
 //----------------------------------------------
 	updateMainPanels();
@@ -462,6 +481,7 @@ void ofxNCoreVision::removeMainPanels()
 	controls->removePanel( this->smoothPanel );
 	controls->removePanel( this->highpassPanel );
 	controls->removePanel( this->amplifyPanel );
+	controls->removePanel( this->experimentPanel );
     if (bcamera)
 		controls->removePanel( this->calibrationPanel );
 	controls->removePanel( this->propertiesPanel );
@@ -779,6 +799,10 @@ void ofxNCoreVision::handleGui(int parameterId, int task, void* data, int length
 				pathDetector.detectEdges();
 				printf("bDetectEdges = %d\n", bDetectEdges);
 				bDetectEdges = 0;
+				if (trackingHist != NULL) {
+					delete trackingHist;
+					trackingHist = NULL;
+				}
 			}
 			break;
 		case triggerPanel_use:
@@ -965,7 +989,29 @@ void ofxNCoreVision::handleGui(int parameterId, int task, void* data, int length
 				}
 			}
 			break;
-			
+		// Experiment 
+		case experimentPanel_run:
+			if(length == sizeof(bool)) {
+				bRunExperiment = *(bool*)data;
+			}
+			break;
+		case experimentPanel_reward:
+			if(length == sizeof(bool)) {
+				bRewardEarned = *(bool*)data;
+			}
+			break;
+		case experimentPanel_distThresh:
+			if(length == sizeof(float)) {
+				distThresh = *(float*)data;
+			}
+			break;
+		case experimentPanel_followingPropThresh:
+			if(length == sizeof(float)) {
+				followingPropThresh = *(float*)data / 100;
+			}
+			break;
+
+		// Tracked Panel
 		case trackedPanel_low_normalizing:
 			if(length == sizeof(float)) {
 				filter->normalizingLowLevel = *(float*)data;

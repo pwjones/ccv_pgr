@@ -16,8 +16,8 @@ BlobTracker::BlobTracker()
 {
 	IDCounter = 200;
 	isCalibrating = false;
-	camWidth = 320;
-	camHeight = 240;
+	camWidth = 1280;
+	camHeight = 1024;
 	//Initialise Object Blobs
 	for(int i = 180;i<200;i++)
 	{

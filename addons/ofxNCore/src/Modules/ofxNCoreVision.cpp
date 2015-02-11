@@ -31,8 +31,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	//Load Settings from config file
 	loadXMLSettings();
 
-	if(debugMode)
-	{
+	if(debugMode) {
 		printf("DEBUG MODE : Printing to File\n");
 		/*****************************************************************************************************
 		* LOGGING
@@ -105,9 +104,9 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	
 	//Fiducial Initialisation
 
-	// factor for Fiducial Drawing. The ImageSize is hardcoded 326x246 Pixel!(Look at ProcessFilters.h at the draw() Method
-	fiducialDrawFactor_Width = 326 / static_cast<float>(filter->camWidth);//camWidth;
-	fiducialDrawFactor_Height = 246 / static_cast<float>(filter->camHeight);//camHeight;
+	// factor for Fiducial Drawing. The ImageSize specified in multiple #define statements (change all)!(Look at ProcessFilters.h at the draw() Method
+	fiducialDrawFactor_Width = MAIN_WINDOW_WIDTH / static_cast<float>(filter->camWidth);//camWidth;
+	fiducialDrawFactor_Height = MAIN_WINDOW_HEIGHT / static_cast<float>(filter->camHeight);//camHeight;
 
 
 	/*****************************************************************************************************
@@ -143,7 +142,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 
 	//Setup the movieWriter to save the incoming video
 	movieWriter = new ofxFC2MovieWriter();
-	//pathDetector = ofxEdgeDetector();
+
 	/*
 	//CUDA context initialization
 	if ( gpu_context_create(&ctx) != GPU_OK )
@@ -502,7 +501,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			tracker.doFiducialCalculation();
 		}
 
-		//Dynamic Background subtraction LearRate
+		//Dynamic Background subtraction LearnRate
 		if (filter->bDynamicBG)
 		{
 			filter->fLearnRate = backgroundLearnRate * .0001; //If there are no blobs, add the background faster.
@@ -520,88 +519,36 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			myTUIO.sendTUIO(&getBlobs(),&getObjects(),&fidfinder.fiducialsList);
 		}
 
+		// Edge Detection 
+		// Seems like this is likely to just block this image acquisition loop, which is ok
 		if (bDetectEdges) {
-			// Do some edge detection
 			pathDetector.updateImage(filter->grayImg);
 			pathDetector.detectEdges();
-			bDetectEdges = 0;
-			// Seems like this is likely to just block the updating, which is ok
+			bDetectEdges = 0;	
 		}
-		int32 err; // used for the error codes from the Ni-DAQ
-		if (bUseDaq) {
-			if (!bDaqOpen) { // open it!
-				printf("Opening the NI-DAQ session\n");
-				// Create the channels
-				err = DAQmxCreateTask("",&nidaqInHandle); DAQmxErrorCheck(err, nidaqInHandle);
-				err = DAQmxCreateDIChan(nidaqInHandle,inputLine.c_str(),"",DAQmx_Val_ChanPerLine); DAQmxErrorCheck(err, nidaqInHandle);
-				err = DAQmxStartTask(nidaqInHandle); DAQmxErrorCheck(err, nidaqInHandle);// Now start the task
-				err = DAQmxCreateTask("",&nidaqOutHandle); DAQmxErrorCheck(err, nidaqOutHandle);
-				err = DAQmxCreateDOChan(nidaqOutHandle,outputLine.c_str(),"",DAQmx_Val_ChanPerLine); DAQmxErrorCheck(err, nidaqOutHandle);
-				err = DAQmxStartTask(nidaqOutHandle); DAQmxErrorCheck(err, nidaqOutHandle);// Now start the task
-				if (!err) { //success
-					printf("DAQ successfully started\n");
-					bDaqOpen = 1;
-				} else { //if we error, don't use the DAQ
-					bUseDaq = 0;
-				}
-			} else {
-				// Give a high pulse for 10 frames of every 100
-				if (frames == 1) {  // Every 1000 frames
-					daqOut = !daqOut; // flip the output
-					uInt8 data[1] = {daqOut};
-					err = DAQmxWriteDigitalLines(nidaqOutHandle,1,1,10.0,DAQmx_Val_GroupByChannel,data,NULL,NULL); 
-					DAQmxErrorCheck(err, nidaqOutHandle);
-				}
-				if (frames == 0) { //Every 1000 frames
-					uInt32 readData;
-					int32  read;
-					err = DAQmxReadDigitalU32(nidaqInHandle,1,10.0,DAQmx_Val_GroupByChannel,&readData,1,&read,NULL);
-					DAQmxErrorCheck(err, nidaqOutHandle);
-					printf("Data acquired: 0x%X\n",readData);
-				}
+
+		// Track the progress relative to trail
+		if (pathDetector.pathsDetected() && contourFinder.bTrackFingers) {
+			if (trackingHist == NULL) {
+				trackingHist = new ofxTrackingHistory(&pathDetector, distThresh);
 			}
-		} else if (bDaqOpen) {
-				//DAQmxErrorCheck (DAQmxStopTask(&nidaqInHandle), nidaqInHandle);
-				//DAQmxErrorCheck (DAQmxStopTask(&nidaqOutHandle), nidaqOutHandle);
+			float x,y;
+			contourFinder.getBlobsCenterOfMass(x,y);
+			trackingHist->updatePosition(cv::Point(x,y));
+			double prop = trackingHist->followingProportion(0);
+			if (frames == 0) {
+				printf("Has followed %f of the trail of %f\n", prop*100, followingPropThresh);
+			}
+			if (prop >= followingPropThresh) // the animal has earned a reward
+				bRewardEarned = 1;
+
 		}
 		
-		// Serial port output
-		if (bSerial) {
-			if (!bSerialOpen) {
-				printf("Opening a serial port connection\n");
-				char tmpName[28];
-				strcpy(tmpName, serialPortName.c_str());
-				//bool serialSuccess = OpenSerialPort(SerialPortName, dcb, hPort);
-				bool serialSuccess = serialOut.Open(tmpName, 115200);
-				if (serialSuccess)
-					bSerialOpen = 1;
-			}
-			if (contourFinder.bTrackFingers && contourFinder.nBlobs > 0) {
-				float comx, comy;
-				char tmp[80];
-				string serialMsg;
-
-				if (pathDetector.pathsDetected()) { //send distance to trail and CenterOfMass
-					contourFinder.getBlobsCenterOfMass(comx, comy);
-					float minDist = pathDetector.minPathDist(cv::Point(comx, comy), 0);
-					//printf("  COM: ( %f, %f )     Dist to path: %f\n", comx, comy, minDist);
-					sprintf(tmp, "xpos=%d\nypos=%d\ndistToTrail=%.d;\n", (int)comx, (int)comy, (int)minDist);
-					serialMsg = tmp;
-					serialOut.SendData(serialMsg.c_str(), serialMsg.length());
-				} else { // just send CenterOfMass
-					contourFinder.getBlobsCenterOfMass(comx, comy);
-					sprintf(tmp, "xpos=%d\nypos=%d;\n", (int)comx, (int)comy);
-					serialMsg = tmp;
-					serialOut.SendData(serialMsg.c_str(), serialMsg.length());
-				}
-			}
-		} else {
-			if (bSerialOpen) { //closing the serial port
-				bool closeSuccess = serialOut.Close();
-				if (closeSuccess)
-					bSerialOpen = 0;
-			}
-		}
+		// Stop/start the DAQ,check inputs/outputs if it's on
+		checkDAQ();
+		
+		// Check if serial comm channel is open - send outputs if so
+		checkSerial();
 
 		// This implementation works, but is not ideal because it needs the Flea3 camera, and the
 		// getNewImage method to be public, which it shouldn't be.
@@ -626,13 +573,8 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 				}
 				framesSinceSave++;
 			} else { //start saving the movie
-				//printf("Trying to initialize the movie saving\n");
-				//movieWriter->init("F:/Data/ccv_movies/mov", MJPG, fps, sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
 				printf("Starting to save movie on frame: %d\n", frames);
 				movieWriter->init(savedMovieFileName.c_str(), MJPG, fps/saveMovieSubsample, sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
-				//movieWriter->writeGrayMovieFrame(sourceGrayImg.getPixels(), sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
-				// Movie lags the log by a single frame (I don't understand why), so write an extra one on opening - PWJ, 8/20/2014
-				//movieWriter->writeGrayMovieFrame(sourceGrayImg.getPixels(), sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
 				bSavingMovie = 1;
 				framesSinceSave = 1;
 			}
@@ -643,55 +585,142 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			}
 		}
 
-		// This is writing the blob info directly to a log file.
-		if (bSavingLog) { 
-			if (logFile.is_open()) {
-				//printf("The log file is open\n");
-				string blobStr;
-				char tstr[50], headStr[100];
-				// Do file saving stuff
-				sprintf(headStr, "Areas: %d\n", tracker.trackedBlobs.size());
-				logFile << headStr;
-				for (ii=0; ii < contourFinder.nBlobs; ii++) {
-					blobStr = contourFinder.blobs[ii].print();
-					sprintf(tstr, "%0.2f", contourFinder.blobs[ii].lastTimeTimeWasChecked);
-					//printf(blobStr.c_str());
-					logFile << "t:" << tstr << " " << blobStr << "\n";
-				}
-				
-			} else { // open up the file and start saving 
-				const char *logfn_base = logFileName.c_str();
-				char logfn[100];
-				char *timestr;
-				//time(&rawtime);
-				rawtime = time(NULL);
-				timeinfo = localtime(&rawtime);
-				//strftime(timestr,80,"%Y-%m-%d-%H%M%S",timeinfo);
-				timestr = ofxNCoreVision::makeFormattedTimestamp();
-				sprintf(logfn, "%s_%s.txt", logfn_base, timestr);
-				logFile.open(logfn, ios::out);
-				if (logFile.fail()) {
-					printf("Frame: %d     Failed opening the log file: %s\n", frames, logfn);
-				} else {
-					printf("Frame  %d     Succeeded opening the log file: %s\n", frames, logfn);
-				}
-				free(timestr);
-				// print a header with the path information
-				logFile << "MovieSubsample:" << saveMovieSubsample << "\n";
-				logFile << pathDetector.print();
-			}
-		} else {
-			if (logFile.is_open()) {
-				printf("Closing the log file.\n");
-				logFile.close();
-			}
-		}
-
+		// Write the tracked positions directly to the specified log file
+		writeLogFile();
+		
 		//get DSP time
 		differenceTime = ofGetElapsedTimeMillis() - beforeTime;
 	}
 }
 
+void ofxNCoreVision::checkDAQ()
+{
+	int32 err; // used for the error codes from the Ni-DAQ
+	if (bUseDaq) {
+		if (!bDaqOpen) { // open it!
+			printf("Opening the NI-DAQ session\n");
+			// Create the channels
+			err = DAQmxCreateTask("",&nidaqInHandle); DAQmxErrorCheck(err, nidaqInHandle);
+			err = DAQmxCreateDIChan(nidaqInHandle,inputLine.c_str(),"",DAQmx_Val_ChanPerLine); DAQmxErrorCheck(err, nidaqInHandle);
+			err = DAQmxStartTask(nidaqInHandle); DAQmxErrorCheck(err, nidaqInHandle);// Now start the task
+			err = DAQmxCreateTask("",&nidaqOutHandle); DAQmxErrorCheck(err, nidaqOutHandle);
+			err = DAQmxCreateDOChan(nidaqOutHandle,outputLine.c_str(),"",DAQmx_Val_ChanPerLine); DAQmxErrorCheck(err, nidaqOutHandle);
+			err = DAQmxStartTask(nidaqOutHandle); DAQmxErrorCheck(err, nidaqOutHandle);// Now start the task
+			if (!err) { //success
+				printf("DAQ successfully started\n");
+				bDaqOpen = 1;
+			} else { //if we error, don't use the DAQ
+				bUseDaq = 0;
+			}
+		} else {
+			// Give a high output whenever there is a reward earned by trail following
+			daqOut = bRewardEarned;
+			uInt8 data[1] = {daqOut};
+			err = DAQmxWriteDigitalLines(nidaqOutHandle,1,1,10.0,DAQmx_Val_GroupByChannel,data,NULL,NULL); DAQmxErrorCheck(err, nidaqOutHandle);
+			// Read the input channel.  If high, then reset things.
+			uInt32 readData;
+			int32  read;
+			err = DAQmxReadDigitalU32(nidaqInHandle,1,10.0,DAQmx_Val_GroupByChannel,&readData,1,&read,NULL); DAQmxErrorCheck(err, nidaqOutHandle);
+			if (readData) { //will be 0 most of the time - if not, reset the tracking
+				bRewardEarned = false;
+				if (trackingHist != NULL) trackingHist->reset();
+			}
+			if (frames == 0) { //Every 1000 frames
+				printf("Data acquired: 0x%X\n",readData);
+			}
+		}
+	} else if (bDaqOpen) {
+			//DAQmxErrorCheck (DAQmxStopTask(&nidaqInHandle), nidaqInHandle);
+			//DAQmxErrorCheck (DAQmxStopTask(&nidaqOutHandle), nidaqOutHandle);
+	}
+}
+
+void ofxNCoreVision::checkSerial()
+{
+	// Serial port input/output
+	if (bSerial) {
+		if (!bSerialOpen) {
+			printf("Opening a serial port connection\n");
+			char tmpName[28];
+			strcpy(tmpName, serialPortName.c_str());
+			//bool serialSuccess = OpenSerialPort(SerialPortName, dcb, hPort);
+			bool serialSuccess = serialOut.Open(tmpName, 115200);
+			if (serialSuccess)
+				bSerialOpen = 1;
+		}
+		if (contourFinder.bTrackFingers && contourFinder.nBlobs > 0) {
+			float comx, comy;
+			char tmp[80];
+			string serialMsg;
+
+			if (pathDetector.pathsDetected()) { //send distance to trail and CenterOfMass
+				contourFinder.getBlobsCenterOfMass(comx, comy);
+				float minDist = pathDetector.minPathDist(cv::Point(comx, comy), 0);
+				//printf("  COM: ( %f, %f )     Dist to path: %f\n", comx, comy, minDist);
+				sprintf(tmp, "xpos=%d\nypos=%d\ndistToTrail=%.d;\n", (int)comx, (int)comy, (int)minDist);
+				serialMsg = tmp;
+				serialOut.SendData(serialMsg.c_str(), serialMsg.length());
+			} else { // just send CenterOfMass
+				contourFinder.getBlobsCenterOfMass(comx, comy);
+				sprintf(tmp, "xpos=%d\nypos=%d;\n", (int)comx, (int)comy);
+				serialMsg = tmp;
+				serialOut.SendData(serialMsg.c_str(), serialMsg.length());
+			}
+		}
+	} else {
+		if (bSerialOpen) { //closing the serial port
+			bool closeSuccess = serialOut.Close();
+			if (closeSuccess)
+				bSerialOpen = 0;
+		}
+	}
+}
+
+void ofxNCoreVision::writeLogFile()
+{
+	if (bSavingLog) { 
+		if (logFile.is_open()) {
+			//printf("The log file is open\n");
+			string blobStr;
+			char tstr[50], headStr[100];
+			// Do file saving stuff
+			sprintf(headStr, "Areas: %d\n", tracker.trackedBlobs.size());
+			logFile << headStr;
+			for (int ii=0; ii < contourFinder.nBlobs; ii++) {
+				blobStr = contourFinder.blobs[ii].print();
+				sprintf(tstr, "%0.2f", contourFinder.blobs[ii].lastTimeTimeWasChecked);
+				//printf(blobStr.c_str());
+				logFile << "t:" << tstr << " " << blobStr << "\n";
+			}
+			
+		} else { // open up the file and start saving 
+			const char *logfn_base = logFileName.c_str();
+			char logfn[100];
+			char *timestr;
+			//time(&rawtime);
+			rawtime = time(NULL);
+			timeinfo = localtime(&rawtime);
+			//strftime(timestr,80,"%Y-%m-%d-%H%M%S",timeinfo);
+			timestr = ofxNCoreVision::makeFormattedTimestamp();
+			sprintf(logfn, "%s_%s.txt", logfn_base, timestr);
+			logFile.open(logfn, ios::out);
+			if (logFile.fail()) {
+				printf("Frame: %d     Failed opening the log file: %s\n", frames, logfn);
+			} else {
+				printf("Frame  %d     Succeeded opening the log file: %s\n", frames, logfn);
+			}
+			free(timestr);
+			// print a header with the path information
+			logFile << "MovieSubsample:" << saveMovieSubsample << "\n";
+			logFile << pathDetector.print();
+		}
+	} else {
+		if (logFile.is_open()) {
+			printf("Closing the log file.\n");
+			logFile.close();
+		}
+	}
+}
 
 /************************************************
 *				Input Device Stuff
@@ -988,12 +1017,12 @@ void ofxNCoreVision::drawFingerOutlines()
 			if (bDrawOutlines)
 			{
 				//Draw contours (outlines) on the source image
-				contourFinder.blobs[i].drawContours(MAIN_FILTERS_X, MAIN_TOP_OFFSET, camWidth, camHeight, 326, 246);
+				contourFinder.blobs[i].drawContours(MAIN_FILTERS_X, MAIN_TOP_OFFSET, camWidth, camHeight, MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
 			}
 			if (bShowLabels) //Show ID label;
 			{
-				float xpos = contourFinder.blobs[i].centroid.x * (326.0f/camWidth);
-				float ypos = contourFinder.blobs[i].centroid.y * (246.0f/camHeight);
+				float xpos = contourFinder.blobs[i].centroid.x * (MAIN_WINDOW_WIDTH/camWidth);
+				float ypos = contourFinder.blobs[i].centroid.y * (MAIN_WINDOW_HEIGHT/camHeight);
 				//if (i == 0)
 				//	cout << "drawFingerOutlines: " << xpos << " , " << ypos << "\n";
 
@@ -1009,8 +1038,8 @@ void ofxNCoreVision::drawFingerOutlines()
 			float xpos, ypos;
 
 			contourFinder.getBlobsCenterOfMass(xpos, ypos);
-			xpos = xpos * (326.0f/camWidth);
-			ypos = ypos * (246.0f/camHeight);
+			xpos = xpos * (MAIN_WINDOW_WIDTH/camWidth);
+			ypos = ypos * (MAIN_WINDOW_HEIGHT/camHeight);
 
 			ofSetColor(0xCCFFCC);
 			char idStr[] = "x";
@@ -1026,12 +1055,12 @@ void ofxNCoreVision::drawFingerOutlines()
 			if (bDrawOutlines)
 			{
 				//Draw contours (outlines) on the source image
-				contourFinder.objects[i].drawBox(MAIN_FILTERS_X, MAIN_TOP_OFFSET, camWidth, camHeight, 326.0f, 246.0f);
+				contourFinder.objects[i].drawBox(MAIN_FILTERS_X, MAIN_TOP_OFFSET, camWidth, camHeight, MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
 			}
 			if (bShowLabels) //Show ID label;
 			{
-				float xpos = contourFinder.objects[i].centroid.x * (326.0f/camWidth);
-				float ypos = contourFinder.objects[i].centroid.y * (246.0f/camHeight);
+				float xpos = contourFinder.objects[i].centroid.x * (MAIN_WINDOW_WIDTH/camWidth);
+				float ypos = contourFinder.objects[i].centroid.y * (MAIN_WINDOW_HEIGHT/camHeight);
 
 				ofSetColor(0xCCFFCC);
 				char idStr[1024];

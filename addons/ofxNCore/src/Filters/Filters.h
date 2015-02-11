@@ -22,8 +22,8 @@ class Filters {
 	public:
 
 	  Filters(){
-		camWidth = 320;
-		camHeight = 240;
+		camWidth = 326;
+		camHeight = 246;
 		exposureStartTime = CAMERA_EXPOSURE_TIME;
 		//filter values
 		threshold = 120;

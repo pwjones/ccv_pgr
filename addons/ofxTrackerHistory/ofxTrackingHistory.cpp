@@ -1,4 +1,4 @@
-#include "ofxTrackerHistory.h"
+#include "ofxTrackingHistory.h"
 #include "opencv2/opencv.hpp"
 #include <algorithm>
 
@@ -6,7 +6,7 @@
 vector<bool> vectorOR(vector<bool>& v1, vector<bool>& v2);
 double trueCount(vector<bool>& v);
 
-ofxTrackerHistory::ofxTrackerHistory(ofxEdgeDetector *detector, double thresh)
+ofxTrackingHistory::ofxTrackingHistory(ofxEdgeDetector *detector, double thresh)
 {
 	edgeDetector = detector;
 	followingThresh = thresh;
@@ -14,16 +14,17 @@ ofxTrackerHistory::ofxTrackerHistory(ofxEdgeDetector *detector, double thresh)
 	followingPath = 0;
 	// All of the paths have different sizes, so initialize the followed vector to match that.
 	vector<int> numPathPts = detector->numPathPoints(useSkel);
+	followed = vector<vector<bool>>(numPathPts.size());
 	for (int i=0; i < numPathPts.size(); i++) {  
 		followed[i] = vector<bool>(numPathPts[i], false);
 	}
 }
 
-ofxTrackerHistory::~ofxTrackerHistory()
+ofxTrackingHistory::~ofxTrackingHistory()
 {
 }
 
-void ofxTrackerHistory::updatePosition(cv::Point posUpdate)
+void ofxTrackingHistory::updatePosition(cv::Point posUpdate)
 {
 	
 	//for(jj=0; jj<edgeDetector->numPaths;i++) {
@@ -34,19 +35,28 @@ void ofxTrackerHistory::updatePosition(cv::Point posUpdate)
 	for (int ii = 0; ii<dists.size(); ii++) {
 		close[ii] = (dists[ii] <= followingThresh);
 	}
-	close = vectorOR(followed[jj], close);
+	followed[jj] = vectorOR(followed[jj], close);
 	//}
 	pos.push_back(posUpdate);
 }
 
-double ofxTrackerHistory::followingProportion(int path)
+double ofxTrackingHistory::followingProportion(int path)
 {
-	if (path != followingPath)
+	if (path != followingPath) // this should eventually be eliminated.  Should track all paths
 		return(0);
 	else 
 		return( trueCount(followed[path]) / followed[path].size() );
 }
 
+void ofxTrackingHistory::reset()
+{
+	// All of the paths have different sizes, so initialize the followed vector to match that.
+	vector<int> numPathPts = edgeDetector->numPathPoints(useSkel);
+	followed = vector<vector<bool>>(numPathPts.size());
+	for (int i=0; i < numPathPts.size(); i++) {  
+		followed[i] = vector<bool>(numPathPts[i], false);
+	}
+}
 
 // ------------Vector manipulation utility functions --------------------
 vector<bool> vectorOR(vector<bool>& v1, vector<bool>& v2)
