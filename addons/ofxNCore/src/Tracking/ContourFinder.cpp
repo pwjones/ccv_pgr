@@ -223,8 +223,10 @@ void ContourFinder::getBlobsCenterOfMass(float& xpos, float& ypos)
 
 	// iterate through the blobs. Get the area weighted x,y positions
 	for( int i = 0; i < nBlobs; i++) {
-		xpos_weighted[i] = blobs[i].centroid.x * blobs[i].area;
-		ypos_weighted[i] = blobs[i].centroid.y * blobs[i].area;
+		//xpos_weighted[i] = blobs[i].centroid.x * blobs[i].area;
+		//ypos_weighted[i] = blobs[i].centroid.y * blobs[i].area;
+		xpos_weighted[i] = blobs[i].centroid.x;
+		ypos_weighted[i] = blobs[i].centroid.y;
 		totalMass += blobs[i].area;
 		//cout << "x: " << xpos_weighted[i] << "  y: " << ypos_weighted[i];
 	}
@@ -234,11 +236,11 @@ void ContourFinder::getBlobsCenterOfMass(float& xpos, float& ypos)
 		sumX += xpos_weighted[i];
 		sumY += ypos_weighted[i];
 	}
-	//x = sumX/nBlobs;
-	//y = sumY/nBlobs;
+	xpos = sumX/nBlobs;
+	ypos = sumY/nBlobs;
 	// set return vals
-	xpos = sumX/totalMass;
-	ypos = sumY/totalMass;
+	//xpos = sumX/totalMass;
+	//ypos = sumY/totalMass;
 	//clean up
 	delete [] xpos_weighted;
 	delete [] ypos_weighted;
