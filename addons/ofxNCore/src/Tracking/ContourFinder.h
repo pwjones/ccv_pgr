@@ -43,6 +43,8 @@ class ContourFinder
 	vector <Blob>		objects;
 	
 	void getBlobsCenterOfMass(float& xpos, float& ypos); // the center of mass of the blobs
+	// specific for mouse tracking - get the position of the putative head of the mouse
+	void getHeadPosition(float& xpos, float& ypos); 
 	
 	bool bTrackFingers;
 	bool bTrackObjects;

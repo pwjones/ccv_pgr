@@ -25,6 +25,7 @@ class Blob
 	    float               area;
         float               length;
 		float               angle;
+		float               aspectRatio;
 		float				A;		 //rotation velocity
 		float               raccel;  //rotation acceleration
 		float				maccel;  //distance traveled since last frame

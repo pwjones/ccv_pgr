@@ -522,16 +522,20 @@ void BlobTracker::getBlobsCenterOfMass(float& x, float& y)
 	// iterate through the blobs. Get the area weighted x,y positions
 	int i = 0;
 	for( it = calibratedBlobs.begin(); it != calibratedBlobs.end(); ++it) {
+	    // These are unweighted
 		xpos_weighted[i] = it->second.centroid.x; //* it->second.area;
 		ypos_weighted[i] = it->second.centroid.y; //* it->second.area;
 		totalMass += it->second.area;
+		// Weighted version
+		//xpos_weighted[i] = it->second.centroid.x * it->second.area;
+		//ypos_weighted[i] = it->second.centroid.y * it->second.area;
 		i++;
 		//cout << "x: " << xpos_weighted[i] << "  y: " << ypos_weighted[i];
 	}
 	//cout << "\n";
-	// calculate the mean by summing and dividing my total
+	// calculate the mean by summing and dividing by total.  Need to use mass if doing weighted.
 	for (i = 0; i < nBlobs; i++ ) {
-		sumX += xpos_weighted[i];
+		sumX += xpos_weighted[i] ;
 		sumY += ypos_weighted[i];
 	}
 	x = sumX/nBlobs;

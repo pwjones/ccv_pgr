@@ -1,8 +1,6 @@
 /*
 *  Blob.cpp
 *
-*  Created by Peter Jones on 8/4/2014.
-*  Copyright 2014 me, use as you wish.
 *
 */
 
@@ -13,6 +11,7 @@ Blob::Blob()
 {
     area 		= 0.0f;
     length 		= 0.0f;
+    aspectRatio = 0.0f;
     hole 		= false;
     nPts        = 0;
 	simulated	= false;
