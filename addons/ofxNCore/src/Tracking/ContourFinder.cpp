@@ -117,8 +117,8 @@ int ContourFinder::findContours( ofxCvGrayscaleImage&  input,
 			blob.angleBoundingRect.width  = box.size.height;
 			blob.angleBoundingRect.height = box.size.width;
 			blob.angle = box.angle;
-			float smallSide = fmin(box.size.height, box.size.width);
-			float largeSide = fmax(box.size.height, box.size.width);
+			float smallSide = min(box.size.height, box.size.width);
+			float largeSide = max(box.size.height, box.size.width);
 			blob.aspectRatio = largeSide / smallSide; //compute the aspect ratio, >= 1.  
 
 			//TEMPORARY INITIALIZATION TO 0, Will be calculating afterwards.This is to prevent sending wrong data
@@ -266,23 +266,23 @@ void ContourFinder::getHeadPosition(float& xpos, float& ypos)
 	if (maxAspect < 4) { // no tail, so default the the actual center
 	    getBlobsCenterOfMass(xpos, ypos); 
 	} else {
-	    getBlobsCenterOfMass(&comX, &comY);
-	    ofPoint COM = new ofPoint;
+	    getBlobsCenterOfMass(comX, comY);
+	    ofxVec2f COM;
 	    COM.set(comX, comY);
-	    ofVec2f bodyVec = COM - blobs[mai].centroid; //tail to body vector
+	    ofxVec2f bodyVec = COM - blobs[mai].centroid; //tail to body vector
 	    // find the blob centroid with the largest dot product relative to the body-tail vector.
 	    float maxDot = 0; 
 	    int maxi = -1;
 	    for( int i = 0; i < nBlobs; i++) {
-	        ofVec2f toTail = blobls[0].centroid - blobs[mai].centroid;
-	        if (dot.toTail(bodyVec) > maxDot) {
+	        ofxVec2f toTail = blobs[0].centroid - blobs[mai].centroid;
+	        if (toTail.dot(bodyVec) > maxDot) {
 	            maxi = i;
-	            maxDot = dot.toTail(bodyVec);
+	            maxDot = toTail.dot(bodyVec);
 	        }
 	    }
 	    if (maxi != -1) {
-	        xpos = blobs[maxi].Centroid.x;
-	        ypos = blobs[maxi].Centroid.y;
+	        xpos = blobs[maxi].centroid.x;
+	        ypos = blobs[maxi].centroid.y;
 	    } else {
 	        getBlobsCenterOfMass(xpos, ypos); 
 	    }

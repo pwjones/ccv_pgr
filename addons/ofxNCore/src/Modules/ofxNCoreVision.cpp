@@ -533,7 +533,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 				trackingHist = new ofxTrackingHistory(&pathDetector, distThresh);
 			}
 			float x,y;
-			contourFinder.getBlobsCenterOfMass(x,y);
+			contourFinder.getHeadPosition(x,y);
 			trackingHist->updatePosition(cv::Point(x,y));
 			double prop = trackingHist->followingProportion(0);
 			if (frames == 0) {
@@ -654,7 +654,7 @@ void ofxNCoreVision::checkSerial()
 			string serialMsg;
 
 			if (pathDetector.pathsDetected()) { //send distance to trail and CenterOfMass
-				contourFinder.getBlobsCenterOfMass(comx, comy);
+				contourFinder.getHeadPosition(comx, comy);
 				float minDist = pathDetector.minPathDist(cv::Point(comx, comy), 0);
 				//printf("  COM: ( %f, %f )     Dist to path: %f\n", comx, comy, minDist);
 				sprintf(tmp, "xpos=%d\nypos=%d\ndistToTrail=%.d;\n", (int)comx, (int)comy, (int)minDist);
@@ -1037,7 +1037,7 @@ void ofxNCoreVision::drawFingerOutlines()
 		if (bDrawOutlines) { //also draw the center of mass of the tracked blobs
 			float xpos, ypos;
 
-			contourFinder.getBlobsCenterOfMass(xpos, ypos);
+			contourFinder.getHeadPosition(xpos, ypos);
 			xpos = xpos * (MAIN_WINDOW_WIDTH/camWidth);
 			ypos = ypos * (MAIN_WINDOW_HEIGHT/camHeight);
 

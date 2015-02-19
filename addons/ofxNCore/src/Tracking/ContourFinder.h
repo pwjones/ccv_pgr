@@ -17,6 +17,7 @@
 #include "ofxOpenCv.h"
 #include "Blob.h"
 #include "../Templates/TemplateUtils.h"
+#include "ofxVectorMath.h"
 
 #define TOUCH_MAX_CONTOURS			128
 #define TOUCH_MAX_CONTOUR_LENGTH	1024

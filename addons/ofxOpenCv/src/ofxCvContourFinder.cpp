@@ -2,7 +2,6 @@
 #include "ofxCvContourFinder.h"
 
 
-
 //--------------------------------------------------------------------------------
 bool sort_carea_compare( const CvSeq* a, const CvSeq* b) {
 	// use opencv to calc size, then sort based on size
