@@ -117,9 +117,6 @@ int ContourFinder::findContours( ofxCvGrayscaleImage&  input,
 			blob.angleBoundingRect.width  = box.size.height;
 			blob.angleBoundingRect.height = box.size.width;
 			blob.angle = box.angle;
-			float smallSide = min(box.size.height, box.size.width);
-			float largeSide = max(box.size.height, box.size.width);
-			blob.aspectRatio = largeSide / smallSide; //compute the aspect ratio, >= 1.  
 
 			//TEMPORARY INITIALIZATION TO 0, Will be calculating afterwards.This is to prevent sending wrong data
 			blob.D.x = 0;
@@ -172,7 +169,11 @@ int ContourFinder::findContours( ofxCvGrayscaleImage&  input,
 				blob.angleBoundingRect.width  = box.size.height;
 				blob.angleBoundingRect.height = box.size.width;
 				blob.angle = box.angle;
-		
+				//printf("Box: x=%f y=%f w=%f h=%f a=%f\n", box.center.x, box.center.y, box.size.width, box.size.height, box.angle);
+				float smallSide = min(box.size.height, box.size.width);
+				float largeSide = max(box.size.height, box.size.width);
+				blob.aspectRatio = largeSide / smallSide; //compute the aspect ratio, >= 1.  
+
 				// assign other parameters
 				blob.area                = fabs(area);
 				blob.hole                = area < 0 ? true : false;
@@ -262,7 +263,7 @@ void ContourFinder::getHeadPosition(float& xpos, float& ypos)
 		    maxAspect = blobs[i].aspectRatio;
 		}
 	}
-	
+	//printf("Aspect ratio: %f\n", maxAspect);
 	if (maxAspect < 4) { // no tail, so default the the actual center
 	    getBlobsCenterOfMass(xpos, ypos); 
 	} else {
@@ -274,12 +275,14 @@ void ContourFinder::getHeadPosition(float& xpos, float& ypos)
 	    float maxDot = 0; 
 	    int maxi = -1;
 	    for( int i = 0; i < nBlobs; i++) {
-	        ofxVec2f toTail = blobs[0].centroid - blobs[mai].centroid;
+	        ofxVec2f toTail = blobs[i].centroid - blobs[mai].centroid;
+			//printf("bodyVec: x=%f y=%f   toTail: x=%f y=%f\n", bodyVec.x, bodyVec.y, toTail.x, toTail.y);
 	        if (toTail.dot(bodyVec) > maxDot) {
 	            maxi = i;
 	            maxDot = toTail.dot(bodyVec);
-	        }
+	       } 
 	    }
+		//printf("MAXDOT = %f\n",maxDot);
 	    if (maxi != -1) {
 	        xpos = blobs[maxi].centroid.x;
 	        ypos = blobs[maxi].centroid.y;

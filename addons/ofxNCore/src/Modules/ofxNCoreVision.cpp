@@ -1012,6 +1012,9 @@ void ofxNCoreVision::drawFingerOutlines()
 	//Find the blobs for drawing
 	if(contourFinder.bTrackFingers)
 	{
+		float xscalef = MAIN_WINDOW_WIDTH/camWidth;
+		float yscalef = MAIN_WINDOW_HEIGHT/camHeight;
+
 		for (int i=0; i<contourFinder.nBlobs; i++)
 		{
 			if (bDrawOutlines)
@@ -1025,7 +1028,7 @@ void ofxNCoreVision::drawFingerOutlines()
 				float ypos = contourFinder.blobs[i].centroid.y * (MAIN_WINDOW_HEIGHT/camHeight);
 				//if (i == 0)
 				//	cout << "drawFingerOutlines: " << xpos << " , " << ypos << "\n";
-
+				
 				ofSetColor(0xCCFFCC);
 				char idStr[1024];
 
@@ -1036,15 +1039,23 @@ void ofxNCoreVision::drawFingerOutlines()
 		}
 		if (bDrawOutlines) { //also draw the center of mass of the tracked blobs
 			float xpos, ypos;
+			float xoff = MAIN_FILTERS_X;
+			float yoff = MAIN_TOP_OFFSET;
 
 			contourFinder.getHeadPosition(xpos, ypos);
-			xpos = xpos * (MAIN_WINDOW_WIDTH/camWidth);
-			ypos = ypos * (MAIN_WINDOW_HEIGHT/camHeight);
+			//contourFinder.getBlobsCenterOfMass(xpos, ypos);
+			xpos = xpos * xscalef;
+			ypos = ypos * yscalef;
 
-			ofSetColor(0xCCFFCC);
-			char idStr[] = "x";
+			//ofSetColor(0xCCFFCC);
+			glPushMatrix();
+			ofSetColor(0x00CC00);
+			ofRect(xoff + xpos, yoff+ypos-2.5, 1, 5); //Vertical Plus
+			ofRect(xoff + xpos-2.5, yoff+ypos, 5, 1); //Horizontal Plus
+			glPopMatrix();
+			//char idStr[] = "x";
 			//cout << "COM: " << xpos << " , " << ypos << "\n";
-			verdana.drawString(idStr, xpos + MAIN_FILTERS_X, ypos + MAIN_TOP_OFFSET);
+			//verdana.drawString(idStr, xpos + MAIN_FILTERS_X, ypos + MAIN_TOP_OFFSET);
 		}
 	}
 	//Object Drawing
