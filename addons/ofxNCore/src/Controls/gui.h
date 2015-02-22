@@ -107,10 +107,11 @@ void ofxNCoreVision::updateMainPanels()
 	// Experiment
 	controls->update(appPtr->experimentPanel_run, kofxGui_Set_Bool, &bRunExperiment, sizeof(bool));
 	controls->update(appPtr->experimentPanel_reward, kofxGui_Set_Bool, &bRewardEarned, sizeof(bool));
-	controls->update(appPtr->experimentPanel_distThresh, kofxGui_Set_Bool, &distThresh, sizeof(float));
-	controls->update(appPtr->experimentPanel_followingPropThresh, kofxGui_Set_Bool, &followingPropThresh, sizeof(float));
-	controls->update(appPtr->experimentPanel_continuousFollowingThresh, kofxGui_Set_Bool, &continuousFollowingThresh, sizeof(float));
-	controls->update(appPtr->experimentPanel_maxVelThresh, kofxGui_Set_Bool, &maxVelThresh, sizeof(float));
+	// Reward
+	controls->update(appPtr->rewPanel_distThresh, kofxGui_Set_Bool, &distThresh, sizeof(float));
+	controls->update(appPtr->rewPanel_followingPropThresh, kofxGui_Set_Bool, &followingPropThresh, sizeof(float));
+	controls->update(appPtr->rewPanel_continuousFollowingThresh, kofxGui_Set_Bool, &continuousFollowingThresh, sizeof(float));
+	controls->update(appPtr->rewPanel_maxVelThresh, kofxGui_Set_Bool, &maxVelThresh, sizeof(float));
 	//Threshold
 
 	// Normalize
@@ -337,23 +338,35 @@ void ofxNCoreVision::addMainPanels()
 	ofxGuiPanel* expPanel = controls->addPanel(appPtr->experimentPanel, "Experiment Control", MAIN_FILTERS_X+MAIN_FILTERS_W*0,570, OFXGUI_PANEL_BORDER, 7);
 	expPanel->addButton(experimentPanel_run, "Run", 12, 12, kofxGui_Button_Off, kofxGui_Button_Switch);
 	expPanel->addButton(experimentPanel_reward, "Reward", 12, 12, kofxGui_Button_Off, kofxGui_Button_Trigger);
-	expPanel->addSlider(experimentPanel_distThresh, "Thresh Dist From Trail", MAIN_FILTERS_Z, 13, 1.0f, 50.0f, distThresh, kofxGui_Display_Int, 0);
-	expPanel->addSlider(experimentPanel_followingPropThresh, "Thresh Following Prop", MAIN_FILTERS_Z, 13, 0.0f, 100.0f, followingPropThresh*100, kofxGui_Display_Int, 0);
-	expPanel->addSlider(experimentPanel_continuousFollowingThresh, "Contin Following Thresh", MAIN_FILTERS_Z, 13, 0.0f, 100.0f, continuousFollowingThresh*100, kofxGui_Display_Int, 0);
-	expPanel->addSlider(experimentPanel_maxVelThresh, "Max Velocity Val", MAIN_FILTERS_Z, 13, 0.05f, 1.0f, maxVelThresh, kofxGui_Display_Float2, 0 );
-	expPanel->mObjects[0]->mObjY = 30; expPanel->mObjects[0]->mObjX = 175;//RUN
-	expPanel->mObjects[1]->mObjY = 55; expPanel->mObjects[1]->mObjX = 175;//REWARD
+	//expPanel->addSlider(experimentPanel_distThresh, "Thresh Dist From Trail", MAIN_FILTERS_Z, 13, 1.0f, 50.0f, distThresh, kofxGui_Display_Int, 0);
+	//expPanel->addSlider(experimentPanel_followingPropThresh, "Thresh Following Prop", MAIN_FILTERS_Z, 13, 0.0f, 100.0f, followingPropThresh*100, kofxGui_Display_Int, 0);
+	//expPanel->addSlider(experimentPanel_continuousFollowingThresh, "Contin Following Thresh", MAIN_FILTERS_Z, 13, 0.0f, 100.0f, continuousFollowingThresh*100, kofxGui_Display_Int, 0);
+	//expPanel->addSlider(experimentPanel_maxVelThresh, "Max Velocity Val", MAIN_FILTERS_Z, 13, 0.05f, 1.0f, maxVelThresh, kofxGui_Display_Float2, 0 );
+	expPanel->mObjects[0]->mObjY = 30; //expPanel->mObjects[0]->mObjX = 155;//RUN
+	expPanel->mObjects[1]->mObjY = 55; //expPanel->mObjects[1]->mObjX = 155;//REWARD
 	//expPanel->mObjects[2]->mObjY = 5; expPanel->mObjects[2]->mObjX = 135; // Thresh Dist slider
 	//expPanel->mObjects[3]->mObjY = 35; expPanel->mObjects[3]->mObjX = 135; // Thresh Following Prop
 	//expPanel->mObjects[4]->mObjY = 65; expPanel->mObjects[4]->mObjX = 135;
 	//expPanel->mObjects[5]->mObjY = 95; expPanel->mObjects[5]->mObjX = 135;
-	expPanel->mObjects[2]->mObjY = 25; //expPanel->mObjects[2]->mObjX = 135; // Thresh Dist slider
-	expPanel->mObjects[3]->mObjY = 55; //expPanel->mObjects[3]->mObjX = 135; // Thresh Following Prop
-	expPanel->mObjects[4]->mObjY = 85; //expPanel->mObjects[4]->mObjX = 135;
-	expPanel->mObjects[5]->mObjY = 115; //expPanel->mObjects[5]->mObjX = 135;
-	expPanel->mObjWidth = 235;
+	//expPanel->mObjects[2]->mObjY = 25; //expPanel->mObjects[2]->mObjX = 135; // Thresh Dist slider
+	//expPanel->mObjects[3]->mObjY = 55; //expPanel->mObjects[3]->mObjX = 135; // Thresh Following Prop
+	//expPanel->mObjects[4]->mObjY = 85; //expPanel->mObjects[4]->mObjX = 135;
+	//expPanel->mObjects[5]->mObjY = 115; //expPanel->mObjects[5]->mObjX = 135;
+	expPanel->mObjWidth = 127;
 	expPanel->mObjHeight = 145;
 
+	// Reward Criteria Panel
+	ofxGuiPanel* rewPanel = controls->addPanel(appPtr->rewPanel, "Reward Criteria", MAIN_FILTERS_X+MAIN_FILTERS_W,570, OFXGUI_PANEL_BORDER, 7);
+	rewPanel->addSlider(rewPanel_distThresh, "Thresh Dist From Trail", MAIN_FILTERS_Z, 13, 1.0f, 50.0f, distThresh, kofxGui_Display_Int, 0);
+	rewPanel->addSlider(rewPanel_followingPropThresh, "Thresh Following Prop", MAIN_FILTERS_Z, 13, 0.0f, 100.0f, followingPropThresh*100, kofxGui_Display_Int, 0);
+	rewPanel->addSlider(rewPanel_continuousFollowingThresh, "Contin Following Thresh", MAIN_FILTERS_Z, 13, 0.0f, 100.0f, continuousFollowingThresh*100, kofxGui_Display_Int, 0);
+	rewPanel->addSlider(rewPanel_maxVelThresh, "Max Velocity Val", MAIN_FILTERS_Z, 13, 0.05f, 1.0f, maxVelThresh, kofxGui_Display_Float2, 0 );
+	rewPanel->mObjects[0]->mObjY = 25; //expPanel->mObjects[2]->mObjX = 135; // Thresh Dist slider
+	rewPanel->mObjects[1]->mObjY = 55; //expPanel->mObjects[3]->mObjX = 135; // Thresh Following Prop
+	rewPanel->mObjects[2]->mObjY = 85; //expPanel->mObjects[4]->mObjX = 135;
+	rewPanel->mObjects[3]->mObjY = 115; //expPanel->mObjects[5]->mObjX = 135;
+	rewPanel->mObjWidth = 165;
+	rewPanel->mObjHeight = 145;
 
 //----------------------------------------------
 	updateMainPanels();
@@ -1009,22 +1022,22 @@ void ofxNCoreVision::handleGui(int parameterId, int task, void* data, int length
 				bRewardEarned = *(bool*)data;
 			}
 			break;
-		case experimentPanel_distThresh:
+		case rewPanel_distThresh:
 			if(length == sizeof(float)) {
 				distThresh = *(float*)data;
 			}
 			break;
-		case experimentPanel_followingPropThresh:
+		case rewPanel_followingPropThresh:
 			if(length == sizeof(float)) {
 				followingPropThresh = *(float*)data / 100;
 			}
 			break;
-		case experimentPanel_continuousFollowingThresh:
+		case rewPanel_continuousFollowingThresh:
 			if(length == sizeof(float)) {
 				continuousFollowingThresh = *(float*)data / 100;
 			}
 			break;
-		case experimentPanel_maxVelThresh:
+		case rewPanel_maxVelThresh:
 			if(length == sizeof(float)) {
 				maxVelThresh = *(float*)data;
 			}

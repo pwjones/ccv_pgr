@@ -65,7 +65,7 @@ void ofxTrackingHistory::updatePosition(cv::Point posUpdate)
 		close[ii] = (dists[ii] <= followingThresh);
 	}
 	bool follow = false;
-	for (int ii = 0; ii<close.size(); i++) {
+	for (int ii = 0; ii<close.size(); ii++) {
 	    if (close[ii]) {
 	        follow = true;
 	        break;
@@ -83,7 +83,7 @@ void ofxTrackingHistory::updatePosition(cv::Point posUpdate)
 void ofxTrackingHistory::updateFollowing(bool currFollowing)
 {
     double followingProp = followingProportion(followingPath);
-    if (isFollowing) // previously on the trail
+	if (isFollowing) {// previously on the trail
         if (!currFollowing) { // has left the trail
             isFollowing = false;
             continuousProp = 0;

@@ -13,6 +13,7 @@ public:
 		ofxTrackingHistory(ofxEdgeDetector *detector, double thresh);
 		~ofxTrackingHistory();
 		void updatePosition(cv::Point posUpdate); // to be called at each position update
+		bool isFollowingPath(int path);
 		double followingProportion(int path); // the current proportion of trail followed
 		double continuousFollowingProp(int path); // the proportion of the trail covered in current following episode
 		void reset(); 

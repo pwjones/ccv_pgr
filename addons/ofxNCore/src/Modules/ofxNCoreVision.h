@@ -145,10 +145,12 @@ class ofxNCoreVision : public ofxGuiListener
 		experimentPanel,
 		experimentPanel_run,
 		experimentPanel_reward,
-		experimentPanel_distThresh,
-		experimentPanel_followingPropThresh,
-		experimentPanel_continuousFollowingThresh,
-		experimentPanel_maxVelThresh,
+
+		rewPanel,
+		rewPanel_distThresh,
+		rewPanel_followingPropThresh,
+		rewPanel_continuousFollowingThresh,
+		rewPanel_maxVelThresh,
 
 		trackedPanel,
 		trackedPanel_darkblobs,
