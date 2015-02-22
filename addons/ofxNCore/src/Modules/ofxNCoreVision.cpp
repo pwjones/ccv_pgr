@@ -541,10 +541,11 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			contourFinder.getHeadPosition(x,y);
 			trackingHist->updatePosition(cv::Point(x,y));
 			double prop = trackingHist->followingProportion(0);
+			double contProp = trackingHist->continuousFollowingProp(0);
 			if (frames == 0) {
-				printf("Has followed %f of the trail of %f\n", prop*100, followingPropThresh);
+				printf("Has followed %f of the trail of %f.  Current prop = %f\n", prop*100, followingPropThresh, contProp);
 			}
-			if (prop >= followingPropThresh) // the animal has earned a reward
+			if (prop >= followingPropThresh && contProp >= continuousFollowingThresh) // the animal has earned a reward
 				bRewardEarned = 1;
 		}
 		// ---------------------- END MOUSE TRACKING SPECIFIC FUNCTIONALITY ------------------------- //
