@@ -1,0 +1,1313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ContourFinder" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAQAAGAIAAgSBgAgAAQgAAAYEAAAABACACAAAAQCA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Tracking\ContourFinder.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="testApp" Collapsed="true">
+    <Position X="10.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ECgAEAAAAAQAAAgAAAKAAAAAEAAAAAAgIEAAAGAEAAA=</HashCode>
+      <FileName>src\testApp.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxFC2MovieWriter" Collapsed="true">
+    <Position X="38.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgCAAAAAAIgCAAAAAAEAEAAAAACIAAIAABABAAAAAAI=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFC2MovieWriter\ofxFC2MovieWriter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxLogFileWriter" Collapsed="true">
+    <Position X="38.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxLogFileWriter\ofxLogFileWriter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxTrackingHistory" Collapsed="true">
+    <Position X="43.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAEAAAAAACAAQABAICAAAAAACEAAAKAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxTrackerHistory\ofxTrackingHistory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxXmlSettings" Collapsed="true">
+    <Position X="47" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gEAFIgCAAIAgFCQIAgMpBKEIAwEEgQABAAAAAABAUAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\src\ofxXmlSettings.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlVisitor" Collapsed="true">
+    <Position X="3.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAQAAAAAAAAAAAAAIAAAAAAAAAAAgAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlBase" Collapsed="true">
+    <Position X="7.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JAgggBQAEAgEAAAQAgBhARASADAQAiAIAAAiAAAkAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlNode" Collapsed="true">
+    <Position X="6.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKAgAAAIAEAEiiBAhEAAYQAEAAqBgCECAYtgAAtAIDA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlAttribute" Collapsed="true">
+    <Position X="14.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQggAAAgAAQggAEAADAAwQAAAIEAGQAAABgQAIEEgA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlAttributeSet" Collapsed="true">
+    <Position X="41.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAQAAQAAABQAAAAAJAAAAACACAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlElement" Collapsed="true">
+    <Position X="1" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAgAAAAACACAAAJAAAAIYEAgQCAAA0BCBAAAAAEIFE=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlComment" Collapsed="true">
+    <Position X="3.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAgAIAAAAAAAAAAAAAAAQAAAAAAAAEIAAAAAAAEIBA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlText" Collapsed="true">
+    <Position X="5.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKAgAAAABAAAAAAAAEAAAQBAAAABgAEAAAAAAAAEIBQ=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlDeclaration" Collapsed="true">
+    <Position X="7.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IIAgACCAAAQAAAAAAAAAAQAAgAAAAIEAAAIIAAAEKBA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlUnknown" Collapsed="true">
+    <Position X="10" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAgAAAAAEAAAAAAAAAAAQACAAAAAAEAAAAAAIAEIBA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlDocument" Collapsed="true">
+    <Position X="12.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAgAAAABBAQAQABAgEICQAAAAEQBAEBVAAAAEgUJBA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlHandle" Collapsed="true">
+    <Position X="43.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAEAAAAEAAAIAAAEgAIQABAAAAAAAAAIEICAEAABA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlPrinter" Collapsed="true">
+    <Position X="3.5" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAEABEhAQgBAAQAAAAMAAAAAAAAABQIBQAwAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TiXmlParsingData" Collapsed="true">
+    <Position X="45.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAQABAAEAAAAAAAAAAEEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxmlparser.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CSerial" Collapsed="true">
+    <Position X="45.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIABIAAAAAAAIAAAgAAQEFAAACAAAgCAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNetwork\src\CSerial.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxTCPClient" Collapsed="true">
+    <Position X="40" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAIAggJAAAAAQAgAAACAQAECIAAAACgCRMAAsCABAgQ=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNetwork\src\ofxTCPClient.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InetAddr" Collapsed="true">
+    <Position X="7.5" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQCAAAAAgAAAAAAQAAAAAAABAgAAICAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNetwork\src\ofxTCPManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxTCPManager" Collapsed="true">
+    <Position X="41.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BIgAgAAAACAAAkAACMMIIJBAQEABEFQQASAIBEGAQEA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNetwork\src\ofxTCPManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxTCPServer" Collapsed="true">
+    <Position X="13.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAoAggJGIAAAQAiMAEEASAEAAACgACgAQIAAEAAQEgA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNetwork\src\ofxTCPServer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxUDPManager" Collapsed="true">
+    <Position X="45.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAgAgAAAgABARgAgCMACIKBAQEABkEQQAQAIBACEQEA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNetwork\src\ofxUDPManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxOscArg" Collapsed="true">
+    <Position X="18" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAIAAAAAAAAAQAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOsc\src\ofxOscArg.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxOscArgInt32" Collapsed="true">
+    <Position X="15.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABEAAAAAAAAAQAQAAAgQAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOsc\src\ofxOscArg.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxOscArgFloat" Collapsed="true">
+    <Position X="18" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACADAAAAAAAAAAQAQAAAAQAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOsc\src\ofxOscArg.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxOscArgString" Collapsed="true">
+    <Position X="20.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAFAAAAAAAAAAQAQAAAAQEAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOsc\src\ofxOscArg.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxOscBundle" Collapsed="true">
+    <Position X="45.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QEAEAAABAAAAAAACAAABEQAAAARAAAIBAAAAAAAACAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOsc\src\ofxOscBundle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxOscMessage" Collapsed="true">
+    <Position X="47" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQAAACAAIAgAAAwEAAAASAGEFIgAAIAgwAAAgAAAAI=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOsc\src\ofxOscMessage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxOscReceiver" Collapsed="true">
+    <Position X="48.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAEABAkBAgABAACAAAAEEABBAAAAAAAAIQA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOsc\src\ofxOscReceiver.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxOscSender" Collapsed="true">
+    <Position X="38.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAgAAAAAAAAAAgBAAAAQAAgAAAAAAAAAAcAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOsc\src\ofxOscSender.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxCvBlob" Collapsed="true">
+    <Position X="43.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhAAAAAAAAAAAAAAAEKAAAAAAAAAAEAEgAAAAAAAAAE=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOpenCv\src\ofxCvBlob.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxCvColorImage" Collapsed="true">
+    <Position X="0.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ikAAAQAAAAAAAAAQACQBAQAAAAAAEBIAAQAAAAASRQA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOpenCv\src\ofxCvColorImage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxCvContourFinder" Collapsed="true">
+    <Position X="45.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UQAAAAAGAACAiAAgAgIAQgAAAhAAQAAACBACIAAAACA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOpenCv\src\ofxCvContourFinder.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxCvFloatImage" Collapsed="true">
+    <Position X="3" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kEAQAAAAAAABCCAAiCUAAQAAIAAEABIAASAAAAASFYE=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOpenCv\src\ofxCvFloatImage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxCvGrayscaleImage" Collapsed="true">
+    <Position X="5.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gACAAAQACAAgCBAAACQAAQAAAAAAADIAAQAJAAgDBQA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOpenCv\src\ofxCvGrayscaleImage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxCvImage" Collapsed="true">
+    <Position X="4" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>20TAAACAAARAAQUAQKeQYQQTQgGESBIJCRiIcAFCFRE=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOpenCv\src\ofxCvImage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxCvShortImage" Collapsed="true">
+    <Position X="7.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gEgAAAAAAAAAAAAAgCQAAQAgAAAAABIAAQAAAAASBQE=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOpenCv\src\ofxCvShortImage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxMatrix3x3" Collapsed="true">
+    <Position X="40" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GgAACAAAAABAAgAAYAUAAAAAIAAAAAi+aQAAAAAAAIA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxVectorMath\src\ofxMatrix3x3.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxVec2f" Collapsed="true">
+    <Position X="5.5" Y="22.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GwAIGQCAJMAYBAgBYEUZgSACAFUkABgAFAAABADgArI=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxVectorMath\src\ofxVec2f.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxVec3f" Collapsed="true">
+    <Position X="23.5" Y="20.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GwAIGQCAIsAYBAgBYEUZgSACAFUkAJgIFAAABADgArI=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxVectorMath\src\ofxVec3f.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxVec4f" Collapsed="true">
+    <Position X="19.5" Y="20.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GwAAAQCAIEEQBAgAYEUJACACAFEkABgAAAgAAAAgArI=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxVectorMath\src\ofxVec4f.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxThread" Collapsed="true">
+    <Position X="13.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAgIAAGYAgAAEAAAAAAAAAAAACEAAiAAAIABAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxThread\src\ofxThread.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxDirList" Collapsed="true">
+    <Position X="47" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAwgEAAAAAAAAAAAAACICAAAAAAAAAAAFAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxDirList\src\ofxDirList.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxffmv" Collapsed="true">
+    <Position X="5.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgEAAAECKACAANAARAAIAAAAAABAYAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\ofxffmv.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Calibration" Collapsed="true">
+    <Position X="13" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABBKoCAgAACgAQgABBJRAAEDAARACASCAAApAAABiAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Calibration\Calibration.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CalibrationUtils" Collapsed="true">
+    <Position X="40" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BMACAEAAEABgcTgAACAEAAAAAQAAAABABAAgQCACAEI=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Calibration\CalibrationUtils.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="rect&lt;T&gt;" Collapsed="true">
+    <Position X="22.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAEBAEAAAAAAAAAAAYIAAIAIAARCAAAAAAAAAAABA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Calibration\rect2d.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vector2d&lt;T&gt;" Collapsed="true">
+    <Position X="17.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>WgAAAECCEEAUIAAAYAUAAQAAAACAAABAQAAAAAAAYqA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Calibration\vector2d.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TUIO" Collapsed="true">
+    <Position X="40" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEABACAAAAAIQA0AREIABQCyQQgAAAgAAAgABAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Communication\TUIO.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGui" Collapsed="true">
+    <Position X="47" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAgAYAAEAAAACAAQAAICQAAAAAAAAAAAYEBAACAUSAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGui.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiArrow" Collapsed="true">
+    <Position X="20" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAQAAICAAAAAAAEAIJAIgIAACAEAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiArrow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiButton" Collapsed="true">
+    <Position X="24.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAACIAAAAAAQAAICAAAAAAAEAAKgIAAAACAEAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiColor" Collapsed="true">
+    <Position X="31.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIgAAIAAAAAAAQAQAAICAAAgAAAEAAIAIAAAACAEAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiColor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiFiles" Collapsed="true">
+    <Position X="35.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAhAAEAAQAAAAAASAAIKgAFAAAAEAAIBJAAAACAEAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiFiles.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiGlobals" Collapsed="true">
+    <Position X="48.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAECAAAAgICCARBSAaAiIIIkEAAIRAUCZACgCEAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiGlobals.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiGrid" Collapsed="true">
+    <Position X="2" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hAkKZqhQQwiCBCgUQSICRATQygwFAR8AvrKkgyM0ImM=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiGrid.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiImage" Collapsed="true">
+    <Position X="4.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAEEAUCAAABAKoASoAAAABAAAAAAKArACAKiAGIAQ=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiImage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiKnob" Collapsed="true">
+    <Position X="6.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QQgAAAAAAgAAAAAQCAICAABAAAAUAAIBIACEACAEAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiKnob.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiLabel" Collapsed="true">
+    <Position X="8.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAggEAIAACCAAAASAAICAACAAAAAgAIIIAAAACAMAAg=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiLabel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiMatrix" Collapsed="true">
+    <Position X="11" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAgAAAAAAAAAAADQAAICAAAQAAAEAAIBIgAAACEEACA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiMatrix.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiObject" Collapsed="true">
+    <Position X="19" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AigBAAAQIAAACAAxMCaCAAAoQIQACgAIJAgBIGAEQGA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiPanel" Collapsed="true">
+    <Position X="13.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAgAQBQAkgAAAAAQABKCAAIIQAAAAAIBsgKEACAEAAU=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiPanel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiPoints" Collapsed="true">
+    <Position X="15.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQgAAAAAABAAEAAQCIICAABAAAAEAAIBIACEACAEECA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiPoints.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiRadar" Collapsed="true">
+    <Position X="17.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQgAAAAAAAAAAAAQCAICAABAAAAEAAIBIACEACAEAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiRadar.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiScope" Collapsed="true">
+    <Position X="22.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAEAAAACQAAICAABQAAAEAAIBIAAAACAMAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiScope.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiSlider" Collapsed="true">
+    <Position X="26.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQgAAAAAAAAAAAAQCAICAABAAAAEAAIBIACEACAMAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiSlider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiSwitch" Collapsed="true">
+    <Position X="33.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQgAAAAAAAAAAAAQCAICAABAAAAEAAIAoBCEACAEAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiSwitch.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiListener" Collapsed="true">
+    <Position X="0.5" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiTypes.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofCell" Collapsed="true">
+    <Position X="38.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAACAAAAAAAAAAAgA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiTypes.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofRGBA" Collapsed="true">
+    <Position X="41.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAABAAAAAAACAAoAQABAAAAABA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiTypes.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofPointList" Collapsed="true">
+    <Position X="40" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAACAAAAAAEAQAIAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiTypes.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxGuiXYPad" Collapsed="true">
+    <Position X="29" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQgAAAAAIAAAAAAQCAICAABAAAAEAAIBIACEACAEAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiXYPad.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="content" Collapsed="true">
+    <Position X="43.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACACAAAAAAAAAADAQAAAAAAAAAAAAAAABgAAAAAgA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Events\TouchMessenger.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TouchMessage" Collapsed="true">
+    <Position X="48.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Events\TouchMessenger.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TouchListener" Collapsed="true">
+    <Position X="13" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAoAAgAAAAAAAAAAAAAAAAEAAAAAAgAAABAEAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Events\TouchMessenger.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TouchManager" Collapsed="true">
+    <Position X="47" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABEAsAAiEIJAgAAANCAAAkAAEAAAYAAwAKABAEEAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Events\TouchMessenger.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CPUImageFilter" Collapsed="true">
+    <Position X="5.25" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAQIAAAAAAAAAAABACAEAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Filters\CPUImageFilter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Filters" Collapsed="true">
+    <Position X="9.75" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kUXAQCABmAAEMIIFZJogCgAAAABBBSAADgDQFJiAwAI=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Filters\Filters.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterParameter" Collapsed="true">
+    <Position X="47" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAQAAAAAAAAAAAAAAAFACAAAAAAAAAABAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Filters\GPUImageFilter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GPUImageFilter" Collapsed="true">
+    <Position X="48.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAGAAAAAAAABIAAAAAAAkEAAAEAAAAAAAQAECAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Filters\GPUImageFilter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProcessFiducialFilters" Collapsed="true">
+    <Position X="8.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAIIAAAIIAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Filters\ProcessFiducialFilters.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProcessFilters" Collapsed="true">
+    <Position X="10.75" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAIIAAAIIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Filters\ProcessFilters.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShaderProgram" Collapsed="true">
+    <Position X="48.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAhAAAAAAAIAAABAABAAAAAAAAAABABAAAAIAE=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Filters\ShaderProgram.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxNCoreVision" Collapsed="true">
+    <Position X="0.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>nDVDoSloFPJAMKPFrvO2tnmTShVLgrbwW3RHvUB8o+4=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Modules\ofxNCoreVision.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Blob" Collapsed="true">
+    <Position X="38.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AlQAAIACAACASAEABGCAAAACAQAAEECEAggAZABAAgE=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Tracking\Blob.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlobTracker" Collapsed="true">
+    <Position X="15.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CgBAAAAAAAAgGQDIBAgACAAEAogAAACBAEAAAAAhAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Tracking\Tracking.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CameraUtils" Collapsed="true">
+    <Position X="41.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAgA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Camera\CameraUtils.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Template" Collapsed="true">
+    <Position X="38.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAQEAAAAQAQAAAAAAEAAAAABAAAAAAEAAAAgA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Templates\Template.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TemplateUtils" Collapsed="true">
+    <Position X="40" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAAAAAIAAAAABAEAAQCCBQAAAAQAAAAAAAAQAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Templates\TemplateUtils.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxPS3" Collapsed="true">
+    <Position X="7.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAEAAAACKAAAAJAARFAAAgAAAABAYAQABAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxPS3\src\ofxPS3.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxFiducial" Collapsed="true">
+    <Position X="40" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AwFAUcIABAAAQYAKCAIBBcAAhgoBACAEAQAAAGEUAuQ=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\ofxFiducial.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxFiducialFinder" Collapsed="true">
+    <Position X="41.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACQAAAAABACAAABAAAAAEQAAgAAAACAAoACACAAAQI=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\ofxFiducialFinder.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxFiducialTracker" Collapsed="true">
+    <Position X="43.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAwAAIAARACAAADAABRgEQAABAAAACEIoACACCAAAM=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\ofxFiducialTracker.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxFinger" Collapsed="true">
+    <Position X="45.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QwEAAQAAAAAAQAQAQAIBAQAAhAABQAAEAAAAAGEEQpE=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\ofxFinger.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TreeIdMapImplementation" Collapsed="true">
+    <Position X="38.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAIAAAAAgAAAAAAAAEAAAAAAADAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\libfidtrack\treeidmap.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxCameraBase" Collapsed="true">
+    <Position X="6.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MiAAgAIMGhAAACaYQAAYAIxGAqwIYISEBBZAYAmBNSA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxCameraBase\inc\ofxCameraBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxMultiplexer" Collapsed="true">
+    <Position X="41.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ECAEBAAAiTQBAFyoBgSgQIDBAAEeAwGYAkCQACAQAEo=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxMultiplexer\inc\ofxMultiplexer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxMultiplexerManager" Collapsed="true">
+    <Position X="43.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FjggABCAAAAAABYACgCKRICAQAUYAAkYwQA4IYQQAg8=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxMultiplexer\inc\ofxMultiplexerManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxCMUCamera" Collapsed="true">
+    <Position X="10" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAEAABACKAAAAIAARAAAAAAAAIBCYIAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxCMU\inc\ofxCMUCamera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxDShow" Collapsed="true">
+    <Position X="12.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABABAAEAAAACKAAAAIAARAAAAAAAAABAYAAAAAAgA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxDShow\src\ofxDShow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxKinect" Collapsed="true">
+    <Position X="1" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAEAQAAUAAAACqAAAAJAARBAAIgAAACTAYAQAEAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxKinect\src\ofxKinect.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxFlea3" Collapsed="true">
+    <Position X="3.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAIAAAEAAAAiKQACAMEARAAAAAAAAHhAYAAAAggQI=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFlea3\ofxFlea3.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxEdgeDetector" Collapsed="true">
+    <Position X="48.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EhQAAAAADUAAdJSAQASEFAGVBEAIACAIECAgIASBAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxEdgeDetector\ofxEdgeDetector.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="TiXmlCursor" Collapsed="true">
+    <Position X="41.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQACAAAAAAAAAAAABABAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="dirent" Collapsed="true">
+    <Position X="41.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxDirList\src\ofxDirList.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="DIR" Collapsed="true">
+    <Position X="40" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAACAAAAAAAAAAgAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxDirList\src\ofxDirList.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FlyCaptureInfoEx" Collapsed="true">
+    <Position X="45.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAEABABACAAAAIAACEAAAAAAgAAAAAAECA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FlyCaptureDriverInfo" Collapsed="true">
+    <Position X="41.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FlyCaptureTimestamp" Collapsed="true">
+    <Position X="47" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAABAEAIQAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FlyCaptureImage" Collapsed="true">
+    <Position X="43.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAQgAAAAAAAQAAAEAAAAACAAAAAAAAAAgCAAACAABA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="_frame" Collapsed="true">
+    <Position X="38.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACBACAAAAEAAAAAAABAAAAAABAIAAAhAAAAQABAAAQ=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\ofxFiducial.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="finger_frame" Collapsed="true">
+    <Position X="38.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACBACAAAAEAAAAAAABAAAAAAAAAAAAAAAAAQAAAAAQ=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\ofxFinger.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="TiledBernsenThresholder" Collapsed="true">
+    <Position X="40" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAQAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\tiled_bernsen_threshold.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FidtrackerX" Collapsed="true">
+    <Position X="47" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAABAYAECAAgCgIAAAAAAAAAAICAAQBQgEAEgRAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\libfidtrack\fidtrackX.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FiducialX" Collapsed="true">
+    <Position X="48.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACBAAAAAAAAgAAAAIAAAAAABgAABAgoA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\libfidtrack\fidtrackX.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="RegionX" Collapsed="true">
+    <Position X="45.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAABQAQAAAAAgAAAAIAAAAAABgAAAAgAE=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\libfidtrack\fidtrackX.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="FloatPoint" Collapsed="true">
+    <Position X="40" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\libfidtrack\floatpoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="DoublePoint" Collapsed="true">
+    <Position X="43.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\libfidtrack\floatpoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="IntPoint" Collapsed="true">
+    <Position X="48.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\libfidtrack\floatpoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ShortPoint" Collapsed="true">
+    <Position X="48.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\libfidtrack\floatpoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Span" Collapsed="true">
+    <Position X="38.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\libfidtrack\segment.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="fidRegion" Collapsed="true">
+    <Position X="45.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAACAggAADAAAAIAAAyAAAEIAAAAAgAAIIIAgAU=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\libfidtrack\segment.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="RegionReference" Collapsed="true">
+    <Position X="43.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\libfidtrack\segment.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Segmenter" Collapsed="true">
+    <Position X="47" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAERAQIAAAAhACAAAAAAAAAAAAIAAAAE=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\libfidtrack\segment.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="TreeIdMap" Collapsed="true">
+    <Position X="43.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAEAAAAgAAAAAAAAAAAEBAAAAAAAgAAAAABA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFiducialFinder\src\libfidtrack\treeidmap.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ofxCameraBaseSettings" Collapsed="true">
+    <Position X="40" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAgAAAAAAAAQAAAAAAAAAAAJAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxCameraBase\inc\ofxCameraBaseSettings.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ofxCameraBaseCalibration" Collapsed="true">
+    <Position X="38.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxCameraBase\inc\ofxCameraBaseSettings.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ofxTimeStamp" Collapsed="true">
+    <Position X="41.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAACAUCAQA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxCameraBase\inc\ofxCameraBaseSettings.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="LPCINETADDR" Collapsed="true">
+    <Position X="4.5" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNetwork\src\ofxTCPManager.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="LPINETADDR" Collapsed="true">
+    <Position X="7.5" Y="20" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNetwork\src\ofxTCPManager.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="ofxOscArgType" Collapsed="true">
+    <Position X="9.5" Y="22.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOsc\src\ofxOscArg.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="int32_t" Collapsed="true">
+    <Position X="40" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOsc\src\ofxOscArg.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="ofxPoint2f" Collapsed="true">
+    <Position X="5.5" Y="25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxVectorMath\src\ofxVectorMath.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="ofxPoint3f" Collapsed="true">
+    <Position X="23.5" Y="23" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxVectorMath\src\ofxVectorMath.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="ofxPoint4f" Collapsed="true">
+    <Position X="19.5" Y="23" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxVectorMath\src\ofxVectorMath.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="CameraGUIContext" Collapsed="true">
+    <Position X="38.25" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrcameragui.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="GenericCameraContext" Collapsed="true">
+    <Position X="38.25" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrcameragui.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="FlyCaptureContext" Collapsed="true">
+    <Position X="48.75" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="FlyCaptureCameraSerialNumber" Collapsed="true">
+    <Position X="47" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="FlyCaptureCallback" Collapsed="true">
+    <Position X="45.25" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="rect2df" Collapsed="true">
+    <Position X="22.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Calibration\rect2d.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="vector2df" Collapsed="true">
+    <Position X="17.5" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Calibration\vector2d.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="vector2di" Collapsed="true">
+    <Position X="17.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Calibration\vector2d.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="CLEyeCameraInstance" Collapsed="true">
+    <Position X="40" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxPS3\src\CLEyeMulticam.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="CLEyeCameraColorMode" Collapsed="true">
+    <Position X="1.5" Y="20.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxPS3\src\CLEyeMulticam.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="CLEyeCameraResolution" Collapsed="true">
+    <Position X="21.5" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxPS3\src\CLEyeMulticam.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="CLEyeCameraParameter" Collapsed="true">
+    <Position X="15.5" Y="19.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxPS3\src\CLEyeMulticam.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="CAMERATYPE" Collapsed="true">
+    <Position X="21.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxCameraBase\inc\ofxCameraBaseSettings.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="CAMERA_BASE_FEATURE" Collapsed="true">
+    <Position X="11.5" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxCameraBase\inc\ofxCameraBaseSettings.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="CLNUIMotor" Collapsed="true">
+    <Position X="43.5" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxKinect\src\CLNUIDevice.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="CLNUICamera" Collapsed="true">
+    <Position X="41.75" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxKinect\src\CLNUIDevice.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="AviType" Collapsed="true">
+    <Position X="41.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAQAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFC2MovieWriter\ofxFC2MovieWriter.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_0103_1" Collapsed="true">
+    <Position X="38.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAACABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TiXmlEncoding" Collapsed="true">
+    <Position X="45.25" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAABAAAAAAAABAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxXmlSettings\libs\tinyxml.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="_ofxOscArgType" Collapsed="true">
+    <Position X="9.5" Y="24.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAEAAAAgAIgAAAAAIAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOsc\src\ofxOscArg.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ofxCvRoiMode" Collapsed="true">
+    <Position X="43.5" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAQAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxOpenCv\src\ofxCvConstants.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="CameraGUIError" Collapsed="true">
+    <Position X="43.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAiAAEAAAABAAAAAAAAQAAAABA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrcameragui.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="CameraGUIType" Collapsed="true">
+    <Position X="45.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAEAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrcameragui.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FlyCaptureError" Collapsed="true">
+    <Position X="43.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gIoABAGAAIAQAQiABAAAAACAAAAAgBFEAQCAECAEgoA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FlyCaptureProperty" Collapsed="true">
+    <Position X="38.25" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAAAAAAAAAgAEAAJAUAAAEAAAQAEAAIkACAIA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FlyCaptureBusEvent" Collapsed="true">
+    <Position X="47" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAABAAQA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FlyCaptureFrameRate" Collapsed="true">
+    <Position X="45.25" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABEIAAIACQAAAAQgAQIAIAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FlyCaptureVideoMode" Collapsed="true">
+    <Position X="41.75" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAwEAAEAhAAAAIQCMgAEUCCAAwQAAIAEAAIAAAJA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FlyCaptureCameraModel" Collapsed="true">
+    <Position X="38.25" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACIAAAAABAAABAAUAABCBAAABQAAACAQABAAgAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FlyCaptureCameraType" Collapsed="true">
+    <Position X="40" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FlyCaptureBusSpeed" Collapsed="true">
+    <Position X="48.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEEAAAAABgABAAAAKQIAAAAhAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FlyCaptureColorMethod" Collapsed="true">
+    <Position X="41.75" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAgAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAIACA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FlyCaptureStippledFormat" Collapsed="true">
+    <Position X="40" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABBAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FlyCapturePixelFormat" Collapsed="true">
+    <Position X="48.75" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAgAEAAAAAAAAAYAAAAAABgAAEAAAAAAAREAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FlyCaptureImageFileFormat" Collapsed="true">
+    <Position X="47" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACCAAAAAAAAAQAAAIAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxFFMV\src\pgrflycapture.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_013a_1" Collapsed="true">
+    <Position X="40" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAKAEAQAEAAAAAIAAABAAgAKAigBAAABI=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiTypes.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_013a_2" Collapsed="true">
+    <Position X="41.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAACAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAABIA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiTypes.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_013a_3" Collapsed="true">
+    <Position X="43.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAQAAAAAAAAIAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiTypes.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_013a_4" Collapsed="true">
+    <Position X="45.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiTypes.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_013a_5" Collapsed="true">
+    <Position X="47" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAIAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiTypes.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_013a_6" Collapsed="true">
+    <Position X="48.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABgAAAAAAAAAAAQAAAAAIAAACIAIAAAAAAAABDQAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiTypes.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_013a_7" Collapsed="true">
+    <Position X="38.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAoAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiTypes.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_013a_8" Collapsed="true">
+    <Position X="40" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAQAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxNCore\src\Controls\ofxGuiTypes.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_015e_1" Collapsed="true">
+    <Position X="1.5" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAQAAAAAAAAAAAAAAAAAACAAAAoAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxPS3\src\CLEyeMulticam.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_015e_2" Collapsed="true">
+    <Position X="21.5" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxPS3\src\CLEyeMulticam.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_015e_3" Collapsed="true">
+    <Position X="15.5" Y="21.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQCCAAAQABAhAABAIAAACAACAIAIAAAgAAAABABAAAE=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxPS3\src\CLEyeMulticam.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_0156_1" Collapsed="true">
+    <Position X="21.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAACAAgAAAAAAAAAAEBAAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxCameraBase\inc\ofxCameraBaseSettings.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_0156_2" Collapsed="true">
+    <Position X="11.5" Y="19.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IEABQAAAEgAQAABgAwQSAAAAYAAoAGBAAIAIBgAEAAA=</HashCode>
+      <FileName>c:\Users\pwjones\dev\ccv15_pgr\addons\ofxCameraBase\inc\ofxCameraBaseSettings.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
