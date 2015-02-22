@@ -147,6 +147,8 @@ class ofxNCoreVision : public ofxGuiListener
 		experimentPanel_reward,
 		experimentPanel_distThresh,
 		experimentPanel_followingPropThresh,
+		experimentPanel_continuousFollowingThresh,
+		experimentPanel_maxVelThresh,
 
 		trackedPanel,
 		trackedPanel_darkblobs,
@@ -304,6 +306,8 @@ public:
 		trackingHist = NULL;
 		distThresh = 20;
 		followingPropThresh = .80;
+		continuousFollowingThresh = .20; 
+		maxVelThresh = .8; // this is in px/msec, so it will be low
 		bRewardEarned = false;
 		bRunExperiment = false;
 	}
@@ -548,8 +552,11 @@ public:
 	ofstream			logFile;
 	bool				bDetectEdges;
 	// Tracking
-	float				followingPropThresh;
-	float				distThresh;
+	//criteria for following
+	float				distThresh; // upper limit for distance from trail 
+	float				followingPropThresh; // the proportion of trail that must be followed
+	float				continuousFollowingThresh; // the proportion that must be followed continuously
+	float				maxVelThresh; // the maximum vel for following - to exclude just running over
 	bool				bRewardEarned;
 	bool				bRunExperiment;
 	ofxEdgeDetector		pathDetector; //To detect paths from the background image

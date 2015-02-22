@@ -109,6 +109,8 @@ void ofxNCoreVision::updateMainPanels()
 	controls->update(appPtr->experimentPanel_reward, kofxGui_Set_Bool, &bRewardEarned, sizeof(bool));
 	controls->update(appPtr->experimentPanel_distThresh, kofxGui_Set_Bool, &distThresh, sizeof(float));
 	controls->update(appPtr->experimentPanel_followingPropThresh, kofxGui_Set_Bool, &followingPropThresh, sizeof(float));
+	controls->update(appPtr->experimentPanel_continuousFollowingThresh, kofxGui_Set_Bool, &continuousFollowingThresh, sizeof(float));
+	controls->update(appPtr->experimentPanel_maxVelThresh, kofxGui_Set_Bool, &maxVelThresh, sizeof(float));
 	//Threshold
 
 	// Normalize
@@ -218,8 +220,8 @@ void ofxNCoreVision::addMainPanels()
 	logPanel->addButton(appPtr->logPanel_saveBgImage, "Save Bg Image", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	logPanel->addButton(appPtr->logPanel_detectEdges, "Detect Paths", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger);
 	logPanel->addButton(appPtr->logPanel_saveMovie, "Save Movie", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
-	string logLabel = "Log: ";
-	logLabel.append(logFileName);
+	string logLabel = "Save Log File";
+	//logLabel.append(logFileName);
 	logPanel->addButton(appPtr->logPanel_logFile, logLabel, OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	logPanel->addButton(appPtr->logPanel_saveBothMovieLog, "Save Movie and Log", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	logPanel->mObjWidth = 200;
@@ -337,13 +339,20 @@ void ofxNCoreVision::addMainPanels()
 	expPanel->addButton(experimentPanel_reward, "Reward", 12, 12, kofxGui_Button_Off, kofxGui_Button_Trigger);
 	expPanel->addSlider(experimentPanel_distThresh, "Thresh Dist From Trail", MAIN_FILTERS_Z, 13, 1.0f, 50.0f, distThresh, kofxGui_Display_Int, 0);
 	expPanel->addSlider(experimentPanel_followingPropThresh, "Thresh Following Prop", MAIN_FILTERS_Z, 13, 0.0f, 100.0f, followingPropThresh*100, kofxGui_Display_Int, 0);
-	//expPanel->mObjects[0]->mObjX = 105;
-	expPanel->mObjects[0]->mObjY = 30;
-	expPanel->mObjects[1]->mObjY = 50;
-	expPanel->mObjects[2]->mObjY = 70;
-	expPanel->mObjects[3]->mObjY = 95;
-	expPanel->mObjWidth = 160;
-	expPanel->mObjHeight = 140;
+	expPanel->addSlider(experimentPanel_continuousFollowingThresh, "Contin Following Thresh", MAIN_FILTERS_Z, 13, 0.0f, 100.0f, continuousFollowingThresh*100, kofxGui_Display_Int, 0);
+	expPanel->addSlider(experimentPanel_maxVelThresh, "Max Velocity Val", MAIN_FILTERS_Z, 13, 0.05f, 1.0f, maxVelThresh, kofxGui_Display_Float2, 0 );
+	expPanel->mObjects[0]->mObjY = 30; expPanel->mObjects[0]->mObjX = 175;//RUN
+	expPanel->mObjects[1]->mObjY = 55; expPanel->mObjects[1]->mObjX = 175;//REWARD
+	//expPanel->mObjects[2]->mObjY = 5; expPanel->mObjects[2]->mObjX = 135; // Thresh Dist slider
+	//expPanel->mObjects[3]->mObjY = 35; expPanel->mObjects[3]->mObjX = 135; // Thresh Following Prop
+	//expPanel->mObjects[4]->mObjY = 65; expPanel->mObjects[4]->mObjX = 135;
+	//expPanel->mObjects[5]->mObjY = 95; expPanel->mObjects[5]->mObjX = 135;
+	expPanel->mObjects[2]->mObjY = 25; //expPanel->mObjects[2]->mObjX = 135; // Thresh Dist slider
+	expPanel->mObjects[3]->mObjY = 55; //expPanel->mObjects[3]->mObjX = 135; // Thresh Following Prop
+	expPanel->mObjects[4]->mObjY = 85; //expPanel->mObjects[4]->mObjX = 135;
+	expPanel->mObjects[5]->mObjY = 115; //expPanel->mObjects[5]->mObjX = 135;
+	expPanel->mObjWidth = 235;
+	expPanel->mObjHeight = 145;
 
 
 //----------------------------------------------
@@ -1008,6 +1017,16 @@ void ofxNCoreVision::handleGui(int parameterId, int task, void* data, int length
 		case experimentPanel_followingPropThresh:
 			if(length == sizeof(float)) {
 				followingPropThresh = *(float*)data / 100;
+			}
+			break;
+		case experimentPanel_continuousFollowingThresh:
+			if(length == sizeof(float)) {
+				continuousFollowingThresh = *(float*)data / 100;
+			}
+			break;
+		case experimentPanel_maxVelThresh:
+			if(length == sizeof(float)) {
+				maxVelThresh = *(float*)data;
 			}
 			break;
 

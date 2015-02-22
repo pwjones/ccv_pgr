@@ -492,7 +492,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 		//If Object tracking or Finger tracking is enabled
 		if(contourFinder.bTrackFingers || contourFinder.bTrackObjects)
 		{
-			tracker.track(&contourFinder);
+			tracker.track(&contourFinder); // this actually does the assignment of IDs, etc.
 		}
 
 		//Map Fiducials from camera to screen position
@@ -518,16 +518,21 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			myTUIO.setMode(contourFinder.bTrackFingers , contourFinder.bTrackObjects, contourFinder.bTrackFiducials);
 			myTUIO.sendTUIO(&getBlobs(),&getObjects(),&fidfinder.fiducialsList);
 		}
-
-		// Edge Detection 
-		// Seems like this is likely to just block this image acquisition loop, which is ok
+		// ---------------------- MOUSE TRACKING SPECIFIC ACTIONS ---------------------// 
+		
+		// Edge/Trail Detection 
 		if (bDetectEdges) {
 			pathDetector.updateImage(filter->grayImg);
-			pathDetector.detectEdges();
+			pathDetector.detectEdges(); // Will block this image acquisition loop temporarily, which is ok
 			bDetectEdges = 0;	
 		}
 
-		// Track the progress relative to trail
+		float vel = tracker.getCenterOfMassVelocity() * (camWidth+camHeight)/2; // velocity expressed as pixels rather than percentage
+		if ((frames % 5) == 0 && vel > .05) {
+			printf("DEBUG: Vel = %f\n", vel);
+		}
+
+		// Track the progress relative to trail/paths
 		if (pathDetector.pathsDetected() && contourFinder.bTrackFingers) {
 			if (trackingHist == NULL) {
 				trackingHist = new ofxTrackingHistory(&pathDetector, distThresh);
@@ -541,12 +546,11 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			}
 			if (prop >= followingPropThresh) // the animal has earned a reward
 				bRewardEarned = 1;
-
 		}
-		
+		// ---------------------- END MOUSE TRACKING SPECIFIC FUNCTIONALITY ------------------------- //
+
 		// Stop/start the DAQ,check inputs/outputs if it's on
 		checkDAQ();
-		
 		// Check if serial comm channel is open - send outputs if so
 		checkSerial();
 
@@ -562,7 +566,6 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			//FlyCapture2::Image fcImage = FlyCapture2::Image(h, w, w, saveImg, sizeof(w*h*sizeof(unsigned char)), FlyCapture2::PIXEL_FORMAT_MONO8);
 			fcImage.Save("savedBg.jpg");
 			bSaveBgImage = 0;
-
 		}
 
 		if (bSaveMovie) { // Do movie saving things - this functionality also needs the FlyCapture2 library
@@ -617,17 +620,21 @@ void ofxNCoreVision::checkDAQ()
 			daqOut = bRewardEarned;
 			uInt8 data[1] = {daqOut};
 			err = DAQmxWriteDigitalLines(nidaqOutHandle,1,1,10.0,DAQmx_Val_GroupByChannel,data,NULL,NULL); DAQmxErrorCheck(err, nidaqOutHandle);
+			if (err)
+				printf("NIDAQ WriteDigitialLines Error Code returned %d", err);
 			// Read the input channel.  If high, then reset things.
 			uInt32 readData;
 			int32  read;
 			err = DAQmxReadDigitalU32(nidaqInHandle,1,10.0,DAQmx_Val_GroupByChannel,&readData,1,&read,NULL); DAQmxErrorCheck(err, nidaqOutHandle);
+			if (err)
+				printf("NIDAQ ReadDigitalU32 Error Code returned %d", err);
 			if (readData) { //will be 0 most of the time - if not, reset the tracking
 				bRewardEarned = false;
 				if (trackingHist != NULL) trackingHist->reset();
 			}
-			if (frames == 0) { //Every 1000 frames
-				printf("Data acquired: 0x%X\n",readData);
-			}
+			//if (frames == 0) { //Every 1000 frames
+				//printf("Data acquired: 0x%X\n",readData);
+			//}
 		}
 	} else if (bDaqOpen) {
 			//DAQmxErrorCheck (DAQmxStopTask(&nidaqInHandle), nidaqInHandle);

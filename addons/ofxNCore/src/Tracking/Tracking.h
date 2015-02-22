@@ -25,29 +25,34 @@ class BlobTracker : public TouchListener
 public:
 	BlobTracker();
 	~BlobTracker();
-	//assigns IDs to each blob in the contourFinder
-	void track(ContourFinder* newBlobs);
+
+	std::vector<Blob>		trackedBlobs; //tracked blobs
+	bool isCalibrating;
+	int MOVEMENT_FILTERING;
+	ofxFiducialTracker*	fidfinder;
+	CalibrationUtils* calibrate;
+	
+	void track(ContourFinder* newBlobs); //assigns IDs to each blob in the contourFinder
 	void passInFiducialInfo(ofxFiducialTracker*	_fidfinder);
 	void doFiducialCalculation();
 	void setCameraSize(int width,int height);
-	ofxFiducialTracker*	fidfinder;
-	CalibrationUtils* calibrate;
-	bool isCalibrating;
-	int MOVEMENT_FILTERING;
-	std::vector<Blob>		trackedBlobs; //tracked blobs
-	std::map<int, Blob> getTrackedBlobs();
-	std::map<int, Blob> getTrackedObjects();
+	std::map<int, Blob>	getTrackedBlobs();
+	std::map<int, Blob>	getTrackedObjects();
 	void getBlobsCenterOfMass(float& x, float& y);
+	float getCenterOfMassVelocity();
 
 private:
-	int camWidth,camHeight;
-	int trackKnn(ContourFinder *newBlobs, Blob *track, int k, double thresh);
-	int						IDCounter;	  //counter of last blob
-	int						fightMongrel;
-	
+	int				camWidth,camHeight;
+	int				IDCounter;	  //counter of last blob
+	int				fightMongrel;
+	float			vel, lastVel;	// The center of mass velocity
+	float			comX, comY;
+	int				t, lastTimeTimeWasChecked; //this is the global time for computing COM velocity
 	std::map<int, Blob>     calibratedBlobs;
 	std::map<int,Blob>		trackedObjects;
 	std::map<int, Blob>		calibratedObjects;
+
+	int trackKnn(ContourFinder *newBlobs, Blob *track, int k, double thresh);
 };
 
 #endif

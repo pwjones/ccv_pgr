@@ -33,8 +33,8 @@ Can now use VIDEO or CAMERA MULTIPLEXER MODES.
     </MULTIPLEXER>
     <VIDEO>
         <FILENAME>videos/mouse_test.avi</FILENAME>
-        <SAVEDFILENAME>data/output/video</SAVEDFILENAME>
-        <LOGFILENAME>data/output/trackingLog</LOGFILENAME>
+        <SAVEDFILENAME>C:\Users\pwjones\Videos\mouse_training\2632</SAVEDFILENAME>
+        <LOGFILENAME>C:\Users\pwjones\Videos\mouse_training\2632_trackingLog</LOGFILENAME>
     </VIDEO>
     <!-- Choose MULTIPLEXER if want to use camera or VIDEO -->
     <SOURCE>MULTIPLEXER</SOURCE>
@@ -58,14 +58,14 @@ Can now use VIDEO or CAMERA MULTIPLEXER MODES.
     </APPLICATION>
     <WINDOW>
         <WIDTH>927</WIDTH>
-        <HEIGHT>700</HEIGHT>
+        <HEIGHT>720</HEIGHT>
     </WINDOW>
     <BOOLEAN>
         <PRESSURE>1</PRESSURE>
         <LABELS>1</LABELS>
         <OUTLINES>1</OUTLINES>
         <LEARNBG>0</LEARNBG>
-        <TUIO>1</TUIO>
+        <TUIO>0</TUIO>
         <WINTOUCH>0</WINTOUCH>
         <!-- WINTOUCH is not activly available. -->
         <VMIRROR>0</VMIRROR>
@@ -80,7 +80,7 @@ Can now use VIDEO or CAMERA MULTIPLEXER MODES.
         <SNAPSHOT>0</SNAPSHOT>
         <MINIMODE>0</MINIMODE>
         <HEIGHTWIDTH>0</HEIGHTWIDTH>
-        <OSCMODE>1</OSCMODE>
+        <OSCMODE>0</OSCMODE>
         <TCPMODE>0</TCPMODE>
         <BINMODE>0</BINMODE>
         <TRACKDARK>0</TRACKDARK>
@@ -92,11 +92,11 @@ Can now use VIDEO or CAMERA MULTIPLEXER MODES.
         <MINMOVEMENT>0</MINMOVEMENT>
         <MINBLOBSIZE>15</MINBLOBSIZE>
         <MAXBLOBSIZE>93</MAXBLOBSIZE>
-        <BGLEARNRATE>73.690910</BGLEARNRATE>
-        <THRESHOLD>23</THRESHOLD>
+        <BGLEARNRATE>19.172728</BGLEARNRATE>
+        <THRESHOLD>21</THRESHOLD>
         <HIGHPASSBLUR>9</HIGHPASSBLUR>
-        <HIGHPASSNOISE>2</HIGHPASSNOISE>
-        <HIGHPASSAMP>13</HIGHPASSAMP>
+        <HIGHPASSNOISE>4</HIGHPASSNOISE>
+        <HIGHPASSAMP>5</HIGHPASSAMP>
         <SMOOTH>5</SMOOTH>
         <MINTEMPAREA>0</MINTEMPAREA>
         <MAXTEMPAREA>0</MAXTEMPAREA>

@@ -18,6 +18,10 @@ BlobTracker::BlobTracker()
 	isCalibrating = false;
 	camWidth = 1280;
 	camHeight = 1024;
+	vel = 0; 
+	lastVel = 0;
+	t = ofGetElapsedTimeMillis();
+	lastTimeTimeWasChecked = 0;
 	//Initialise Object Blobs
 	for(int i = 180;i<200;i++)
 	{
@@ -292,7 +296,8 @@ void BlobTracker::track(ContourFinder* newBlobs)
 
 	// AlexP
 	// save the current time since we will be using it a lot
-	int now = ofGetElapsedTimeMillis();
+	lastTimeTimeWasChecked = t; 
+	t = ofGetElapsedTimeMillis(); 
 
 	// STEP 2: Blob update
 	//
@@ -353,7 +358,7 @@ void BlobTracker::track(ContourFinder* newBlobs)
 
 					//calculate the acceleration again
 					tD = trackedBlobs[i].D;
-					trackedBlobs[i].maccel = sqrtf((tD.x* tD.x)+(tD.y*tD.y)) / (now - trackedBlobs[i].lastTimeTimeWasChecked);
+					trackedBlobs[i].maccel = sqrtf((tD.x* tD.x)+(tD.y*tD.y)) / (t - trackedBlobs[i].lastTimeTimeWasChecked);
 
 					//calculate the age
 					trackedBlobs[i].age = ofGetElapsedTimef() - trackedBlobs[i].downTime;
@@ -396,8 +401,8 @@ void BlobTracker::track(ContourFinder* newBlobs)
 
 						//calibrated acceleration
 						ofPoint tD = TouchEvents.messenger.D;
-						TouchEvents.messenger.maccel = sqrtf((tD.x*tD.x)+(tD.y*tD.y)) / (now - TouchEvents.messenger.lastTimeTimeWasChecked);
-						TouchEvents.messenger.lastTimeTimeWasChecked = now;
+						TouchEvents.messenger.maccel = sqrtf((tD.x*tD.x)+(tD.y*tD.y)) / (t - TouchEvents.messenger.lastTimeTimeWasChecked);
+						TouchEvents.messenger.lastTimeTimeWasChecked = t;
 
 						//add to calibration map
 						calibratedBlobs[TouchEvents.messenger.id] = TouchEvents.messenger;
@@ -438,8 +443,8 @@ void BlobTracker::track(ContourFinder* newBlobs)
 				
 						//calibrated acceleration
 						ofPoint tD = TouchEvents.messenger.D;
-						TouchEvents.messenger.maccel = sqrtf((tD.x*tD.x)+(tD.y*tD.y)) / (now - TouchEvents.messenger.lastTimeTimeWasChecked);
-						TouchEvents.messenger.lastTimeTimeWasChecked = now;
+						TouchEvents.messenger.maccel = sqrtf((tD.x*tD.x)+(tD.y*tD.y)) / (t - TouchEvents.messenger.lastTimeTimeWasChecked);
+						TouchEvents.messenger.lastTimeTimeWasChecked = t;
 
 						//add to calibration map
 						calibratedBlobs[TouchEvents.messenger.id] = TouchEvents.messenger;
@@ -448,7 +453,7 @@ void BlobTracker::track(ContourFinder* newBlobs)
 					}
 					// AlexP
 					// The last lastTimeTimeWasChecked is updated at the end after all acceleration values are calculated
-					trackedBlobs[i].lastTimeTimeWasChecked = now;
+					trackedBlobs[i].lastTimeTimeWasChecked = t;
 				}
 			}
 		}
@@ -496,8 +501,16 @@ void BlobTracker::track(ContourFinder* newBlobs)
 			//Send Event
 			TouchEvents.notifyTouchDown(NULL);
 			trackedBlobs.push_back(newBlobs->blobs[i]);
-		}
-	}
+		} // if(newBlobs->blobs[i].id==-1)
+	} //for(int i = 0; i < newBlobs->nBlobs; i++)
+
+	// Get the Center of Mass and the velocity thereof
+	float prevX = comX;
+	float prevY = comY;
+	getBlobsCenterOfMass(comX, comY);
+	lastVel = vel;
+	vel = sqrt(pow(comX-prevX, 2) + pow(comY-prevY,2)) / (t-lastTimeTimeWasChecked) ;
+	//printf("DEBUG: COM Vel = %f\n", vel);
 }
 
 std::map<int, Blob> BlobTracker::getTrackedBlobs()
@@ -540,14 +553,19 @@ void BlobTracker::getBlobsCenterOfMass(float& x, float& y)
 	}
 	x = sumX/nBlobs;
 	y = sumY/nBlobs;
-	// set return vals
-	x = sumX/totalMass;
-	y = sumY/totalMass;
+	// Weighted normalization
+	//x = sumX/totalMass;
+	//y = sumY/totalMass;
 	//clean up
 	delete [] xpos_weighted;
 	delete [] ypos_weighted;
 	
 	//cout << "DEBUG: Tracked CoM   ( " << x << " ,  " << y << " )\n";
+}
+
+float BlobTracker::getCenterOfMassVelocity()
+{
+	return(vel);
 }
 
 /*************************************************************************
