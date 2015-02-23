@@ -545,7 +545,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			if (frames == 0) {
 				printf("Has followed %f of the trail of %f.  Current prop = %f\n", prop*100, followingPropThresh, contProp);
 			}
-			if (prop >= followingPropThresh && contProp >= continuousFollowingThresh) // the animal has earned a reward
+			if (prop >= followingPropThresh) //&& contProp >= continuousFollowingThresh) // the animal has earned a reward
 				bRewardEarned = 1;
 		}
 		// ---------------------- END MOUSE TRACKING SPECIFIC FUNCTIONALITY ------------------------- //
@@ -619,6 +619,8 @@ void ofxNCoreVision::checkDAQ()
 		} else {
 			// Give a high output whenever there is a reward earned by trail following
 			daqOut = bRewardEarned;
+			if (bRewardEarned)
+				printf("DEBUG: TRIGGERING REWARD\n");
 			uInt8 data[1] = {daqOut};
 			err = DAQmxWriteDigitalLines(nidaqOutHandle,1,1,10.0,DAQmx_Val_GroupByChannel,data,NULL,NULL); DAQmxErrorCheck(err, nidaqOutHandle);
 			if (err)
