@@ -527,10 +527,10 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			bDetectEdges = 0;	
 		}
 
-		float vel = tracker.getCenterOfMassVelocity() * (camWidth+camHeight)/2; // velocity expressed as pixels rather than percentage
-		if ((frames % 5) == 0 && vel > .05) {
+		//float vel = tracker.getCenterOfMassVelocity() * (camWidth+camHeight)/2; // velocity expressed as pixels rather than percentage
+		/*if ((frames % 5) == 0 && vel > .05) {
 			printf("DEBUG: Vel = %f\n", vel);
-		}
+		}*/
 
 		// Track the progress relative to trail/paths
 		if (pathDetector.pathsDetected() && contourFinder.bTrackFingers) {
@@ -545,7 +545,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			if (frames == 0) {
 				printf("Has followed %f of the trail of %f.  Current prop = %f\n", prop*100, followingPropThresh, contProp);
 			}
-			if (prop >= followingPropThresh) //&& contProp >= continuousFollowingThresh) // the animal has earned a reward
+			if (prop >= followingPropThresh && contProp >= continuousFollowingThresh) // the animal has earned a reward
 				bRewardEarned = 1;
 		}
 		// ---------------------- END MOUSE TRACKING SPECIFIC FUNCTIONALITY ------------------------- //
