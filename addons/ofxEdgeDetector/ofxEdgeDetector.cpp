@@ -44,14 +44,18 @@ bool ofxEdgeDetector::pathsDetected()
 // ----------------------------------------------------------
 vector<int> ofxEdgeDetector::numPathPoints(bool useSkel)
 {
-	if (useSkel && skelDetected)
-		vector<vector<cv::Point>>& pts = (skelPathPts.size() > 0) ? skelPathPts: pathPts;
-	else 
-		vector<vector<cv::Point>>& pts = pathPts;
+	vector<vector<cv::Point>>& pts = pathPts;
+	if (useSkel && skelDetected) {
+		//printf("Using skel paths: skelPathPts.size returns %d\n", skelPathPts.size());
+		 pts = (skelPathPts.size() > 0) ? skelPathPts: pathPts;
+	//} else { 
+	//	//printf("Using normal paths\n");
+	//	pts = pathPts;
+	}
 	
-	vector<int> npts(pathPts.size(),-1);
-	for(int i = 0; i<npts.size(); i++) {
-		npts[i] = pathPts[i].size();
+	vector<int> npts(pts.size(),-1);
+	for(int i = 0; i<pts.size(); i++) {
+		npts[i] = pts[i].size();
 	}
 	return(npts);
 }
@@ -164,7 +168,8 @@ void ofxEdgeDetector::selectPaths()
 	setMouseCallback(contourWind, mouseSelect, 0 );
 	
 	pathContours.clear(); //reset the selected contours
-	pathContours.reserve(2); // We need room for this many
+	//pathContours.reserve(2); // We need room for this many
+	skelDetected = 0;
 
 	string prompt = "Click to select rewarded path, press enter when path is complete";
 	//string text = "Funny text inside the box";
@@ -189,6 +194,8 @@ void ofxEdgeDetector::selectPaths()
 		pv.push_back(cv::Point(0,0));
 		pathPts.push_back(pv);
 	}
+	pathPts.resize(2);
+
 	int sp[] = {0, 1};
 	//pathPts.clear();
 	vector<cv::Point> tempPts;
@@ -233,6 +240,7 @@ void ofxEdgeDetector::thinPaths()
 		//waitKey(0);
 		pts.clear();
 	}
+	skelPathPts.resize(2);
 	pIm = drawPathOverlay(pathPts);
 	skelIm = drawContourPoints(skelPathPts[0], CV_8UC3);
 	skelIm = drawContourPoints(skelPathPts[1], skelIm, CV_8UC3);
@@ -495,6 +503,12 @@ void ofxEdgeDetector::findNearbyContours(int x, int y, vector<int>& neari)
 		}
 	}
 	//return(neari);
+}
+
+// ------------------------------------
+bool ofxEdgeDetector::pathsThinned()
+{
+	return(skelDetected);
 }
 
 // --------------------------------

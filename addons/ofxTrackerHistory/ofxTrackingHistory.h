@@ -22,13 +22,18 @@ protected:
 		ofxEdgeDetector *edgeDetector; //the object responsible for keeping track of paths
 		vector<cv::Point> pos; // tracked position
 		vector<vector<bool>> followed; // booleans for the following of each trail point
+		vector<bool> close; // the rewarded path, boolean vector for closeness
+		vector<bool> prevClose; // closeness on the prev update
+		vector<bool> diffV; // difference between close and prevClose
 		double followingThresh; // distance threshold for following
 		int followingPath; // the path on which we track following
 		bool useSkel; // are the paths skeletonized
 		bool isFollowing; // current following state of the animal
 		double continuousProp, initialProp;
 		
-		void updateFollowing(bool currFollowing);
+		void updateFollowing(double newProp, bool currFollowing);
+		double findAdjacentTrailPoints(cv::Point pos, vector<bool>& closeTrail);
+		double vectorDiffProp(vector<bool> v1, vector<bool> v2);
 };
 
 #endif //OFXTRACKERHISTORY_H

@@ -28,6 +28,7 @@ public:
 	void thinPaths(); // Algorithmically thin the paths down to a single pixel width
 	double minPathDist(cv::Point p, int pathNum); // The minimum distance to a point on the path
 	vector<double> pathDist(cv::Point p, int pathNum, bool useSkel); // Distance to each point in path.
+	bool pathsThinned(); // Have thinned paths been computed?
 	bool pathsDetected(); // Have paths been identified from the image
 	string print(); // Print info about the paths
 	vector<int> numPathPoints(bool useSkel);

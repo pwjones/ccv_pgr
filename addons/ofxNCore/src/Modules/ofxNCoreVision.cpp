@@ -524,6 +524,8 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 		if (bDetectEdges) {
 			pathDetector.updateImage(filter->grayImg);
 			pathDetector.detectEdges(); // Will block this image acquisition loop temporarily, which is ok
+			if (trackingHist != NULL)
+				trackingHist->reset();
 			bDetectEdges = 0;	
 		}
 
@@ -543,7 +545,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			double prop = trackingHist->followingProportion(0);
 			double contProp = trackingHist->continuousFollowingProp(0);
 			if (frames == 0) {
-				printf("Has followed %f of the trail of %f.  Current prop = %f\n", prop*100, followingPropThresh, contProp);
+				printf("Has followed %f of the trail of %f.  Current prop = %f\n", prop, followingPropThresh, contProp);
 			}
 			if (prop >= followingPropThresh && contProp >= continuousFollowingThresh) // the animal has earned a reward
 				bRewardEarned = 1;
@@ -619,8 +621,8 @@ void ofxNCoreVision::checkDAQ()
 		} else {
 			// Give a high output whenever there is a reward earned by trail following
 			daqOut = bRewardEarned;
-			if (bRewardEarned)
-				printf("DEBUG: TRIGGERING REWARD\n");
+			//if (bRewardEarned)
+				//printf("DEBUG: TRIGGERING REWARD\n");
 			uInt8 data[1] = {daqOut};
 			err = DAQmxWriteDigitalLines(nidaqOutHandle,1,1,10.0,DAQmx_Val_GroupByChannel,data,NULL,NULL); DAQmxErrorCheck(err, nidaqOutHandle);
 			if (err)
