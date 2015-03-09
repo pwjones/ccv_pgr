@@ -32,6 +32,7 @@ public:
 	bool pathsDetected(); // Have paths been identified from the image
 	string print(); // Print info about the paths
 	vector<int> numPathPoints(bool useSkel);
+	int numPathPoints(bool useSkel, int pathNum);
 
 	// These need to be public to be accessed by GUI routines. Please don't use otherwise.
 	void cannyThreshold(int newThresh, void *);

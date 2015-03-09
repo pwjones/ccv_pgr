@@ -59,7 +59,22 @@ vector<int> ofxEdgeDetector::numPathPoints(bool useSkel)
 	}
 	return(npts);
 }
-		
+	
+// ----------------------------------------------------------
+int ofxEdgeDetector::numPathPoints(bool useSkel, int pathNum)
+{
+	vector<vector<cv::Point>>& pts = pathPts;
+	if (useSkel && skelDetected) {
+		 pts = (skelPathPts.size() > 0) ? skelPathPts: pathPts;
+	}
+	
+	int npts = -1;
+	if (pathNum < pts.size()) {
+	    npts = pts[pathNum].size();
+	}
+	
+	return(npts);
+}	
 // ------------------------------------------------------------
 void ofxEdgeDetector::updateImage(ofxCvGrayscaleImage& src_img)
 {

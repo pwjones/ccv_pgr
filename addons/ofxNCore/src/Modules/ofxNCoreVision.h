@@ -243,7 +243,7 @@ public:
 		fps			= 0;
 		lastFPSlog	= 0;
 		differenceTime = 0;
-		saveMovieSubsample = 3;
+		saveMovieSubsample = 1;
 		//bools
 		bCalibration= 0;
 		bFullscreen = 0;
@@ -306,9 +306,9 @@ public:
 		daqOut = 0;
 		daqErrorStr[0] = '\0';
 		trackingHist = NULL;
-		distThresh = 20;
-		followingPropThresh = .80;
-		continuousFollowingThresh = .20; 
+		distThresh = 25;
+		followingPropThresh = 500;
+		continuousFollowingThresh = 150; 
 		maxVelThresh = .8; // this is in px/msec, so it will be low
 		bRewardEarned = false;
 		bRunExperiment = false;

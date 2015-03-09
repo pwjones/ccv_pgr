@@ -205,6 +205,7 @@ void ofxNCoreVision::loadXMLSettings()
 	videoFileName				= XML.getValue("CONFIG:VIDEO:FILENAME", "test_videos/RearDI.m4v");
 	savedMovieFileName			= XML.getValue("CONFIG:VIDEO:SAVEDFILENAME", "data/output/video");
 	logFileName					= XML.getValue("CONFIG:VIDEO:LOGFILENAME", "data/output/trackingLog");
+	saveMovieSubsample          = XML.getValue("CONFIG:VIDEO:SUBSAMPLE", "3");
 	bcamera						= XML.getValue("CONFIG:SOURCE","VIDEO") == "MULTIPLEXER";
 	maxBlobs					= XML.getValue("CONFIG:BLOBS:MAXNUMBER", 20);
 	bShowLabels					= XML.getValue("CONFIG:BOOLEAN:LABELS",0);
@@ -535,6 +536,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 		}*/
 
 		// Track the progress relative to trail/paths
+		int rewardedPath = 0;
 		if (pathDetector.pathsDetected() && contourFinder.bTrackFingers) {
 			if (trackingHist == NULL) {
 				trackingHist = new ofxTrackingHistory(&pathDetector, distThresh);
@@ -542,10 +544,11 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			float x,y;
 			contourFinder.getHeadPosition(x,y);
 			trackingHist->updatePosition(cv::Point(x,y));
-			double prop = trackingHist->followingProportion(0);
-			double contProp = trackingHist->continuousFollowingProp(0);
+			int trailPx = pathDetector.numPathPoints(1, rewardedPath );
+			double prop = trackingHist->followingProportion( rewardedPath ) * trailPx;
+			double contProp = trackingHist->continuousFollowingProp( rewardedPath ) * trailPx;
 			if (frames == 0) {
-				printf("Has followed %f of the trail of %f.  Current prop = %f\n", prop, followingPropThresh, contProp);
+				printf("Has followed: %f  Goal: %f  Current prop: %f\n", prop, followingPropThresh, contProp);
 			}
 			if (prop >= followingPropThresh && contProp >= continuousFollowingThresh) // the animal has earned a reward
 				bRewardEarned = 1;
