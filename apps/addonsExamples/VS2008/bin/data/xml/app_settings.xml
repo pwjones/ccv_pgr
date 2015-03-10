@@ -36,7 +36,7 @@ Can now use VIDEO or CAMERA MULTIPLEXER MODES.
         <SAVEDFILENAME>C:\Users\pwjones\Videos\mouse_training\2632</SAVEDFILENAME>
         <LOGFILENAME>C:\Users\pwjones\Videos\mouse_training\2632_trackingLog</LOGFILENAME>
         <!--Save every x frames, in order to track at faster speeds but still save video -->
-        <SUBSAMPLE>1</SUBSAMPLE>
+        <SUBSAMPLE>2</SUBSAMPLE>
     </VIDEO>
     <!-- Choose MULTIPLEXER if want to use camera or VIDEO -->
     <SOURCE>MULTIPLEXER</SOURCE>
@@ -95,7 +95,7 @@ Can now use VIDEO or CAMERA MULTIPLEXER MODES.
         <MINBLOBSIZE>15</MINBLOBSIZE>
         <MAXBLOBSIZE>93</MAXBLOBSIZE>
         <BGLEARNRATE>19.172728</BGLEARNRATE>
-        <THRESHOLD>94</THRESHOLD>
+        <THRESHOLD>20</THRESHOLD>
         <HIGHPASSBLUR>9</HIGHPASSBLUR>
         <HIGHPASSNOISE>4</HIGHPASSNOISE>
         <HIGHPASSAMP>5</HIGHPASSAMP>

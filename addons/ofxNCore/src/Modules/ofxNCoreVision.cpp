@@ -205,7 +205,7 @@ void ofxNCoreVision::loadXMLSettings()
 	videoFileName				= XML.getValue("CONFIG:VIDEO:FILENAME", "test_videos/RearDI.m4v");
 	savedMovieFileName			= XML.getValue("CONFIG:VIDEO:SAVEDFILENAME", "data/output/video");
 	logFileName					= XML.getValue("CONFIG:VIDEO:LOGFILENAME", "data/output/trackingLog");
-	saveMovieSubsample          = XML.getValue("CONFIG:VIDEO:SUBSAMPLE", "3");
+	saveMovieSubsample          = XML.getValue("CONFIG:VIDEO:SUBSAMPLE", 3);
 	bcamera						= XML.getValue("CONFIG:SOURCE","VIDEO") == "MULTIPLEXER";
 	maxBlobs					= XML.getValue("CONFIG:BLOBS:MAXNUMBER", 20);
 	bShowLabels					= XML.getValue("CONFIG:BOOLEAN:LABELS",0);
