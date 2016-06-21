@@ -299,8 +299,10 @@ public:
 		// NI DAQ
 		nidaqInHandle = 0;
 		nidaqOutHandle = 0;
-		outputLine = "Dev1/port0/line7";
+		frameCountBool = false;
+		outputLine = "Dev1/port0/line4:7"; // 0.6 Cheetah output, 0.7 is behavioral controller, Statescript, output
 		inputLine = "Dev1/port1/line0";
+		//cheetahOutputLine = "Dev1/port0/line6";
 		bDaqOpen = 0;
 		bUseDaq = 1;
 		daqOut = 0;
@@ -542,6 +544,8 @@ public:
 	string				inputLine;
 	char				daqErrorStr[2048]; 
 	bool				daqOut;
+	bool				frameCountBool;
+
 
 	//Logging
 	char				dateStr [9];

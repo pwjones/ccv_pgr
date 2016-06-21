@@ -465,6 +465,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 		if (bGPUMode)
 		{
 			grabFrameToGPU(filter->gpuSourceTex);
+			checkDAQ(); // Stop/start the DAQ,check inputs/outputs if it's on
 			filter->applyGPUFilters();
 			contourFinder.findContours(filter->gpuReadBackImageGS,  (MIN_BLOB_SIZE * 2) + 1, ((camWidth * camHeight) * .4) * (MAX_BLOB_SIZE * .001), maxBlobs, false);
 			if(contourFinder.bTrackFiducials || bFidtrackInterface)
@@ -477,6 +478,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 		}
 		else { // not GPUmode
 			grabFrameToCPU();
+			checkDAQ(); // Stop/start the DAQ,check inputs/outputs if it's on
 			//sourceImg.setFromGrayscalePlanarImages(processedImg, processedImg, processedImg);
 			sourceGrayImg.setFromPixels(processedImg.getPixels(), processedImg.getWidth(), processedImg.getHeight()); //copy that image
 			filter->applyCPUFilters( processedImg );
@@ -555,8 +557,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 		}
 		// ---------------------- END MOUSE TRACKING SPECIFIC FUNCTIONALITY ------------------------- //
 
-		// Stop/start the DAQ,check inputs/outputs if it's on
-		checkDAQ();
+		
 		// Check if serial comm channel is open - send outputs if so
 		checkSerial();
 
@@ -583,7 +584,8 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 				framesSinceSave++;
 			} else { //start saving the movie
 				printf("Starting to save movie on frame: %d\n", frames);
-				movieWriter->init(savedMovieFileName.c_str(), MJPG, fps/saveMovieSubsample, sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
+				double fps_offset = -15;
+				movieWriter->init(savedMovieFileName.c_str(), MJPG, (fps+fps_offset)/saveMovieSubsample, sourceGrayImg.getWidth(), sourceGrayImg.getHeight());
 				bSavingMovie = 1;
 				framesSinceSave = 1;
 			}
@@ -624,9 +626,19 @@ void ofxNCoreVision::checkDAQ()
 		} else {
 			// Give a high output whenever there is a reward earned by trail following
 			daqOut = bRewardEarned;
+			// Flip the frame to high, and the reward status to be what it is, then output that on the NIDAQ 
+			frameCountBool = !frameCountBool;
+			bool frameEven = (frames % 2) == 0;
+			bool bsaving = bSavingLog || bSavingMovie;
 			//if (bRewardEarned)
 				//printf("DEBUG: TRIGGERING REWARD\n");
-			uInt8 data[1] = {daqOut};
+			uInt8 data[4] = {frameCountBool, bsaving, daqOut, daqOut};
+			err = DAQmxWriteDigitalLines(nidaqOutHandle,1,1,10.0,DAQmx_Val_GroupByChannel,data,NULL,NULL); DAQmxErrorCheck(err, nidaqOutHandle);
+			if (err)
+				printf("NIDAQ WriteDigitialLines Error Code returned %d", err);
+			// Flip frame back down to low, and output again.
+			frameCountBool = !frameCountBool;
+			data[0] = frameCountBool;
 			err = DAQmxWriteDigitalLines(nidaqOutHandle,1,1,10.0,DAQmx_Val_GroupByChannel,data,NULL,NULL); DAQmxErrorCheck(err, nidaqOutHandle);
 			if (err)
 				printf("NIDAQ WriteDigitialLines Error Code returned %d", err);
@@ -1173,9 +1185,12 @@ void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 			//controls->update(appPtr->trackingPanel_trackFingers, kofxGui_Set_Bool, &contourFinder.bTrackFingers, sizeof(bool));
 			break;
 		case 'd':
-			contourFinder.bTrackFiducials = !contourFinder.bTrackFiducials;
-			bFidMode = contourFinder.bTrackFiducials;
-			controls->update(appPtr->trackingPanel_trackFiducials, kofxGui_Set_Bool, &contourFinder.bTrackFiducials, sizeof(bool));
+			bDetectEdges = !bDetectEdges;
+			controls->update(appPtr->logPanel_detectEdges, kofxGui_Set_Bool, &bDetectEdges, sizeof(bool));
+			// d used to be fiducial tracking.  Screw that, it's trail detection now. 
+			//contourFinder.bTrackFiducials = !contourFinder.bTrackFiducials;
+			//bFidMode = contourFinder.bTrackFiducials;
+			//controls->update(appPtr->trackingPanel_trackFiducials, kofxGui_Set_Bool, &contourFinder.bTrackFiducials, sizeof(bool));
 			break;
 		case 'j':
 			if (!contourFinder.bTrackObjects)

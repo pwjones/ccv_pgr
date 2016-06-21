@@ -211,7 +211,7 @@ void ofxNCoreVision::addMainPanels()
 	// Tracking
 	ofxGuiPanel* trackingPanel = controls->addPanel(appPtr->trackingPanel, "Track", MAIN_PANEL_SECOND_X, 370 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	trackingPanel->addButton(appPtr->trackingPanel_trackFingers, "Fingers (g)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
-	trackingPanel->addButton(appPtr->trackingPanel_trackFiducials, "Fiducials (d)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
+	trackingPanel->addButton(appPtr->trackingPanel_trackFiducials, "Fiducials", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	trackingPanel->addButton(appPtr->trackingPanel_trackObjects, "Objects (j)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	trackingPanel->mObjWidth = 200;
 	trackingPanel->mObjHeight = 87;
@@ -219,7 +219,7 @@ void ofxNCoreVision::addMainPanels()
 	// Saving/Logging
 	ofxGuiPanel* logPanel = controls->addPanel(appPtr->logPanel, "Logging/Saving", MAIN_PANEL_SECOND_X, 467 -(bcamera ? 0 : 80), OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	logPanel->addButton(appPtr->logPanel_saveBgImage, "Save Bg Image", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
-	logPanel->addButton(appPtr->logPanel_detectEdges, "Detect Paths", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger);
+	logPanel->addButton(appPtr->logPanel_detectEdges, "Detect Paths (D)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger);
 	logPanel->addButton(appPtr->logPanel_saveMovie, "Save Movie", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch);
 	string logLabel = "Save Log File";
 	//logLabel.append(logFileName);
